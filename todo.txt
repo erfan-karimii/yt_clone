@@ -1,0 +1,2 @@
+send email code (in server) 
+remember me register

@@ -1,6 +1,11 @@
 from django import forms 
-import re
+from .models import Profile
 
-class PhoneNumber(forms.Form):
-    phone_number = forms.RegexField(regex=r'^(?:0|98|\+98|\+980|0098|098|00980)?(9\d{9})$')
+class EmailForm(forms.Form):
+    email = forms.EmailField()
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        exclude = ('user',)
 

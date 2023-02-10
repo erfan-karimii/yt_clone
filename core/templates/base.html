@@ -200,6 +200,22 @@
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/flatpickr.js' %}"></script>
     <script src="{% static 'js/script.js' %}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        {% for message in messages %}
+            {% if message.level == 40 %}
+            Swal.fire({
+                icon: 'error',
+                text: '{{message}}',
+            })
+            {% else %}
+            Swal.fire({
+                icon: 'success',
+                text: '{{message}}',
+            })
+            {% endif %}
+        {% endfor %}
+    </script>
     {% block js %}{% endblock js %}
 </body>
 

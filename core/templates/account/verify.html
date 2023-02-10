@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+
+<section class="banner-section p120">
+	<div class="container">
+		<div class="banner-text">
+			<h2>تایید ایمیل</h2>
+			<p>قبل از ساخت حساب کاربری لطفا ایمیل خود را تایید کنید.</p>
+		</div><!--banner-text end-->
+	</div>
+</section><!--banner-section end-->
+
+<section class="form_popup">
+
+	<div class="login_form" id="login_form">
+		<div class="hd-lg">
+			<img src="{% static 'images/logo.png' %}" alt="">
+			<span>تایید ایمیل</span>
+		</div><!--hd-lg end-->
+		<div class="user-account-pr">
+			<form method='post' action="{% url 'account:verify' %}">
+				{% csrf_token %}
+				<div class="input-sec">
+					<input type="text" name="token" placeholder="کد ارسالی به ایمیل خود را وارد نمایید.">
+				</div>
+				<div class="input-sec mb-0">
+					<button type="submit">تایید</button>
+				</div><!--input-sec end-->
+			</form>
+		</div>
+	</div>
+
+</section><!--form_popup end-->
+
+{% endblock body %}

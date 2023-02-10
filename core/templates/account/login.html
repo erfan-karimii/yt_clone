@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+
+<section class="banner-section p120">
+	<div class="container">
+		<div class="banner-text">
+			<h2>ورود</h2>
+			<p>لطفاً برای دسترسی به همه فیلم ها و موارد دیگر به سیستم وارد شوید.</p>
+		</div><!--banner-text end-->
+	</div>
+</section><!--banner-section end-->
+
+<section class="form_popup">
+
+	<div class="login_form" id="login_form">
+		<div class="hd-lg">
+			<img src="images/logo.png" alt="">
+			<span>به حساب اورن خود وارد شوید</span>
+		</div><!--hd-lg end-->
+		<div class="user-account-pr">
+			<form method='post'>
+				{% csrf_token %}
+				<div class="input-sec">
+					<input type="text" name="username" placeholder="ایمیل" required >
+				</div>
+				<div class="input-sec">
+					<input type="Password" name="password" placeholder="رمز ورود" required >
+				</div>
+				<div class="chekbox-lg">
+					<label>
+						<input type="checkbox" name="remember" value="rem">
+						<b class="checkmark"> </b>
+						<span>مرا به خاطر بسپار</span>
+					</label>
+				</div>
+				<div class="input-sec mb-0">
+					<button type="submit">ورود</button>
+				</div><!--input-sec end-->
+			</form>
+		</div>
+		<div class="fr-ps">
+			<h1>حساب کاربری ندارید <a href="{% url 'account:registerView' %}" title="" class="show_signup">ثبت نام کنید.</a></h1>
+		</div>
+	</div><!--login end--->
+
+</section><!--form_popup end-->
+
+{% endblock body %}
