@@ -41,9 +41,12 @@ INSTALLED_APPS = [
 
     # Django App
     'youtube',
+    'account',
+    'sitesetting',
 
     #-----------package--------
     'ckeditor',
+    'django_render_partial',
 ]
 
 MIDDLEWARE = [
@@ -138,7 +141,7 @@ MEDIA_ROOT2 = os.path.join(BASE_DIR,'thumbnail/')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# AUTH_USER_MODEL = 'account.User'
+AUTH_USER_MODEL = 'account.User'
 
 #------------------------ckeditor-------------
 CKEDITOR_UPLOAD_PATH = "uploads/"

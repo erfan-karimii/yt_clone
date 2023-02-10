@@ -1,0 +1,161 @@
+{% load static %}
+<header>
+    <div class="top_bar">
+        <div class="container">
+            <div class="top_header_content">
+                <ul class="controls-lv d-rtl" style="">
+                    <li>
+                        <a href="#" title=""><i class="icon-message"></i></a>
+                    </li>
+                    <li>
+                        <a href="#" title=""><i class="icon-notification"></i></a>
+                    </li>
+                    <li class="user-log">
+                        <div class="user-ac-img">
+                            <img src="{% static 'images/resources/user-img.png' %}" alt="">
+                        </div>
+                        <div class="account-menu">
+                            <h4>محمد امینی <span class="usr-status">ویژه</span></h4>
+                            <div class="sd_menu">
+                                <ul class="mm_menu">
+                                    <li>
+                                        <span>
+                                            <i class="icon-user"></i>
+                                        </span>
+                                        <a href="#" title="">کانال من</a>
+                                    </li>
+                                    <li>
+                                        <span>
+                                            <i class="icon-paid_sub"></i>
+                                        </span>
+                                        <a href="#" title="">اشتراک پولی</a>
+                                    </li>
+                                    <li>
+                                        <span>
+                                            <i class="icon-settings"></i>
+                                        </span>
+                                        <a href="#" title="">تنظیمات</a>
+                                    </li>
+                                    <li>
+                                        <span>
+                                            <i class="icon-logout"></i>
+                                        </span>
+                                        <a href="#" title="">خروج</a>
+                                    </li>
+                                </ul>
+                            </div><!--sd_menu end-->
+                            <div class="sd_menu scnd">
+                                <ul class="mm_menu">
+                                    <li>
+                                        <span>
+                                            <i class="icon-light"></i>
+                                        </span>
+                                        <a href="#" title="">حالت شب</a>
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                                <b class="slider round"></b>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <span>
+                                            <i class="icon-language"></i>
+                                        </span>
+                                        <a href="#" title="">زبان</a>
+                                    </li>
+                                    <li>
+                                        <span>
+                                            <i class="icon-feedback"></i>
+                                        </span>
+                                        <a href="#" title="">ارسال بازخورد</a>
+                                    </li>
+                                </ul>
+                            </div><!--sd_menu end-->
+                            <div class="restricted-mode">
+                                <h4>حالت محدود</h4>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                        <span class="slider round"></span>
+                                </label>
+                                <div class="clearfix"></div>
+                            </div><!--restricted-more end-->
+                        </div>
+                    </li>
+                    <li>
+                        <a href="Upload_Video.html" title="" class="btn-default">آپلود</a>
+                    </li>
+                </ul><!--controls-lv end-->
+                <div class="menu_logo d-rtl">
+                    <a href="#" title="" class="menu">
+                        <i class="icon-menu"></i>
+                    </a>
+                    <a href="index.html" title="" class="logo">
+                        <img src="{% static 'images/logo.png' %}" alt="">
+                    </a>
+                </div><!--menu_logo end-->
+                <div class="search_form d.rtl">
+                    <form>
+                        <input type="text" name="search" placeholder="جستجو ویدیو ... ">
+                        <button type="submit">
+                            <i class="icon-search"></i>
+                        </button>
+                    </form>
+                </div><!--search_form end-->
+                <div class="clearfix"></div>
+
+            </div><!--top_header_content end-->
+        </div>
+    </div><!--header_content end-->
+    <div class="btm_bar">
+        <div class="container">
+            <div class="btm_bar_content">
+                <nav>
+                    <ul>
+                        {% for navone in navones %}
+                        <li><a href="{{navone.link}}" title="{{navone.name}}">{{navone.name}}</a>
+                            <div class="mega-menu">
+                                <ul class="d-rtl">
+                                    {% for navtwo in navone.navtwo_set.all %}
+                                    <li><a href="{{navtwo.link}}" title="{{navtwo.name}}">{{navtwo.name}}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="clearfix"></div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </nav><!--navigation end-->
+                <ul class="shr_links">
+                    <li>
+                        <h3>برو به : </h3>
+                    </li>
+                    <li>
+                        <button class="Iransans" data-toggle="tooltip" data-placement="top" title="لایک">
+                          <i class="icon-like"></i>
+                        </button>
+                    </li>
+                    <li>
+                        <button data-toggle="tooltip" data-placement="top" title="بعدا می بینم">
+                          <i class="icon-watch_later"></i>
+                        </button>
+                    </li>
+                    <li>
+                        <button data-toggle="tooltip" data-placement="top" title="لیست پخش">
+                          <i class="icon-playlist"></i>
+                        </button>
+                    </li>
+                    <li>
+                        <button data-toggle="tooltip" data-placement="top" title="خریداری شده">
+                          <i class="icon-purchased"></i>
+                        </button>
+                    </li>
+                    <li>
+                        <button data-toggle="tooltip" data-placement="top" title="تاریخچه">
+                          <i class="icon-history"></i>
+                        </button>
+                    </li>
+                </ul><!--shr_links end-->
+                <div class="clearfix"></div>
+            </div><!--btm_bar_content end-->
+        </div>
+    </div><!--btm_bar end-->
+</header><!--header end-->

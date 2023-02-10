@@ -539,7 +539,7 @@ nav ul li:hover > .mega-menu {
 	position: absolute;
 	top: 100%;
 	right: 0;
-	width: 560px;
+	width: 160px;
 	background-color: #fff;
 	z-index: 9;
 	opacity: 0;
@@ -554,7 +554,7 @@ nav ul li:hover > .mega-menu {
 }
 .mega-menu ul {
 	float: left;
-	width: 50%;
+	width: 100%;
 }
 nav ul ul li:first-child {
 	padding-left: 25px;
