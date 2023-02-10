@@ -1,0 +1,390 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>قالب اورن | اشتراک ویدیو</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<link rel="icon" href="{% static 'images/Favicon.png' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/flatpickr.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/fontello.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/fontello-codes.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/thumbs-embedded.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/responsive.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/color.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/fontawesome.css' %}">
+    {% block css %}{% endblock css %}
+</head>
+
+<body>
+	<div class="wrapper hp_1">
+		<header>
+			<div class="top_bar">
+				<div class="container">
+					<div class="top_header_content">
+					<ul class="controls-lv d-rtl" style="">
+							<li>
+								<a href="#" title=""><i class="icon-message"></i></a>
+							</li>
+							<li>
+								<a href="#" title=""><i class="icon-notification"></i></a>
+							</li>
+							<li class="user-log">
+								<div class="user-ac-img">
+									<img src="{% static 'images/resources/user-img.png' %}" alt="">
+								</div>
+								<div class="account-menu">
+									<h4>محمد امینی <span class="usr-status">ویژه</span></h4>
+									<div class="sd_menu">
+										<ul class="mm_menu">
+											<li>
+												<span>
+													<i class="icon-user"></i>
+												</span>
+												<a href="#" title="">کانال من</a>
+											</li>
+											<li>
+												<span>
+													<i class="icon-paid_sub"></i>
+												</span>
+												<a href="#" title="">اشتراک پولی</a>
+											</li>
+											<li>
+												<span>
+													<i class="icon-settings"></i>
+												</span>
+												<a href="#" title="">تنظیمات</a>
+											</li>
+											<li>
+												<span>
+													<i class="icon-logout"></i>
+												</span>
+												<a href="#" title="">خروج</a>
+											</li>
+										</ul>
+									</div><!--sd_menu end-->
+									<div class="sd_menu scnd">
+										<ul class="mm_menu">
+											<li>
+												<span>
+													<i class="icon-light"></i>
+												</span>
+												<a href="#" title="">حالت شب</a>
+												<label class="switch">
+													<input type="checkbox">
+												  	<b class="slider round"></b>
+												</label>
+											</li>
+											<li>
+												<span>
+													<i class="icon-language"></i>
+												</span>
+												<a href="#" title="">زبان</a>
+											</li>
+											<li>
+												<span>
+													<i class="icon-feedback"></i>
+												</span>
+												<a href="#" title="">ارسال بازخورد</a>
+											</li>
+										</ul>
+									</div><!--sd_menu end-->
+									<div class="restricted-mode">
+										<h4>حالت محدود</h4>
+										<label class="switch">
+											<input type="checkbox" checked>
+										  	<span class="slider round"></span>
+										</label>
+										<div class="clearfix"></div>
+									</div><!--restricted-more end-->
+								</div>
+							</li>
+							<li>
+								<a href="Upload_Video.html" title="" class="btn-default">آپلود</a>
+							</li>
+						</ul><!--controls-lv end-->
+						<div class="menu_logo d-rtl">
+							<a href="#" title="" class="menu">
+								<i class="icon-menu"></i>
+							</a>
+							<a href="index.html" title="" class="logo">
+								<img src="{% static 'images/logo.png' %}" alt="">
+							</a>
+						</div><!--menu_logo end-->
+						<div class="search_form d.rtl">
+							<form>
+								<input type="text" name="search" placeholder="جستجو ویدیو ... ">
+								<button type="submit">
+									<i class="icon-search"></i>
+								</button>
+							</form>
+						</div><!--search_form end-->
+						<div class="clearfix"></div>
+
+					</div><!--top_header_content end-->
+				</div>
+			</div><!--header_content end-->
+			<div class="btm_bar">
+				<div class="container">
+					<div class="btm_bar_content">
+						<nav>
+							<ul>
+								<li><a href="#" title="">صفحات</a>
+									<div class="mega-menu">
+										<ul class="d-rtl">
+											<li><a href="#" title="">صفحه کانال <i class="fa fa-angle-left font-aw" aria-hidden="true"></i></a>
+												<ul>
+													<li><a href="Single_Channel_Home.html" title="">صفحه نخست کانال</a></li>
+													<li><a href="Single_Channel_Videos.html" title="">صفحه ویدیو های کانال</a></li>
+													<li><a href="Single_Channel_Playlist.html" title="">صفحه لیست پخش کانال</a></li>
+													<li><a href="Single_Channel_Channels.html" title="">صفحه کانال های پیشنهادی</a></li>
+													<li><a href="Single_Channel_About.html" title="">صفحه درباره ما کانال</a></li>
+													<li><a href="Single_Channel_Products.html" title="">صفحه محصولات کانال</a></li>	
+												</ul>
+											</li>
+											<li><a href="History_Page.html" title="">صفحه تاریخچه</a></li>
+											<li><a href="Browse_Categories.html" title="">صفحه دسته بندی ها</a></li>
+											<li><a href="Updates_From_Subs.html" title="">صفحه آپلود های جدید</a></li>
+											<li><a href="login.html" title="">صفحه ورود</a></li>
+											<li><a href="signup.html" title="">صفحه ثبت نام</a></li>
+											<li><a href="User_Account_Page.html" title="">صفحه حساب کاربری</a></li>
+										</ul>
+										<ul class="d-rtl">
+											<li><a href="index.html" title="">صفحه نخست</a></li>
+											<li><a href="single_video_page.html" title="">صفحه ویدیو</a></li>
+											<li><a href="Single_Video_Simplified_Page.html" title="">صفحه ساده ویدیو</a></li>
+											<li><a href="single_video_fullwidth_page.html" title="">صفحه تمام عرض ویدیو</a></li>
+											<li><a href="single_video_playlist.html" title="">صفحه لیست پخش ویدیو</a></li>
+											<li><a href="Upload_Video.html" title="">صفحه آپلود ویدیو</a></li>
+											<li><a href="Upload_Edit.html" title="">جزئیات ویدیو آپلود شده</a></li>
+											<li><a href="Browse_Channels.html" title="">مشاهده کانال ها</a></li>
+											<li><a href="Searched_Videos_Page.html" title="">ویدیو های جستجو شده</a></li>
+										</ul>
+									</div>
+									<div class="clearfix"></div>
+								</li>
+								<li><a href="Browse_Categories.html" title="">دسته بندی ها</a></li>
+								<li><a href="Browse_Channels.html" title="">کانال ها</a></li>
+								<li><a href="#" title="">پرطرفدار</a></li>
+								<li><a href="Single_Channel_Home.html" title="">زنده</a></li>
+								<li><a href="#" title="">فیلم</a></li>
+							</ul>
+						</nav><!--navigation end-->
+						<ul class="shr_links">
+							<li>
+								<h3>برو به : </h3>
+							</li>
+							<li>
+								<button class="Iransans" data-toggle="tooltip" data-placement="top" title="لایک">
+								  <i class="icon-like"></i>
+								</button>
+							</li>
+							<li>
+								<button data-toggle="tooltip" data-placement="top" title="بعدا می بینم">
+								  <i class="icon-watch_later"></i>
+								</button>
+							</li>
+							<li>
+								<button data-toggle="tooltip" data-placement="top" title="لیست پخش">
+								  <i class="icon-playlist"></i>
+								</button>
+							</li>
+							<li>
+								<button data-toggle="tooltip" data-placement="top" title="خریداری شده">
+								  <i class="icon-purchased"></i>
+								</button>
+							</li>
+							<li>
+								<button data-toggle="tooltip" data-placement="top" title="تاریخچه">
+								  <i class="icon-history"></i>
+								</button>
+							</li>
+						</ul><!--shr_links end-->
+						<div class="clearfix"></div>
+					</div><!--btm_bar_content end-->
+				</div>
+			</div><!--btm_bar end-->
+		</header><!--header end-->
+
+        <div class="side_menu">
+            <div class="form_dvv" style="">
+                <a href="#" title="" class="login_form_show">ثبت نام</a>
+            </div>
+            <div class="sd_menu">
+                <ul class="mm_menu">
+                    <li>
+                        <span>
+                            <i class="icon-home"></i>
+                        </span>
+                        <a href="#" title="">خانه</a>
+                    </li>
+                    <li>
+                        <span>
+                            <i class="icon-fire"></i>
+                        </span>
+                        <a href="#" title="">پرطرفدار</a>
+                    </li>
+                    <li>
+                        <span>
+                            <i class="icon-subscriptions"></i>
+                        </span>
+                        <a href="#" title="">اشتراک ویژه</a>
+                    </li>
+                </ul>
+            </div><!--sd_menu end-->
+            <div class="sd_menu">
+                <h3>کتابخانه</h3>
+                <ul class="mm_menu">
+                    <li>
+                        <span>
+                            <i class="icon-history"></i>
+                        </span>
+                        <a href="#" title="">تاریخچه</a>
+                    </li>
+                    <li>
+                        <span>
+                            <i class="icon-watch_later"></i>
+                        </span>
+                        <a href="#" title="">بعدا می بینم</a>
+                    </li>
+                    <li>
+                        <span>
+                            <i class="icon-purchased"></i>
+                        </span>
+                        <a href="#" title="">خریداری شده</a>
+                    </li>
+                    <li>
+                        <span>
+                            <i class="icon-like"></i>
+                        </span>
+                        <a href="#" title="">پسندیده شده</a>
+                    </li>
+                    <li>
+                        <span>
+                            <i class="icon-play_list"></i>
+                        </span>
+                        <a href="#" title="">لیست پخش</a>
+                    </li>
+                </ul>
+            </div><!--sd_menu end-->
+            <div class="sd_menu subs_lst">
+                <h3>اشتراک ها</h3>
+                <ul class="mm_menu">
+                    <li>
+                        <span class="usr_name">
+                            <img src="{% static 'images/resources/th1.png' %}" alt="">
+                        </span>
+                        <a href="#" title="">محمد امینی</a>
+                        <small>3</small>
+                    </li>
+                    <li>
+                        <span class="usr_name">
+                            <img src="{% static 'images/resources/th2.png' %}" alt="">
+                        </span>
+                        <a href="#" title="">سارا علیزاده</a>
+                        <small>6</small>
+                    </li>
+                    <li>
+                        <span class="usr_name">
+                            <img src="{% static 'images/resources/th3.png' %}" alt="">
+                        </span>
+                        <a href="#" title="">توریست</a>
+                        <small>2</small>
+                    </li>
+                    <li>
+                        <span class="usr_name">
+                            <img src="{% static 'images/resources/th4.png' %}" alt="">
+                        </span>
+                        <a href="#" title="">فوتبال</a>
+                        <small>11</small>
+                    </li>
+                    <li>
+                        <span class="usr_name">
+                            <img src="{% static 'images/resources/th5.png' %}" alt="">
+                        </span>
+                        <a href="#" title="">خندوانه</a>
+                        <small>3</small>
+                    </li>
+                    <li>
+                        <span class="usr_name">
+                            <img src="{% static 'images/resources/sn.png' %}" alt="">
+                        </span>
+                        <a href="#" title="">موزیک</a>
+                        <small>20</small>
+                    </li>
+                </ul>
+                <a href="#" title="" class="more-ch"><i class="icon-arrow_below"></i> 14 مورد بیشتر </a>
+            </div><!--sd_menu end-->
+            <div class="sd_menu">
+                <ul class="mm_menu">
+                    <li>
+                        <span>
+                            <i class="icon-settings"></i>
+                        </span>
+                        <a href="#" title="">تنظیمات</a>
+                    </li>
+                    <li>
+                        <span>
+                            <i class="icon-flag"></i>
+                        </span>
+                        <a href="#" title="">گزارش عملکرد</a>
+                    </li>
+                    <li>
+                        <span>
+                            <i class="icon-logout"></i>
+                        </span>
+                        <a href="#" title="">خروج</a>
+                    </li>
+                </ul>
+            </div><!--sd_menu end-->
+            <div class="sd_menu m_linkz">
+                <ul class="mm_menu">
+                    <li><a href="#">درباره</a></li>
+                    <li><a href="#">قوانین </a></li>
+                    <li><a href="#">حریم خصوصی</a></li>
+                    <li><a href="#">وبلاگ</a></li>
+                    <li><a href="#">قرارداد ها </a></li>
+                    <li><a href="#">هدایا</a></li>
+                    <li><a href="#">سوالات متداول</a></li>
+                </ul>
+                <span class="font-12">به اورن وارد شوید تا بر اساس سلیقه شما ویدیو های بهتر برای شما نمایش داده شود</span>
+            </div><!--sd_menu end-->
+            <div class="sd_menu bb-0">
+                <ul class="social_links">
+                    <li>
+                        <a href="#" title="">
+                            <i class="icon-facebook-official"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="">
+                            <i class="icon-twitter"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="">
+                            <i class="icon-instagram"></i>
+                        </a>
+                    </li>
+                </ul><!--social_links end-->
+            </div><!--sd_menu end-->
+            <div class="dd_menu"></div>
+        </div><!--side_menu end-->
+        {% block body %}{% endblock body %}
+
+    </div><!--wrapper end-->
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/popper.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/flatpickr.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+    {% block js %}{% endblock js %}
+</body>
+
+</html>
