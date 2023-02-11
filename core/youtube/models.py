@@ -18,6 +18,7 @@ class Video(models.Model):
     video_time = models.CharField(max_length=10,null=True,blank=True)
     thumbnail = models.ImageField()
     visited = models.PositiveIntegerField(default=0)
+    monetize = models.BooleanField(default=True)
     pin_comment = models.CharField(max_length=10,null=True,blank=True)
     like = models.PositiveIntegerField(default=0)
     dislike = models.PositiveIntegerField(default=0)

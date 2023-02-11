@@ -1,9 +1,11 @@
 from django.urls import path 
-from .views import header_view 
+from . import views 
 
 app_name = 'sitesetting'
 
 urlpatterns = [
-    path('header/',header_view,name='header'),
+    path('header/',views.header_view,name='header'),
+    path('footer/',views.footer_view,name='footer'),
+
 
 ]

@@ -4,6 +4,7 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import login,logout
+from django.contrib.auth.decorators import login_required
 import random
 from .forms import EmailForm , ProfileForm
 from .models import Profile
@@ -71,6 +72,7 @@ def set_password(request):
     elif request.method == "GET":
         return render(request,'account/setpassword.html',{})
 
+@login_required(login_url='/login/')
 def ComplateProfile(request):
     profile = Profile.objects.get(user=request.user)
     if request.method == "POST":
@@ -94,6 +96,9 @@ def Login(request):
             if user.is_verified:
                 login(request, user)
                 messages.success(request,'شما با موفقیت وارد حساب کاربری خود شدید')
+                print(request.GET)
+                if request.GET.get('next'):
+                    return redirect(request.GET.get('next'))
                 return redirect('/')
             else:
                 messages.error(request,"شما احراز هویت نشده ایید")

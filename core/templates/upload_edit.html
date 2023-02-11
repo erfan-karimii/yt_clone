@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+
+<section class="upload-detail">
+	<div class="container">
+		<h3>جزئیات آپلود</h3>
+	</div>
+</section><!--upload-detail end-->
+
+
+<section class="vid-title-sec">
+	<div class="container">
+		<form method='post'>
+			{% csrf_token %}
+			<div class="vid-title">
+				<h2 class="title-hd">عنوان ویدیو </h2>
+				<div class="form_field">
+					{{form.title}}
+				</div>
+			</div><!--vid-title-->
+			<div class="abt-vidz-pr">
+				<h2 class="title-hd"> توضیحات </h2>
+				<div class="form_field">
+					{{form.description}}
+				</div>
+			</div><!--abt-vidz-->
+
+			<div class="cls-vidz">
+				<div class="row">
+					<div class="col-lg-9 col-md-9 col-sm-8 col-12">
+						<h2 class="title-hd">تگ ها</h2>
+						<div class="form_field pr">
+							<input type="text" placeholder=" #گیمینگ  #PS4  #سرگرمی ">
+						</div>
+					</div>
+				</div>
+			</div><!--cls-vidz end-->
+			<div class="abt-tags">
+				<div class="row">
+					<div class="col-lg-3 col-md-3 col-sm-6 col-12">
+						<div class="option">
+							<h2 class="title-hd">کسب درآمد </h2>
+							<div class="form_field">
+								<select name='monetize'>
+									<option value='1'>بله</option>
+									<option value='0'>خیر</option>
+								</select>
+								<a href="#" title="" class="arw_vz">
+									<svg width="24" height="26" viewBox="0 0 24 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path fill-rule="evenodd" clip-rule="evenodd" d="M19.9394 7.51447L22.0607 9.63579L12 19.6964L1.93936 9.63579L4.06068 7.51447L12 15.4538L19.9394 7.51447Z" fill="#9494A0"></path>
+									</svg>
+								</a>
+							</div>
+						</div><!--option end-->
+					</div>
+					<div class="col-lg-3 col-md-3 col-sm-4 col-12">
+						<div class="option">
+							<h2 class="title-hd">نمایش خصوصی </h2>
+							<div class="form_field">
+								<select>
+									<option>بله</option>
+									<option>خیر</option>
+								</select>
+								<a href="#" title="" class="arw_vz">
+									<svg width="24" height="26" viewBox="0 0 24 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path fill-rule="evenodd" clip-rule="evenodd" d="M19.9394 7.51447L22.0607 9.63579L12 19.6964L1.93936 9.63579L4.06068 7.51447L12 15.4538L19.9394 7.51447Z" fill="#9494A0"></path>
+									</svg>
+								</a>
+							</div>
+						</div><!--option end-->
+					</div>
+				</div>
+			</div>
+			<div class="category">
+				<div class="category-typ">
+					<div class="video-file">
+						<h3>عکس بند انگشتی ویدیو خود را بارگذاری کنید.</h3>
+						{{form.thumbnail}}
+					</div><!--video-file end-->
+					<div class="clearfix"></div>
+					<div class="btn-sbmit">
+						<button type="submit"> ذخیره</button>
+					</div><!--btn-sbmit end-->
+				</div><!--category-typ-->
+			</div><!--Category-->
+		</form>
+	</div>
+</section><!--vid-title-sec-->
+
+<section class="suggestions">
+	<div class="container">
+		<div class="sgst_content">
+			<h3>راهنما و پیشنهادات</h3>
+			<p>با ارسال فیلم به اورن تایید می کنید که قوانین سایت به طور کامل خوانده و فهمیده اید <a href="#" title=""> مطالعه کامل قوانین </a> و <a href="#" title=""> حریم خصوصی </a>. لطفاً اطمینان حاصل کنید که کپی رایت یا حقوق حریم خصوصی دیگران را نقض نکنید.<a href="#"> مطالعه بیشتر</a></p>
+		</div>
+	</div>
+</section><!--Suggestions end-->
+
+
+<div class="abt-vidz">
+	<ul>
+		<li>
+			<a href="#">راهنمای آپلود </a>
+		</li>
+		<li>
+			<a href="#">عیب یابی </a>
+		</li>
+		<li>
+			<a href="#">آپلود از موبایل </a>
+		</li>
+	</ul>
+</div><!--abt-vidz-->
+
+{% endblock body %}
+

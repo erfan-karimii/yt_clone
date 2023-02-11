@@ -1,0 +1,36 @@
+<div class="col-lg-3">
+    <div class="sidebar">
+        <div class="widget video_info pr sp">
+            <span class="vc_hd">
+                <img src="images/resources/sn.png" alt="">
+            </span>
+            <h4> مشخصات حساب اورن</h4>
+            <p>تاریخ عضویت: {{request.user.profile_set.first.created_date.year}}/{{request.user.profile_set.first.created_date.month}}/{{request.user.profile_set.first.created_date.day}} </p>
+            <span>آخرین ویرایش: {{request.user.profile_set.first.updated_date.year}}/{{request.user.profile_set.first.updated_date.month}}/{{request.user.profile_set.first.updated_date.day}}</span>
+        </div><!--video_info pr-->
+        <div class="widget account">
+            <h2 class="hd-uc"> <i class="icon-user"></i> حساب </h2>
+            <ul>
+                <li><a href="#">حساب من</a></li>
+                <li><a href="#"> تغییر پسورد</a></li>
+                <li><a href="#"> مدیریت اشتراک ها</a></li>
+            </ul>
+        </div><!--account end-->
+        <div class="widget notifications">
+            <h2 class="hd-uc"><i class="icon-notification"></i> اطلاعیه ها </h2>
+            <a href="#" title="">مدیریت اطلاعیه</a>
+        </div><!--notifications end-->
+        <div class="widget vid-ac">
+            <h2 class="hd-uc"><i class="icon-play"></i> ویدیو ها </h2>
+                <ul>
+                <li><a href="{% url 'youtube:upload_video' %}">آپلود ویدیو </a></li>
+                <li><a href="#"> ویدیو های مورد علاقه</a></li>
+            </ul>
+        </div><!--vid-ac end-->
+        <div class="widget playlist">
+            <h2 class="hd-uc"><i class="icon-add_to_playlist"></i> لیست پخش  </h2>
+            <span><a href="#"> مدیریت لیست پخش</a></span>
+        </div><!--playlist end-->
+
+    </div><!--sidebar end-->
+</div>

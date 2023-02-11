@@ -10,6 +10,10 @@ def header_view(request):
     context = {
         'navones':NavOne.objects.all(),
         'profile':profile,
-
     }
     return render(request,'layout/header.html',context)
+
+
+def footer_view(request):
+    context = {}
+    return render(request,'layout/footer.html',context)

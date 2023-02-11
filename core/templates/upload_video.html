@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+
+<section class="upload-videooz">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="video-file">
+					<i class="icon-graphics_05"></i>
+					<h3>انتخاب ویدیو برای آپلود </h3>
+					<span>فایل ویدیو را بکشید و اینجا رها کنید</span>
+					<form>
+						<label for="file-upload" class="custom-file-upload">
+							آپلود ویدیو
+						</label>
+						<input id="file-upload" type="file"/>
+						
+						<button type="submit">ارسال</button>
+					</form>
+				</div><!--video-file end-->
+			</div>
+			<div class="col-lg-6">
+				<div class="youtube-dwn">
+					<i class="icon-graphics_03"></i>
+					<h3>ویدیو را از یوتیوب وارد کنید </h3>
+					<span>کپی / پیست لینک ویدیو</span>
+					<form>
+						<input type="text" name="import_video" placeholder="لینک را پیست کنید">
+						<button type="submit">وارد کردن ویدیو</button>
+					</form>
+				</div><!--youtube-dwn end-->
+			</div>
+		</div>
+	</div>
+</section><!--upload-videooz end-->
+
+<section class="suggestions">
+	<div class="container">
+		<div class="sgst_content">
+			<h3>راهنما و پیشنهادات</h3>
+			<p>با ارسال فیلم به اورن تایید می کنید که قوانین سایت به طور کامل خوانده و فهمیده اید <a href="#" title=""> مطالعه کامل قوانین </a> و <a href="#" title=""> حریم خصوصی </a>. لطفاً اطمینان حاصل کنید که کپی رایت یا حقوق حریم خصوصی دیگران را نقض نکنید.<a href="#"> مطالعه بیشتر</a></p>
+		</div>
+	</div>
+</section><!--Suggestions end-->
+
+<section class="abt-vidz">
+	<ul>
+		<li>
+			<a href="#">راهنمای آپلود </a>
+		</li>
+		<li>
+			<a href="#">عیب یابی </a>
+		</li>
+		<li>
+			<a href="#">آپلود از موبایل </a>
+		</li>
+	</ul>
+</section><!--abt-vidz-->
+
+{% endblock body %}
+
