@@ -11,11 +11,12 @@
 					<i class="icon-graphics_05"></i>
 					<h3>انتخاب ویدیو برای آپلود </h3>
 					<span>فایل ویدیو را بکشید و اینجا رها کنید</span>
-					<form>
+					<form method='post'>
+						{% csrf_token %}
 						<label for="file-upload" class="custom-file-upload">
 							آپلود ویدیو
 						</label>
-						<input id="file-upload" type="file"/>
+						<input id="file-upload" name='video' type="file"/>
 						
 						<button type="submit">ارسال</button>
 					</form>

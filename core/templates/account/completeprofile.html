@@ -16,6 +16,9 @@
 								<form method='post' enctype="multipart/form-data">
 									{% csrf_token %}
 									<div class="ch-pswd">
+										<input type="text" name="channel_name" value='{{profile.channel_name}}' placeholder="نام چنل">
+									</div><!--ch-pswd end-->
+									<div class="ch-pswd">
 										<input type="text" name="first_name" value='{{profile.first_name}}' placeholder="نام">
 									</div><!--ch-pswd end-->
 									<div class="ch-pswd">

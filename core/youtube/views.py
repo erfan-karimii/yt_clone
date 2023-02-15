@@ -1,24 +1,51 @@
 from django.shortcuts import render
+from account.models import Profile
+from django.contrib import messages
+from .models import Video
 from .forms import VideoEditForm
 # Create your views here.
 
 def index(request):
-    return render(request,'index.html',{})
+    context = {
+        'latest_videos': Video.objects.filter(published=True).order_by('created'),
+    }
+    return render(request,'index.html',context)
 
 def upload_video(request):
+    if request.method == 'POST':
+        profile = Profile.objects.get(user=request.user)
+        video = request.POST.get('video')
+        Video.objects.create(youtuber=profile,video=video)
+        messages.success(request,'ویدیو شما در یافت شد و در حال اپلود می باشد.')
     return render(request,'upload_video.html',{})
 
-def upload_edit(request):
+def upload_list(request):
+    profile = Profile.objects.get(user=request.user)
+    videos = Video.objects.filter(youtuber=profile)
+    context = {
+        'videos' : videos,
+    }
+    return render(request,'upload_list.html',context)
+
+def upload_edit(request,id):
+    video = Video.objects.get(id=id)
     if request.method == 'POST':
-        form = VideoEditForm(request.POST)
+        print(request.POST)
+        form = VideoEditForm(request.POST,request.FILES,instance=video)
         if form.is_valid():
-            form.save(commit=False)
+            video = form.save()
+            video.published = True
+            video.save()
+            messages.success(request,'ویدیو شما با موفقیت ادیت شد.')
         else:
             print(form.errors)
+            messages.error(request,'.لطفا همه فیلد رو با دقت کامل کنید')
     else:
-        form = VideoEditForm()
+        form = VideoEditForm(instance=video)
     
     context = {
-        'form' : form, 
+        'form' : form,
+        'video' : video, 
     }
     return render(request,'upload_edit.html',context)
+

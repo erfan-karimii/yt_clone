@@ -58,6 +58,7 @@ class User(AbstractBaseUser,PermissionsMixin):
 
 class Profile(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
+    channel_name = models.CharField(max_length=30,null=True)
     first_name  = models.CharField(max_length=255)
     last_name  = models.CharField(max_length=255)
     image = models.ImageField(null=True,blank=True)

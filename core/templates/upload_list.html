@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block body %}
+
+<section class="subscriptions_sec">
+	<div class="ab-updates">
+		<div class="container">
+			<div class="vidz_sec">
+				<h3>لیست ویدیو های شما</h3>
+			</div><!--vidz_videos end-->
+			<div class="vidz_sec">
+				<a href="#" title="" class="delete-subs">
+				<div class="clearfix"></div>
+				<div class="vidz_list">
+					<div class="row">
+						{% for video in videos %}
+						<div class="col-lg-3 col-md-3 col-sm-6 col-6">
+							<div class="videoo">
+								<div class="vid_thumbainl">
+									<a href="#" title="">
+										{% if video.thumbnail %}
+										<img src="{{video.thumbnail.url}}" alt="{{video.title}}" style="width: 255px;height: 160px;">
+										{% else %}
+										<img src="{% static 'images/no_thumbnail.jpg' %}" alt="no thumbnail" style="width: 255px;height: 160px;">
+										{% endif %}
+										<span class="vid-time">{{video.video_time}}s</span>
+										<span class="watch_later">
+											<i class="icon-watch_later_fill"></i>
+										</span>
+									</a>	
+								</div><!--vid_thumbnail end-->
+								<div class="video_info">
+									{% if video.title %}
+									<h3><a href="#">{{video.title}}</a></h3>
+									{% else %}
+									<h3><a href="#">بدون تیتر</a></h3>
+									{% endif %}
+									<h4><a href="#" >{{video.category}}</a> </h4>
+									<h5><a href="{% url 'youtube:upload_edit' video.id %}" ># ادیت</a> </h5>
+									<span>بازدید {{video.visited}}</span>
+								</div>
+							</div><!--videoo end-->
+						</div>
+						{% endfor %}
+					</div>
+				</div><!--vidz_list end-->
+			</div><!--vidz_videos end-->
+		</div>
+	</div><!--ab-updates end-->
+
+</section><!--subscriptions_sec end-->
+
+{% endblock body %}

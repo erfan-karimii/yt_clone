@@ -54,153 +54,29 @@
 	<div class="vidz-row">
 		<div class="container">
 			<div class="vidz_sec">
-				<h3>ویدیو های ویژه</h3>
+				<h3>ویدیو های جدید</h3>
 				<div class="vidz_list">
 					<div class="row">
+						{% for video in latest_videos %}
 						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
 							<div class="videoo">
 								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide1.png' %}" alt="">
-										<span class="vid-time">10:21</span>
+									<a href="#" title="{{video.category.name}}">
+										<img src="{{video.thumbnail.url}}" alt="{{video.title}}">
+										<span class="vid-time">{{video.video_time}}s</span>
 										<span class="watch_later">
 											<i class="icon-watch_later_fill"></i>
 										</span>
 									</a>	
 								</div><!--vid_thumbnail end-->
 								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">گلاره عباسی و پوریا رحیمی سام از موفقیت شهلا و آمردان در فجر می گویند</a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">کافه آپارات</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-									<span>686 هزار بازدید .<small class="posted_dt">1 هفته قبل</small></span>
+									<h3><a href="#" title="{{video.title}}">{{video.title|truncatechars:35}}</a></h3>
+									<h4><a href="#" title="مشاهده کانال">{{video.youtuber.channel_name}}</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
+									<span>686 بازدید .<small class="posted_dt">{{video.days_passed}}</small></span>
 								</div>
 							</div><!--videoo end-->
 						</div>
-						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-							<div class="videoo">
-								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide2.png' %}" alt="">
-										<span class="vid-time">13:49</span>
-										<span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-									</a>	
-								</div><!--vid_thumbnail end-->
-								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">قسمت سوم - سری دو</a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">شام اینجا</a> </h4>
-									<span>283 هزار بازدید .<small class="posted_dt">3 ماه قبل</small></span>
-								</div>
-							</div><!--videoo end-->
-						</div>
-						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-							<div class="videoo">
-								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide3.png' %}" alt="">
-										<span class="vid-time">2:54</span>
-										<span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-									</a>	
-								</div><!--vid_thumbnail end-->
-								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">خانه ما 10 ( قسمت 8 )</a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">مستند مسابقه خانه ما</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-									<span>2.6 میلیون بازدید .<small class="posted_dt">2 ماه قبل</small></span>
-								</div>
-							</div><!--videoo end-->
-						</div>
-						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-							<div class="videoo">
-								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide4.png' %}" alt="">
-										<span class="vid-time">5:25</span>
-										<span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-									</a>	
-								</div><!--vid_thumbnail end-->
-								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">مردان خواب آلوده!</a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">حامین مدیا</a> </h4>
-									<span>612 هزار بازدید .<small class="posted_dt">5 ماه قبل</small></span>
-								</div>
-							</div><!--videoo end-->
-						</div>
-						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-							<div class="videoo">
-								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide5.png' %}" alt="">
-										<span class="vid-time">4:01</span>
-										<span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-									</a>	
-								</div><!--vid_thumbnail end-->
-								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">افکت قدیمی کردن تصاویر با گوشی موبایلتون</a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">عادل امین | آموزش های تکنولوژی</a> </h4>
-									<span>45 هزار بازدید .<small class="posted_dt">3 روز قبل</small></span>
-								</div>
-							</div><!--videoo end-->
-						</div>
-						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-							<div class="videoo">
-								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide6.png' %}" alt="">
-										<span class="vid-time">6:20</span>
-										<span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-									</a>	
-								</div><!--vid_thumbnail end-->
-								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">بررسی سامسونگ گلکسی اس ۲۱ اولترا ( جدیدترین پرچمدار اندرویدی )</a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">بینوشا</a> </h4>
-									<span>86 هزار بازدید .<small class="posted_dt">6 روز قبل</small></span>
-								</div>
-							</div><!--videoo end-->
-						</div>
-						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-							<div class="videoo">
-								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide7.png' %}" alt="">
-										<span class="vid-time">8:16</span>
-										<span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-									</a>	
-								</div><!--vid_thumbnail end-->
-								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">سریال دیدنی می خواهم زنده بمانم</a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">فیلمو</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-									<span>144 هزار بازدید .<small class="posted_dt">6 روز قبل</small></span>
-								</div>
-							</div><!--videoo end-->
-						</div>
-						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-							<div class="videoo">
-								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide8.png' %}" alt="">
-										<span class="vid-time">29:32</span>
-										<span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-									</a>	
-								</div><!--vid_thumbnail end-->
-								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">عملکرد فیلتر بنزین (خراب و سالم)</a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">دست به آچار</a></h4>
-									<span>408 هزار بازدید .<small class="posted_dt">19 ساعت قبل</small></span>
-								</div>
-							</div><!--videoo end-->
-						</div>
+						{% endfor %}
 					</div>
 				</div><!--vidz_list end-->
 			</div><!--vidz_videos end-->
@@ -318,161 +194,6 @@
 									<h3><a href="single_video_page.html" title="">مداحی مهدی رسولی برای زائران حضرت زینب(س) در دمشق</a></h3>
 									<h4><a href="Single_Channel_Home.html" title="">خبرگزاری تسنیم</a> </h4>
 									<span>408هزار بازدید .<small class="posted_dt">19 ساعت قبل</small></span>
-								</div>
-							</div><!--videoo end-->
-						</div>
-					</div>
-				</div><!--vidz_list end-->
-			</div><!--vidz_videos end-->
-		</div>
-	</div><!--vidz-row end-->
-	<div class="vidz-row">
-		<div class="container">
-			<div class="vidz_sec">
-				<h3>ویدیوهای جدید</h3>
-				<div class="vidz_list">
-					<div class="row">
-						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-							<div class="videoo">
-								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide13.png' %}" alt="">
-										<span class="vid-time">10:21</span>
-										<span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-									</a>	
-								</div><!--vid_thumbnail end-->
-								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">مجتمع گردشگری دشت نور ، بهشتی برای گردشگران</a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">ویدئوگرام</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-									<span>686هزار بازدید .<small class="posted_dt">1 هفته قبل</small></span>
-								</div>
-							</div><!--videoo end-->
-						</div>
-						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-							<div class="videoo">
-								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide14.png' %}" alt="">
-										<span class="vid-time">13:49</span>
-										<span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-									</a>	
-								</div><!--vid_thumbnail end-->
-								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">آهنگ شمالی بسیار شاد و زیبا _ آهنگ محلی مازندرانی</a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">آوای باران</a> </h4>
-									<span>283هزار بازدید .<small class="posted_dt">3 ماه قبل</small></span>
-								</div>
-							</div><!--videoo end-->
-						</div>
-						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-							<div class="videoo">
-								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide15.png' %}" alt="">
-										<span class="vid-time">2:54</span>
-										<span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-									</a>	
-								</div><!--vid_thumbnail end-->
-								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">انیمیشن باب اسفنجی | باب اسفنجی جدید دوبله فارسی | سری جدید | پاتریک</a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">دنیای فیلم و انیمیشن</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-									<span>2.6 میلیون بازدید .<small class="posted_dt">2 ماه قبل</small></span>
-								</div>
-							</div><!--videoo end-->
-						</div>
-						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-							<div class="videoo">
-								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide16.png' %}" alt="">
-										<span class="vid-time">5:25</span>
-										<span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-									</a>	
-								</div><!--vid_thumbnail end-->
-								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">مدیحه سرایی میلاد حضرت علی (ع) با نوای مهدی رسولی</a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">خبرگزاری مهر </a> </h4>
-									<span>612 هزار بازدید .<small class="posted_dt">5 ماه قبل</small></span>
-								</div>
-							</div><!--videoo end-->
-						</div>
-						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-							<div class="videoo">
-								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide17.png' %}" alt="">
-										<span class="vid-time">4:01</span>
-										<span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-									</a>	
-								</div><!--vid_thumbnail end-->
-								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">مد مافیا به بازی Call of Duty Mobile اضافه می‌شود</a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">ویجیاتو</a> </h4>
-									<span>45 هزار بازدید .<small class="posted_dt">3 روز قبل</small></span>
-								</div>
-							</div><!--videoo end-->
-						</div>
-						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-							<div class="videoo">
-								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide18.png' %}" alt="">
-										<span class="vid-time">6:20</span>
-										<span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-									</a>	
-								</div><!--vid_thumbnail end-->
-								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">خلاصه بازی نساجی 1-2 گل گهر (لیگ برتر ایران - 1399/1400)</a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">سایت طرفداری</a> </h4>
-									<span>86 هزار بازدید .<small class="posted_dt">6 روز قبل</small></span>
-								</div>
-							</div><!--videoo end-->
-						</div>
-						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-							<div class="videoo">
-								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide19.png' %}" alt="">
-										<span class="vid-time">8:16</span>
-										<span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-									</a>	
-								</div><!--vid_thumbnail end-->
-								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">نقد و بررسی پابجی new state</a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">رسانه های دنیای گیم</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-									<span>144 هزار بازدید .<small class="posted_dt">6 روز قبل</small></span>
-								</div>
-							</div><!--videoo end-->
-						</div>
-						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-							<div class="videoo">
-								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide20.png' %}" alt="">
-										<span class="vid-time">29:32</span>
-										<span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-									</a>	
-								</div><!--vid_thumbnail end-->
-								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">داستان زندگی مشترک با یک کارآفرین | جشنواره وب و موبایل ایران 99</a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">جشنواره وب و موبایل</a></h4>
-									<span>408 هزار بازدید .<small class="posted_dt">19 ساعت قبل</small></span>
 								</div>
 							</div><!--videoo end-->
 						</div>
