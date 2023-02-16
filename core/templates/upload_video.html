@@ -11,7 +11,7 @@
 					<i class="icon-graphics_05"></i>
 					<h3>انتخاب ویدیو برای آپلود </h3>
 					<span>فایل ویدیو را بکشید و اینجا رها کنید</span>
-					<form method='post'>
+					<form method='post' enctype="multipart/form-data">
 						{% csrf_token %}
 						<label for="file-upload" class="custom-file-upload">
 							آپلود ویدیو

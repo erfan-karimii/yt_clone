@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render ,redirect
 from account.models import Profile
 from django.contrib import messages
 from .models import Video
@@ -7,14 +7,14 @@ from .forms import VideoEditForm
 
 def index(request):
     context = {
-        'latest_videos': Video.objects.filter(published=True).order_by('created'),
+        'latest_videos': Video.objects.filter(published=True).order_by('-created'),
     }
     return render(request,'index.html',context)
 
 def upload_video(request):
     if request.method == 'POST':
         profile = Profile.objects.get(user=request.user)
-        video = request.POST.get('video')
+        video = request.FILES.get('video')
         Video.objects.create(youtuber=profile,video=video)
         messages.success(request,'ویدیو شما در یافت شد و در حال اپلود می باشد.')
     return render(request,'upload_video.html',{})
@@ -49,3 +49,16 @@ def upload_edit(request,id):
     }
     return render(request,'upload_edit.html',context)
 
+def upload_delete(request,id):
+    profile = Profile.objects.get(user=request.user)
+    video = Video.objects.get(id=id,youtuber=profile)
+    video.delete()
+    messages.success(request,'ویدیو شما حذف شد.')
+    return redirect('youtube:upload_list')
+
+def video_detail(request,id):
+    video = Video.objects.get(id=id,published=True)
+    context = {
+        'video' : video,
+    }
+    return render(request,'video_detail.html',context)

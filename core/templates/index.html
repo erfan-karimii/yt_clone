@@ -61,7 +61,7 @@
 						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
 							<div class="videoo">
 								<div class="vid_thumbainl">
-									<a href="#" title="{{video.category.name}}">
+									<a href="{% url 'youtube:video_detail' video.id %}" title="{{video.category.name}}">
 										<img src="{{video.thumbnail.url}}" alt="{{video.title}}">
 										<span class="vid-time">{{video.video_time}}s</span>
 										<span class="watch_later">
@@ -70,7 +70,7 @@
 									</a>	
 								</div><!--vid_thumbnail end-->
 								<div class="video_info">
-									<h3><a href="#" title="{{video.title}}">{{video.title|truncatechars:35}}</a></h3>
+									<h3><a href="{% url 'youtube:video_detail' video.id %}" title="{{video.title}}">{{video.title|truncatechars:35}}</a></h3>
 									<h4><a href="#" title="مشاهده کانال">{{video.youtuber.channel_name}}</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
 									<span>686 بازدید .<small class="posted_dt">{{video.days_passed}}</small></span>
 								</div>

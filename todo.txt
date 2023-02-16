@@ -1,2 +1,3 @@
 send email code (in server) 
 remember me register
+use show = False for deleting objects not realy deleting it (dont forget use modelmanagers)
