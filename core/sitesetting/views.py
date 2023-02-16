@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import NavOne
+from .models import NavOne ,FooterOne ,SiteSetting
 from account.models import Profile
 # Create your views here.
 def header_view(request):
@@ -9,11 +9,15 @@ def header_view(request):
         
     context = {
         'navones':NavOne.objects.all(),
+        'sitesetting' : SiteSetting.objects.last(), 
         'profile':profile,
     }
     return render(request,'layout/header.html',context)
 
 
 def footer_view(request):
-    context = {}
+    context = {
+        'footer_one' : FooterOne.objects.all(),
+        'sitesetting' : SiteSetting.objects.last(), 
+    }
     return render(request,'layout/footer.html',context)

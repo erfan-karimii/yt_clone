@@ -31,22 +31,6 @@ class NavTwo(models.Model):
         return self.name
 
 
-# position = (
-#     ('right','راست'),
-#     ('left','چپ'),
-#     ('right2','راست (کنار محصولات)'),
-# )
-
-# class Tabligh(models.Model):
-#     image = models.ImageField()
-#     alt = models.CharField(max_length=50)
-#     text = models.CharField(max_length=100,null=True,verbose_name='متن')
-#     text2 = models.CharField(max_length=100,null=True,verbose_name='2متن')
-#     diraction = models.CharField(max_length=100,choices=position,verbose_name='مکان تبلیغ')
-#     link = models.CharField(max_length=400,null=True,verbose_name='لینک تبلیغ')
-#     def __str__(self):
-#         return self.text + " | " + self.link
-
 class FooterOne(models.Model):
     name = models.CharField(max_length=100)
     def __str__(self):

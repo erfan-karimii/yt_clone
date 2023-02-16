@@ -27,19 +27,13 @@
 						<div class="vid-info">
 							<h3>{{video.title}}</h3>
 							<div class="info-pr">
-								<span>{{total_hits}} بازدید</span>
+								<span>{{video.visited}} بازدید</span>
 								<ul class="pr_links">
 									<li>
-										<button data-toggle="tooltip" data-placement="top" title="I like this">
+										<button id="like-video" data-toggle="tooltip" data-placement="top">
 											<i class="icon-thumbs_up_fill"></i>
 										</button>
-										<span>388 هزار</span>
-									</li>
-									<li>
-										<button data-toggle="tooltip" data-placement="top" title="I dislike this">
-											<i class="icon-thumbs_down_fill"></i>
-										</button>
-										<span>28 هزار</span>
+										<div id="like-number">{{video.like.all.count}}</div>
 									</li>
 								</ul>
 								<div class="clearfix"></div>
@@ -358,3 +352,32 @@
 </section><!--more_items_sec end-->
 
 {% endblock body %}
+
+{% block js %}
+<script>
+$(document).ready(function(){
+	$('#like-video').click(function(){
+		$.ajax({
+			type : 'GET',
+			url : '{% url "youtube:like_video" %}',
+			data : {'video_id': {{video.id}},},
+			dataType : 'json',
+			success : function (data) {
+				if (data.status == 'fail'){
+					alert('لطفا قبل از لایک کردن وارد حساب خود شودید')
+				}else if(data.status == 'added'){
+					$('#like-number').text(parseInt($('#like-number').text())+1)
+					alert('شما لایک کردید')
+				}else if(data.status == 'removed'){
+					$('#like-number').text(parseInt($('#like-number').text())-1)
+					alert('شما لایک خود را برداشتید')
+				}
+			},  
+			error: function(data){
+				alert('مشکلی پیش امده است لطفا دوباره امتحان کنید.');
+			}                                
+		})
+	})	
+})
+</script>
+{% endblock js %}

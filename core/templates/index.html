@@ -72,7 +72,7 @@
 								<div class="video_info">
 									<h3><a href="{% url 'youtube:video_detail' video.id %}" title="{{video.title}}">{{video.title|truncatechars:35}}</a></h3>
 									<h4><a href="#" title="مشاهده کانال">{{video.youtuber.channel_name}}</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-									<span>686 بازدید .<small class="posted_dt">{{video.days_passed}}</small></span>
+									<span>{{video.visited}} بازدید .<small class="posted_dt">{{video.days_passed}}</small></span>
 								</div>
 							</div><!--videoo end-->
 						</div>

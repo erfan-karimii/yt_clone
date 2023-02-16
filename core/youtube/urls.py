@@ -10,8 +10,8 @@ urlpatterns = [
     path('upload_edit/<id>/',views.upload_edit,name='upload_edit'),
     path('upload_delete/<id>/',views.upload_delete,name='upload_delete'),
     path('video_detail/<id>/',views.video_detail,name='video_detail'),
-    path('add_new_tag/',views.add_new_tag,name='add_new_tag'),
-
+    path('add_new_tag/',views.add_new_tag_ajax,name='add_new_tag'),
+    path('like_video/',views.like_video_ajax,name='like_video'),
 
 
 ]
