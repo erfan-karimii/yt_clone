@@ -33,9 +33,13 @@
 						<div class="form_field pr">
 							{{form.tags}}
 						</div>
+						<a href="#" id='add-tag' >
+							+ اضافه کردن مورد جدید
+						</a>
 					</div>
 				</div>
 			</div><!--cls-vidz end-->
+			<br>
 			<div class="cls-vidz">
 				<div class="row">
 					<div class="col-lg-9 col-md-9 col-sm-8 col-12">
@@ -90,7 +94,7 @@
 					</div><!--video-file end-->
 					<div class="clearfix"></div>
 					<div class="btn-sbmit">
-						<button type="submit"> ذخیره</button>
+						<button type="submit" > ذخیره</button>
 					</div><!--btn-sbmit end-->
 				</div><!--category-typ-->
 			</div><!--Category-->
@@ -127,5 +131,34 @@
 {% block js %}
 <script type="text/javascript">
 	CKEDITOR.replace("id_description");
+</script>
+<script>
+$(document).ready(function(){
+	var tag_id = 0
+	$("#add-tag").click(function(e){
+		e.preventDefault();
+		$(this).before(`<div><input id="tag${tag_id}" type="text"><div onclick=addTag('tag${tag_id}') >تایید</div></div>`)
+		tag_id = tag_id + 1;
+	});
+});
+function addTag(id) {
+	input_value = $("#"+id).val()
+	if (input_value !== ''){
+		$.ajax({
+			type : 'GET',
+			url : '{% url "youtube:add_new_tag" %}',
+			data : {'tag_name': input_value},
+			dataType : 'json',
+			success : function (data) {
+				alert('created')
+				$("#"+id).parent().remove()
+				$("#add-tag").before(`<div><label><input type="checkbox" name="tags" value="${data.id}" style="width : unset ; height : unset" checked> ${input_value}</label></div>`)
+			},  
+			error: function(data){
+				alert('مشکلی پیش امده است لطفا دوباره امتحان کنید.');
+			}                                
+		})   
+	}
+};
 </script>
 {% endblock js %}

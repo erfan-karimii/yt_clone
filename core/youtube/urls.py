@@ -9,7 +9,9 @@ urlpatterns = [
     path('upload_list/',views.upload_list,name='upload_list'),
     path('upload_edit/<id>/',views.upload_edit,name='upload_edit'),
     path('upload_delete/<id>/',views.upload_delete,name='upload_delete'),
-    path('video_detail/<id>',views.video_detail,name='video_detail'),
+    path('video_detail/<id>/',views.video_detail,name='video_detail'),
+    path('add_new_tag/',views.add_new_tag,name='add_new_tag'),
+
 
 
 ]

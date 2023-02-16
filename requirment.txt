@@ -1,4 +1,4 @@
 django-ckeditor
 django-render-partial
 moviepy
-
+django-hitcount

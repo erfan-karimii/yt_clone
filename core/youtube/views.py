@@ -1,7 +1,10 @@
 from django.shortcuts import render ,redirect
 from account.models import Profile
 from django.contrib import messages
-from .models import Video
+from django.http import JsonResponse
+from hitcount.utils import get_hitcount_model
+from hitcount.views import HitCountMixin
+from .models import Video , VideoTag
 from .forms import VideoEditForm
 # Create your views here.
 
@@ -58,7 +61,26 @@ def upload_delete(request,id):
 
 def video_detail(request,id):
     video = Video.objects.get(id=id,published=True)
-    context = {
-        'video' : video,
-    }
+    context = {}
+    hit_count = get_hitcount_model().objects.get_for_object(video)
+    hits = hit_count.hits
+    hitcontext = context['hitcount'] = {'pk': hit_count.pk}
+    hit_count_response = HitCountMixin.hit_count(request, hit_count)
+    if hit_count_response.hit_counted:
+        hits = hits + 1
+        hitcontext['hit_counted'] = hit_count_response.hit_counted
+        hitcontext['hit_message'] = hit_count_response.hit_message
+        hitcontext['total_hits'] = hits
+    # context = {
+    #     'video' : video,
+    # }
+    context['total_hits'] = hits
+    context['video'] = video
     return render(request,'video_detail.html',context)
+
+def add_new_tag(request):
+    tag_name = request.GET.get('tag_name')
+    tag = VideoTag.objects.create(name=tag_name)
+    return JsonResponse({'id':tag.id})
+
+
