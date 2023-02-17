@@ -14,7 +14,6 @@ def header_view(request):
     }
     return render(request,'layout/header.html',context)
 
-
 def footer_view(request):
     context = {
         'footer_one' : FooterOne.objects.all(),

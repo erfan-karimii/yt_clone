@@ -47,7 +47,7 @@ def VerifyChecked(request):
         token = request.POST.get('token')
         if user.token == token :
             MyUser.objects.filter(email=email_c).update(is_verified=True)
-            return redirect('account:complate')
+            return redirect('account:set_password')
         else :
             messages.error(request,'کدارسالی را درست وارد کنید')
             return redirect('account:verify')
@@ -82,7 +82,8 @@ def ComplateProfile(request):
             messages.success(request,'پروفایل شما با ویرایش  شد')
         else:
             print(form.errors)
-        return redirect('/')
+            messages.error(request,'لطفا با دقت همه فیلد هارا پرکنید')
+            return redirect('account:complate')
     elif request.method == "GET":
         return render(request,'account/completeprofile.html',{'profile':profile})
 

@@ -85,118 +85,24 @@
 	<div class="vidz-row">
 		<div class="container">
 			<div class="vidz_sec">
-				<h3>ویدیوهای بروزرسانی شده</h3>
+				<h3>کانال های محبوب</h3>
 				<a href="#" title="" class="view-btn">نمایش همه</a>
 				<div class="vidz_list">
 					<div class="row">
+						{% for channel in channels %}
 						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
 							<div class="videoo">
 								<div class="vcp_inf">
 									<div class="vc_hd">
-										<img src="{% static 'images/resources/th1.png' %}" alt="">
+										<img src="{{channel.image.url}}" alt="">
 									</div>
 									<div class="vc_info">
-										<h4><a href="Single_Channel_Home.html" title="">پاندا</a></h4>
+										<h4><a href="#Single_Channel_Home.html" title="">{{channel.channel_name}}</a></h4>
 									</div>
-									<span class="vc-count">3</span>
-								</div>
-								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide9.png' %}" alt="">
-										<span class="vid-time">4:01</span>
-										<span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-									</a>	
-								</div><!--vid_thumbnail end-->
-								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">محتوای کمک آموزشی فیلیمو مدرسه، تجربه تون از یادگیری آنلاین رو عوض</a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">فیلمو</a> </h4>
-									<span>45 هزار بازدید .<small class="posted_dt">3 روز قبل</small></span>
 								</div>
 							</div><!--videoo end-->
 						</div>
-						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-							<div class="videoo">
-								<div class="vcp_inf">
-									<div class="vc_hd">
-										<img src="{% static 'images/resources/th2.png' %}" alt="">
-									</div>
-									<div class="vc_info">
-										<h4><a href="Single_Channel_Home.html" title="">پسر دهه 80</a></h4>
-									</div>
-									<span class="vc-count">6</span>
-								</div>
-								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide10.png' %}" alt="">
-										<span class="vid-time">6:20</span>
-										<span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-									</a>	
-								</div><!--vid_thumbnail end-->
-								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">قبول داری درس علوم چقدر هیجان انگیزه؟</a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">کوه پلاس</a> </h4>
-									<span>86 هزار بازدید .<small class="posted_dt">6 روز قبل</small></span>
-								</div>
-							</div><!--videoo end-->
-						</div>
-						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-							<div class="videoo">
-								<div class="vcp_inf">
-									<div class="vc_hd">
-										<img src="{% static 'images/resources/th3.png' %}" alt="">
-									</div>
-									<div class="vc_info">
-										<h4><a href="Single_Channel_Home.html" title="">جوینده</a></h4>
-									</div>
-									<span class="vc-count">2</span>
-								</div>
-								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide11.png' %}" alt="">
-										<span class="vid-time">8:16</span>
-										<span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-									</a>	
-								</div><!--vid_thumbnail end-->
-								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">یه عصرونه خوشمزه فقط باقلوای تک سین! بیا که امتحانش کنیم:) </a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">خبرگزاری بازار</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-									<span>144 هزار بازدید .<small class="posted_dt">6 روز قبل</small></span>
-								</div>
-							</div><!--videoo end-->
-						</div>
-						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-							<div class="videoo">
-								<div class="vcp_inf">
-									<div class="vc_hd">
-										<img src="{% static 'images/resources/th4.png' %}" alt="">
-									</div>
-									<div class="vc_info">
-										<h4><a href="Single_Channel_Home.html" title="">خبرگزاری تسنیم</a></h4>
-									</div>
-									<span class="vc-count">7</span>
-								</div>
-								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide12.png' %}" alt="">
-										<span class="vid-time">29:32</span>
-										<span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-									</a>	
-								</div><!--vid_thumbnail end-->
-								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">مداحی مهدی رسولی برای زائران حضرت زینب(س) در دمشق</a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">خبرگزاری تسنیم</a> </h4>
-									<span>408هزار بازدید .<small class="posted_dt">19 ساعت قبل</small></span>
-								</div>
-							</div><!--videoo end-->
-						</div>
+						{% endfor %}
 					</div>
 				</div><!--vidz_list end-->
 			</div><!--vidz_videos end-->
@@ -208,150 +114,26 @@
 				<h3>ویدیوهای محبوب</h3>
 				<div class="vidz_list">
 					<div class="row">
+						{% for video in favorite_videos %}
 						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
 							<div class="videoo">
 								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide1.png' %}" alt="">
-										<span class="vid-time">10:21</span>
+									<a href="{% url 'youtube:video_detail' video.id %}" title="{{video.category.name}}">
+										<img src="{{video.thumbnail.url}}" alt="{{video.title}}">
+										<span class="vid-time">{{video.video_time}}</span>
 										<span class="watch_later">
 											<i class="icon-watch_later_fill"></i>
 										</span>
 									</a>	
 								</div><!--vid_thumbnail end-->
 								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">قسمت نهم سریال ملکه گدایان</a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">فیلمو</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-									<span>686 هزار بازدید .<small class="posted_dt">1 هفته قبل</small></span>
+									<h3><a href="{% url 'youtube:video_detail' video.id %}" title="{{video.title}}">{{video.title|truncatechars:35}}</a></h3>
+									<h4><a href="#" title="مشاهده کانال">{{video.youtuber.channel_name}}</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
+									<span>{{video.visited}} بازدید .<small class="posted_dt">{{video.days_passed}}</small></span>
 								</div>
 							</div><!--videoo end-->
 						</div>
-						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-							<div class="videoo">
-								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide2.png' %}" alt="">
-										<span class="vid-time">13:49</span>
-										<span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-									</a>	
-								</div><!--vid_thumbnail end-->
-								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">ملینا مقدم و علی امیری در قسمت هفتم آپارات گیم شو</a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">گیمر شو</a> </h4>
-									<span>283 هزار بازدید .<small class="posted_dt">3 ماه قبل</small></span>
-								</div>
-							</div><!--videoo end-->
-						</div>
-						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-							<div class="videoo">
-								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide3.png' %}" alt="">
-										<span class="vid-time">2:54</span>
-										<span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-									</a>	
-								</div><!--vid_thumbnail end-->
-								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">11 شیرینی ساده که دسر شما را به هنر تبدیل می کند</a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">ویدئوگرام</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-									<span>2.6 میلیون بازدید .<small class="posted_dt">2 ماه قبل</small></span>
-								</div>
-							</div><!--videoo end-->
-						</div>
-						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-							<div class="videoo">
-								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide4.png' %}" alt="">
-										<span class="vid-time">5:25</span>
-										<span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-									</a>	
-								</div><!--vid_thumbnail end-->
-								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">چگونه می توان شیرینی ها را به آرایش تبدیل کرد!</a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">لول مدیا - LoL MEDIA</a> </h4>
-									<span>612 هزار بازدید .<small class="posted_dt">5 ماه قبل</small></span>
-								</div>
-							</div><!--videoo end-->
-						</div>
-						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-							<div class="videoo">
-								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide5.png' %}" alt="">
-										<span class="vid-time">4:01</span>
-										<span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-									</a>	
-								</div><!--vid_thumbnail end-->
-								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">انیمیشن زیبای اسکار</a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">جهانبین</a> </h4>
-									<span>45 هزار بازدید .<small class="posted_dt">3 روز قبل</small></span>
-								</div>
-							</div><!--videoo end-->
-						</div>
-						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-							<div class="videoo">
-								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide6.png' %}" alt="">
-										<span class="vid-time">6:20</span>
-										<span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-									</a>	
-								</div><!--vid_thumbnail end-->
-								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">کلیپ کوتاه عاشقانه درباره خدا ❤</a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">جام جمکران</a> </h4>
-									<span>86 هزار بازدید .<small class="posted_dt">6 روز قبل</small></span>
-								</div>
-							</div><!--videoo end-->
-						</div>
-						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-							<div class="videoo">
-								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide7.png' %}" alt="">
-										<span class="vid-time">8:16</span>
-										<span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-									</a>	
-								</div><!--vid_thumbnail end-->
-								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">میکس لوازم آرایشی و اکلیل در اسلایم شفاف</a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">جیرجیرک</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-									<span>144 هزار بازدید .<small class="posted_dt">6 روز قبل</small></span>
-								</div>
-							</div><!--videoo end-->
-						</div>
-						<div class="col-lg-3 col-md-6 col-sm-6 col-6 full_wdth">
-							<div class="videoo">
-								<div class="vid_thumbainl">
-									<a href="single_video_page.html" title="">
-										<img src="{% static 'images/resources/vide8.png' %}" alt="">
-										<span class="vid-time">29:32</span>
-										<span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
-									</a>	
-								</div><!--vid_thumbnail end-->
-								<div class="video_info">
-									<h3><a href="single_video_page.html" title="">وسایل باربی *_* 32 ایده جالب برای باربی</a></h3>
-									<h4><a href="Single_Channel_Home.html" title="">جیرجیرک</a></h4>
-									<span>408 هزار  بازدید .<small class="posted_dt">19 ساعت قبل</small></span>
-								</div>
-							</div><!--videoo end-->
-						</div>
+						{% endfor %}
 					</div>
 				</div><!--vidz_list end-->
 			</div><!--vidz_videos end-->

@@ -1,19 +1,27 @@
-from django.shortcuts import render ,redirect
-from account.models import Profile
+from django.shortcuts import render ,redirect ,get_object_or_404
 from django.contrib import messages
 from django.http import JsonResponse
 from hitcount.utils import get_hitcount_model
 from hitcount.views import HitCountMixin
+from django.db.models import Count
+from django.contrib.auth.decorators import login_required
+from account.models import Profile
 from .models import Video , VideoTag
 from .forms import VideoEditForm
 # Create your views here.
 
 def index(request):
+    videos = Video.objects.filter(published=True).order_by('-created')
+    channels = Profile.objects.exclude(image='').annotate(most_like=Count('video__like')).exclude(most_like=0).order_by('-most_like')
+    favorite_videos = Video.objects.filter(published=True).annotate(like_count=Count('like')).order_by('-like_count','created')
     context = {
-        'latest_videos': Video.objects.filter(published=True).order_by('-created'),
+        'latest_videos': videos,
+        'channels' : channels,
+        'favorite_videos' : favorite_videos,
     }
     return render(request,'index.html',context)
 
+@login_required(login_url='/login/')
 def upload_video(request):
     if request.method == 'POST':
         profile = Profile.objects.get(user=request.user)
@@ -95,3 +103,10 @@ def like_video_ajax(request):
     else :
         status = 'fail' 
     return JsonResponse({'status':status})
+
+def channel_home_page(request,id):
+    profile = get_object_or_404(Profile,id=id)
+    context = {
+        'profile' : profile,
+    }
+    return render(request,'channel_home_page.html',context)

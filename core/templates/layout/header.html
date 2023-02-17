@@ -13,12 +13,12 @@
                     <li class="user-log">
                         <div class="user-ac-img">
                             {% if request.user.is_authenticated %}
-                                {% if profile %}
+                                {% if profile.image %}
                                 <img src="{{profile.image.url}}" height='60px' width='61px'>
                                 {% else %}
                                 <img src="{% static 'images/resources/user-img.png' %}">
                                 {% endif %}
-                                {% else %}
+                            {% else %}
                                 <img src="{% static 'images/user-icon.jpg' %}">
                             {% endif %}
                         </div>
