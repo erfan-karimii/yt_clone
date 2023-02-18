@@ -97,7 +97,7 @@
 										<img src="{{channel.image.url}}" alt="">
 									</div>
 									<div class="vc_info">
-										<h4><a href="#Single_Channel_Home.html" title="">{{channel.channel_name}}</a></h4>
+										<h4><a href="{% url 'youtube:channel_home_page' channel.id %}" title="">{{channel.channel_name}}</a></h4>
 									</div>
 								</div>
 							</div><!--videoo end-->

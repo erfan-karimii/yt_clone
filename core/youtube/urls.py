@@ -12,6 +12,7 @@ urlpatterns = [
     path('video_detail/<id>/',views.video_detail,name='video_detail'),
     path('add_new_tag/',views.add_new_tag_ajax,name='add_new_tag'),
     path('like_video/',views.like_video_ajax,name='like_video'),
+    path('follow_channel/',views.follow_channel_ajax,name='follow_channel'),
     path('channel_home_page/<id>/',views.channel_home_page,name='channel_home_page'),
 
 ]

@@ -23,14 +23,19 @@
                             {% endif %}
                         </div>
                         <div class="account-menu">
-                            <h4>محمد امینی <span class="usr-status">ویژه</span></h4>
                             <div class="sd_menu">
                                 <ul class="mm_menu">
                                     <li>
                                         <span>
                                             <i class="icon-user"></i>
                                         </span>
-                                        <a href="{% url 'youtube:upload_list' %}" title="">کانال من</a>
+                                        <a href="{% url 'youtube:upload_list' %}" title="">کانال من (ویژه ادیت)</a>
+                                    </li>
+                                    <li>
+                                        <span>
+                                            <i class="icon-user"></i>
+                                        </span>
+                                        <a href="{% url 'youtube:channel_home_page' profile.id %}" title="">کانال من</a>
                                     </li>
                                     <li>
                                         <span>

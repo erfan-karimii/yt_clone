@@ -16,7 +16,9 @@ def get_upload_path(instance, filename):
     return os.path.join(
       f"{instance.youtuber.channel_name}",filename)
 
-
+class VideoManager(models.Manager):
+    def all_video(self):
+        return Video.objects.filter(published=True)
 
 class Video(models.Model):
     youtuber = models.ForeignKey('account.Profile',on_delete=models.CASCADE)
@@ -32,8 +34,11 @@ class Video(models.Model):
     like = models.ManyToManyField('account.Profile',related_name='like')
     published = models.BooleanField(default=False)
     show = models.BooleanField(default=True)
+
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    objects = VideoManager()
 
     @property
     def days_passed(self):
@@ -69,3 +74,10 @@ class Category(models.Model):
 
 # nested comment 
 
+class PlayList(models.Model):
+    profile = models.ForeignKey('account.Profile',on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    video = models.ManyToManyField('Video')
+
+    def __str__(self):
+        return self.name

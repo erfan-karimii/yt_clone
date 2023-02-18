@@ -83,9 +83,8 @@ def ComplateProfile(request):
         else:
             print(form.errors)
             messages.error(request,'لطفا با دقت همه فیلد هارا پرکنید')
-            return redirect('account:complate')
-    elif request.method == "GET":
-        return render(request,'account/completeprofile.html',{'profile':profile})
+    form = ProfileForm(instance=profile)
+    return render(request,'account/completeprofile.html',{'profile':profile,'form':form})
 
 def Login(request):
     if request.user.is_authenticated:

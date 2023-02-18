@@ -1,8 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser , BaseUserManager ,PermissionsMixin
 from django.utils.translation import gettext_lazy as _
-from django.db.models.signals import post_save
 from django.db import models
-from django.dispatch import receiver
+from ckeditor.fields import RichTextField
 
 # Create your models here.
 
@@ -58,19 +57,34 @@ class User(AbstractBaseUser,PermissionsMixin):
 
 class Profile(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
+    follow = models.ManyToManyField('Profile')
     channel_name = models.CharField(max_length=30,null=True,unique=True)
-    first_name  = models.CharField(max_length=255)
-    last_name  = models.CharField(max_length=255)
     image = models.ImageField(null=True,blank=True)
+    banner = models.ImageField(null=True,blank=True)
     description = models.TextField()
+    links = RichTextField(null=True)
 
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.user.email
+    
+    @property
+    def count_followers(self):
+        followers_count = Profile.follow.through.objects.filter(to_profile=self).count()
+        return followers_count
+    
+    @property
+    def all_yt_videos(self):
+        videos = self.video_set.filter(published=True)
+        return videos
+    
+    @property
+    def all_yt_visit(self):
+        videos = self.video_set.filter(published=True)
+        visit_count = 0
+        for obj in videos:
+            visit_count += obj.visited
+        return visit_count
 
-@receiver(post_save,sender=User)
-def save_profile(sender,instance,created,**kwargs):
-    if created:
-        Profile.objects.create(user=instance)

@@ -16,13 +16,8 @@
 								<form method='post' enctype="multipart/form-data">
 									{% csrf_token %}
 									<div class="ch-pswd">
-										<input type="text" name="channel_name" value='{{profile.channel_name}}' placeholder="نام چنل">
-									</div><!--ch-pswd end-->
-									<div class="ch-pswd">
-										<input type="text" name="first_name" value='{{profile.first_name}}' placeholder="نام">
-									</div><!--ch-pswd end-->
-									<div class="ch-pswd">
-										<input type="text" name="last_name" value='{{profile.last_name}}' placeholder="نام خانوادگی">
+										<label>نام کانال</label>
+										<input type="text" name="channel_name" value='{{profile.channel_name}}' placeholder="نام کانال">
 									</div><!--ch-pswd end-->
 									<div class="ch-pswd">
 										عکس کانال
@@ -32,10 +27,22 @@
 										{% endif %}
 									</div><!--ch-pswd end-->
 									<div class="ch-pswd">
+										بنر کانال
+										<input type="file" name="banner" accept="image/*">
+										{% if profile.banner %}
+										بنر فعلی : <a href='{{profile.banner.url}}'>{{profile.banner}}</a>
+										{% endif %}
+									</div><!--ch-pswd end-->
+									<div class="ch-pswd">
+										<label>درباره من</label>
 										<input type="text" name="description" value='{{profile.description}}' placeholder="درباره من">
 									</div><!--ch-pswd end-->
 									<div class="ch-pswd">
-										<button type="submit"> بروزرسانی</button>
+										<label>لینک های مفید</label>
+										{{form.links}}
+									</div><!--ch-pswd end-->
+									<div class="ch-pswd">
+										<button type="submit">بروزرسانی</button>
 									</div><!--ch-pswd end-->
 								</form>
 							</div><!--change-pswd end-->
@@ -49,3 +56,9 @@
 </section><!--user-account end-->
 
 {% endblock body %}
+
+{% block js %}
+<script type="text/javascript">
+	CKEDITOR.replace("id_links");
+</script>
+{% endblock %}

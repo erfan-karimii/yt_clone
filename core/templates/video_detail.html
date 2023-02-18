@@ -28,6 +28,9 @@
 							<h3>{{video.title}}</h3>
 							<div class="info-pr">
 								<span>{{video.visited}} بازدید</span>
+								<br>
+								<span>انتشار یافته در {{video.created.year}}/{{video.created.month}}/{{video.created.day}}</span>
+
 								<ul class="pr_links">
 									<li>
 										<button id="like-video" data-toggle="tooltip" data-placement="top">
@@ -44,16 +47,20 @@
 						<div class="info-pr-sec">
 							<div class="vcp_inf cr">
 								<div class="vc_hd">
-									<img src="{% static 'images/resources/th5.png' %}" alt="">
+									<img src="{{video.youtuber.image.url}}" alt="">
 								</div>
 								<div class="vc_info pr">
 									<h4><a href="#" title="">{{video.youtuber.channel_name}}</a></h4>
-									<span>انتشار یافته در {{video.created.year}}/{{video.created.month}}/{{video.created.day}}</span>
+									<span>تعداد دنبال کننده  {{video.youtuber.count_followers}}</span>
 								</div>
 							</div><!--vcp_inf end-->							
 							<ul class="chan_cantrz">
 								<li>
-									<a href="#" title="" class="subscribe">اشتراک <strong>13 هزار</strong></a>
+									{% if is_followed %}
+									<a href="#" id="follow-button" title=""  class="subscribe">دنبال می کنید</a>
+									{% else %}
+									<a href="#" id="follow-button" title=""  class="subscribe">دنبال کردن</a>
+									{% endif %}
 								</li>
 								<li>
 									<a href="#" title="" class="donate">هدیه دهید</a>
@@ -66,12 +73,7 @@
 									</button>
 								</li>
 								<li>
-									<button data-toggle="tooltip" data-placement="top" title="مورد علاقه">
-										<i class="icon-like"></i>
-									</button>
-								</li>
-								<li>
-									<button data-toggle="tooltip" data-placement="top" title="بعدا میبینم">
+									<button id='watch-later' data-toggle="tooltip" data-placement="top" title="بعدا میبینم">
 										<i class="icon-watch_later"></i>
 									</button>
 								</li>
@@ -185,13 +187,6 @@
 				<div class="sidebar">
 					<div class="vidz-prt">
 						<h2 class="sm-vidz">ویدیو های مشابه</h2>
-						<h3 class="aut-vid">
-							<span>خودکار </span>
-							<label class="switch">
-								<input type="checkbox">
-								<b class="slider round"></b>
-							</label> 
-						</h3>
 						<div class="clearfix"></div>
 					</div><!--vidz-prt end-->
 					<div class="videoo-list-ab">
@@ -211,38 +206,6 @@
 								<span>686 هزار بازدید .<small class="posted_dt">1 هفته قبل</small></span>
 							</div>
 						</div><!--videoo end-->
-						<div class="videoo">
-							<div class="vid_thumbainl">
-								<a href="single_video_page.html" title="">
-									<img src="{% static 'images/resources/vide2.png' %}" alt="">
-									<span class="vid-time">13:49</span>
-									<span class="watch_later">
-										<i class="icon-watch_later_fill"></i>
-									</span>
-								</a>	
-							</div><!--vid_thumbnail end-->
-							<div class="video_info">
-								<h3><a href="#" title="">مردان خواب آلوده!</a></h3>
-								<h4><a href="#" title="">حامین مدیا</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-								<span>686 هزار بازدید .<small class="posted_dt">1 هفته قبل</small></span>
-							</div>
-						</div><!--videoo end-->
-						<div class="videoo">
-							<div class="vid_thumbainl">
-								<a href="single_video_page.html" title="">
-									<img src="{% static 'images/resources/vide3.png' %}" alt="">
-									<span class="vid-time">2:54</span>
-									<span class="watch_later">
-										<i class="icon-watch_later_fill"></i>
-									</span>
-								</a>	
-							</div><!--vid_thumbnail end-->
-							<div class="video_info">
-								<h3><a href="#" title="">افکت قدیمی کردن تصاویر با گوشی موبایلتون</a></h3>
-								<h4><a href="#" title="">عادل امین | آموزش های تکنولوژی</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-								<span>686 هزار بازدید .<small class="posted_dt">1 هفته قبل</small></span>
-							</div>
-						</div><!--videoo end-->
 						<div class="ad-rw">
 							<img src="{% static 'images/resources/ad-img.jpg' %}" alt="">
 						</div>
@@ -259,70 +222,6 @@
 							<div class="video_info">
 								<h3><a href="#" title="">نقد و بررسی پابجی new state</a></h3>
 								<h4><a href="#" title="">رسانه های دنیای گیم</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-								<span>686 هزار بازدید .<small class="posted_dt">1 هفته قبل</small></span>
-							</div>
-						</div><!--videoo end-->
-						<div class="videoo">
-							<div class="vid_thumbainl">
-								<a href="single_video_page.html" title="">
-									<img src="{% static 'images/resources/vide5.png' %}" alt="">
-									<span class="vid-time">4:01</span>
-									<span class="watch_later">
-										<i class="icon-watch_later_fill"></i>
-									</span>
-								</a>	
-							</div><!--vid_thumbnail end-->
-							<div class="video_info">
-								<h3><a href="#" title="">قسمت نهم سریال ملکه گدایان</a></h3>
-								<h4><a href="#" title="">فیلمو </a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-								<span>686 هزار بازدید .<small class="posted_dt">1 هفته قبل</small></span>
-							</div>
-						</div><!--videoo end-->
-						<div class="videoo">
-							<div class="vid_thumbainl">
-								<a href="single_video_page.html" title="">
-									<img src="{% static 'images/resources/vide6.png' %}" alt="">
-									<span class="vid-time">6:20</span>
-									<span class="watch_later">
-										<i class="icon-watch_later_fill"></i>
-									</span>
-								</a>	
-							</div><!--vid_thumbnail end-->
-							<div class="video_info">
-								<h3><a href="#" title="">11 شیرینی ساده که دسر شما را به هنر تبدیل می کند</a></h3>
-								<h4><a href="#" title="">ویدئوگرام </a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-								<span>686 هزار بازدید .<small class="posted_dt">1 هفته قبل</small></span>
-							</div>
-						</div><!--videoo end-->
-						<div class="videoo">
-							<div class="vid_thumbainl">
-								<a href="single_video_page.html" title="">
-									<img src="{% static 'images/resources/vide7.png' %}" alt="">
-									<span class="vid-time">8:16</span>
-									<span class="watch_later">
-										<i class="icon-watch_later_fill"></i>
-									</span>
-								</a>	
-							</div><!--vid_thumbnail end-->
-							<div class="video_info">
-								<h3><a href="#" title="">انیمیشن زیبای اسکار</a></h3>
-								<h4><a href="#" title="">جهانبین</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-								<span>686 هزار بازدید .<small class="posted_dt">1 هفته قبل</small></span>
-							</div>
-						</div><!--videoo end-->
-						<div class="videoo">
-							<div class="vid_thumbainl">
-								<a href="single_video_page.html" title="">
-									<img src="{% static 'images/resources/vide8.png' %}" alt="">
-									<span class="vid-time">29:32</span>
-									<span class="watch_later">
-										<i class="icon-watch_later_fill"></i>
-									</span>
-								</a>	
-							</div><!--vid_thumbnail end-->
-							<div class="video_info">
-								<h3><a href="#" title="">میکس لوازم آرایشی و اکلیل در اسلایم شفاف</a></h3>
-								<h4><a href="#" title="">جیرجیرک</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
 								<span>686 هزار بازدید .<small class="posted_dt">1 هفته قبل</small></span>
 							</div>
 						</div><!--videoo end-->
@@ -376,8 +275,33 @@ $(document).ready(function(){
 			error: function(data){
 				alert('مشکلی پیش امده است لطفا دوباره امتحان کنید.');
 			}                                
-		})
-	})	
-})
+		});
+	});
+	$('#follow-button').click(function(e){
+		e.preventDefault()
+		$.ajax({
+			type : 'GET',
+			url : '{% url "youtube:follow_channel" %}',
+			data : {'yt_user': '{{video.youtuber.id}}'},
+			dataType : 'json',
+			success : function (data) {
+				if (data.status == 'fail'){
+					alert('لطفا قبل از لایک کردن وارد حساب خود شودید')
+				}else if(data.status == 'added'){
+					$('#follow-button').text('دنبال می کنید')
+					alert('شما الان دنبال می کنید')
+				}else if(data.status == 'removed'){
+					$('#follow-button').text('دنبال کردن')
+					alert('شما الان دنبال نمی کنید')
+				}else if(data.status == 'same'){
+					alert('شما نمی توانید خودتان دنبال کنید.')
+				}
+			},  
+			error: function(data){
+				alert('مشکلی پیش امده است لطفا دوباره امتحان کنید.');
+			}                                
+		});
+	});	
+});
 </script>
 {% endblock js %}
