@@ -97,53 +97,99 @@ def add_new_tag_ajax(request):
     return JsonResponse({'id':tag.id})
 
 def like_video_ajax(request):
-    if request.user.is_authenticated:
-        video_id = request.GET.get('video_id')
-        video = Video.objects.get(id=video_id)
-        profile = Profile.objects.get(user=request.user)
-        if profile in video.like.all():
-            video.like.remove(profile)
-            status = 'removed'
-        else:
-            video.like.add(profile)
-            status = 'added'
-    else :
-        status = 'fail' 
+    video_id = request.GET.get('video_id')
+    video = Video.objects.get(id=video_id)
+    profile = Profile.objects.get(user=request.user)
+    if profile in video.like.all():
+        video.like.remove(profile)
+        status = 'removed'
+    else:
+        video.like.add(profile)
+        status = 'added'
     return JsonResponse({'status':status})
 
 def follow_channel_ajax(request):
-    if request.user.is_authenticated:
-        yt_user = request.GET.get('yt_user')
-        yt_profile= Profile.objects.get(user=yt_user)
-        profile = Profile.objects.get(user=request.user)
-        if yt_profile == profile:
-            status = 'same'
-        elif yt_profile in profile.follow.all():
-            profile.follow.remove(yt_profile)
-            status = 'removed'
-        else:
-            profile.follow.add(yt_profile)
-            status = 'added'
+    yt_user = request.GET.get('yt_user')
+    yt_profile= Profile.objects.get(user=yt_user)
+    profile = Profile.objects.get(user=request.user)
+    if yt_profile == profile:
+        status = 'same'
+    elif yt_profile in profile.follow.all():
+        profile.follow.remove(yt_profile)
+        status = 'removed'
     else:
-        status = 'fail'
+        profile.follow.add(yt_profile)
+        status = 'added'
     return JsonResponse({'status':status})
 
-def channel_home_page(request,id):
-    profile = get_object_or_404(Profile,id=id)
-    all_video = profile.video_set.filter(published=True).order_by('-created')
-    play_lists = PlayList.objects.filter(profile=profile)
+def watch_later_ajax(request):
+    video_id = request.GET.get('video_id')
+    video = Video.objects.get(id=video_id)
+    profile = Profile.objects.get(user=request.user)
+    playlist = PlayList.objects.get(profile=profile,name='watch_later')
+    if video in playlist.video.all():
+        playlist.video.remove(video)
+        status = 'removed'
+    else : 
+        playlist.video.add(video)
+        status= 'added'
+    return JsonResponse({'status':status})
 
-    user_profile = Profile.objects.filter(user=request.user).first()
-    if profile in user_profile.follow.all():
+def get_playlist_ajax(request):
+    profile = Profile.objects.get(user=request.user)
+    playlists = PlayList.objects.filter(profile=profile).exclude(name='watch_later').values_list('name',flat=True)
+    return JsonResponse({'playlists':list(playlists)})
+
+def add_video_to_playlist_ajax(request):
+    playlist_name = request.GET.get('playlist_name')
+    video_id = request.GET.get('video_id')
+    video = Video.objects.get(id=video_id)
+    playlist = PlayList.objects.get(name=playlist_name)
+    if video in playlist.video.all():
+        playlist.video.remove(video)
+        status = 'removed'
+    else :
+        playlist.video.add(video)
+        status = 'added'
+    return JsonResponse({'status':status})
+
+def create_playlist_ajax(request):
+    profile = Profile.objects.get(user=request.user)
+    playlist_name = request.GET.get('playlist_name')
+    video_id = request.GET.get('video_id')
+    video = Video.objects.get(id=video_id)
+    obj,created = PlayList.objects.get_or_create(name=playlist_name,defaults={'profile':profile,})
+
+    if created:
+        obj.video.add(video)
+        status = 'play list created and video added'
+    else:
+        status = 'this play list already exists'
+    return JsonResponse({'status':status})
+
+def delete_playlist(request,id):
+    profile = Profile.objects.get(user=request.user)
+    playlist = PlayList.objects.get(id=id,profile=profile)
+    playlist.delete()
+    messages.success(request,'پلی لیست با موفقیت حذف شد')
+    return redirect('youtube:channel_home_page',id=profile.id)
+
+def channel_home_page(request,id):
+    yt_profile = get_object_or_404(Profile,id=id)
+    all_video = yt_profile.video_set.filter(published=True).order_by('-created')
+    play_lists = PlayList.objects.filter(profile=yt_profile)
+
+    profile = Profile.objects.filter(user=request.user).first()
+    if yt_profile in profile.follow.all():
         is_followed = True
     else :
         is_followed = False
 
     context = {
-        'profile' : profile,
+        'yt_profile' : yt_profile,
+        'profile':profile,
         'videos' : all_video,
         'is_followed' : is_followed,
         'play_lists' : play_lists,
     }
     return render(request,'channel_home_page.html',context)
-

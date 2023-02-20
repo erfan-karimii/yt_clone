@@ -2,4 +2,5 @@ send email code (in server)
 remember me register
 use "show = False" for deleting objects not realy deleting it
 followers count in detail video
-orderby video  channel_home_page
+orderby video in channel_home_page
+similar video in video_detail

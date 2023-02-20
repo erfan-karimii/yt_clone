@@ -68,7 +68,7 @@
 							</ul><!--chan_cantrz end-->
 							<ul class="df-list">
 								<li>
-									<button data-toggle="tooltip" data-placement="top" title="افزودن به لیست پخش">
+									<button id='add-to-playlist' data-toggle="tooltip" data-placement="top" title="افزودن به لیست پخش">
 										<i class="icon-add_to_playlist"></i>
 									</button>
 								</li>
@@ -259,12 +259,10 @@ $(document).ready(function(){
 		$.ajax({
 			type : 'GET',
 			url : '{% url "youtube:like_video" %}',
-			data : {'video_id': {{video.id}},},
+			data : {'video_id': '{{video.id}}',},
 			dataType : 'json',
 			success : function (data) {
-				if (data.status == 'fail'){
-					alert('لطفا قبل از لایک کردن وارد حساب خود شودید')
-				}else if(data.status == 'added'){
+				if(data.status == 'added'){
 					$('#like-number').text(parseInt($('#like-number').text())+1)
 					alert('شما لایک کردید')
 				}else if(data.status == 'removed'){
@@ -285,9 +283,7 @@ $(document).ready(function(){
 			data : {'yt_user': '{{video.youtuber.id}}'},
 			dataType : 'json',
 			success : function (data) {
-				if (data.status == 'fail'){
-					alert('لطفا قبل از لایک کردن وارد حساب خود شودید')
-				}else if(data.status == 'added'){
+				if(data.status == 'added'){
 					$('#follow-button').text('دنبال می کنید')
 					alert('شما الان دنبال می کنید')
 				}else if(data.status == 'removed'){
@@ -302,6 +298,84 @@ $(document).ready(function(){
 			}                                
 		});
 	});	
+	$('#watch-later').click(function(){
+		$.ajax({
+			type : 'GET',
+			url : '{% url "youtube:watch_later" %}',
+			data : {'video_id': '{{video.id}}'},
+			dataType : 'json',
+			success : function (data) {
+				alert(data.status)
+			},  
+			error: function(data){
+				alert('مشکلی پیش امده است لطفا دوباره امتحان کنید.');
+			}                                
+		});
+	});
+	$('#add-to-playlist').click(function(){
+		$.ajax({
+			type : 'GET',
+			url : '{% url "youtube:get_playlist" %}',
+			success : function (data) {
+				var text = '<ul>'
+				for (playlist of data.playlists) {
+					text = text + `<li onclick=addPlaylist('${playlist}')>` + playlist + '</li>'
+				}
+				text = text + '</ul>'
+				Swal.fire({
+					title: 'پلی لیست خود را انتخاب کنید.',
+					html: text,
+					icon: 'info',
+					confirmButtonText: 'ساخت پلی لیست جدید',
+					confirmButtonColor: '#3085d6',
+					showCancelButton: true,
+					cancelButtonText: 'برگشت',
+					cancelButtonColor: '#d33',
+					input: 'text',
+					inputAttributes: {
+						required: 'true'
+					},
+					}).then((result) => {
+					if (result.isConfirmed) {
+						createPlaylist(result)
+					}
+				});
+
+			},  
+			error: function(data){
+				alert('مشکلی پیش امده است لطفا دوباره امتحان کنید.');
+			}                                
+		});
+	});	
 });
+function addPlaylist(name) {
+	$.ajax({
+		type : 'GET',
+		url : '{% url "youtube:add_video_to_playlist" %}',
+		data : {"playlist_name":name,'video_id': '{{video.id}}'},
+		dataType : 'json',
+		success : function (data) {
+			alert(data.status)
+		},  
+		error: function(data){
+			alert('مشکلی پیش امده است لطفا دوباره امتحان کنید.');
+		}                                
+	});	
+}
+function createPlaylist(result) {
+	$.ajax({
+		type : 'GET',
+		url : '{% url "youtube:create_playlist" %}',
+		data : {'playlist_name':result.value,'video_id': '{{video.id}}'},
+		dataType : 'json',
+		success : function(data){
+			alert(data.status)
+		},
+		error: function(data){
+			alert('مشکلی پیش امده است لطفا دوباره امتحان کنید.');
+		}, 
+	});
+	
+}
 </script>
 {% endblock js %}

@@ -31,12 +31,14 @@
                                         </span>
                                         <a href="{% url 'youtube:upload_list' %}" title="">کانال من (ویژه ادیت)</a>
                                     </li>
+                                    {% if request.user.is_authenticated %}
                                     <li>
                                         <span>
                                             <i class="icon-user"></i>
                                         </span>
                                         <a href="{% url 'youtube:channel_home_page' profile.id %}" title="">کانال من</a>
                                     </li>
+                                    {% endif %}
                                     <li>
                                         <span>
                                             <i class="icon-paid_sub"></i>

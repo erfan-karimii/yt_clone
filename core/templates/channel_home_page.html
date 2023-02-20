@@ -4,8 +4,8 @@
 {% block body %}
 
 <section class="channel-cover">
-	{% if profile.banner %}
-	<img src="{{profile.banner.url}}" style="height: 147px;" alt="">
+	{% if yt_profile.banner %}
+	<img src="{{yt_profile.banner.url}}" style="height: 147px;" alt="">
 	{% else %}
 	<img src="{% static 'images/resources/channel-banner.jpg' %}" alt="">
 	{% endif %}
@@ -16,11 +16,11 @@
 		<div class="container">
 			<div class="vcp_inf cr">
 				<span class="vc_hd">
-					<img src="{{profile.image.url}}" alt="">
+					<img src="{{yt_profile.image.url}}" alt="">
 				</span>
 				<div class="vc_info pr">
-					<h4> {{profile.channel_name}} <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-					<span>{{profile.count_followers}} مشترکین</span>
+					<h4> {{yt_profile.channel_name}} <span class="verify_ic"><i class="icon-tick"></i></span></h4>
+					<span>{{yt_profile.count_followers}} مشترکین</span>
 				</div>
 			</div><!--vcp_inf end-->
 			<ul class="chan_cantrz">
@@ -65,7 +65,7 @@
 				<a class="nav-link" id="about-tab" data-toggle="tab" href="#about_tab" role="tab" aria-controls="about-tab" aria-selected="false">درباره کانال</a>
 				</li>
 				<li class="nav-item">
-				<a class="nav-link" id="amazon-tab" data-toggle="tab" href="#amazong-tb" role="tab" aria-controls="amazon-tab" aria-selected="false">محصولات</a>
+				<a class="nav-link" id="amazon-tab" data-toggle="tab" href="#amazong-tb" role="tab" aria-controls="amazon-tab" aria-selected="false">محصولات (به زودی)</a>
 				</li>
 			</ul><!--nav-tabs end-->
 			<div class="clearfix"></div>
@@ -150,7 +150,8 @@
 					<div class="container">
 						<div class="vidz_sec">
 							<h3>{{play_list.name}}</h3>
-							<a href="#" title="">نمایش همه</a>
+							<a href="#" title=""> نمایش همه </a>
+							{% if yt_profile == profile %}<a href="#" class="delete-playlist" title="حذف لیست ویدیو" data-id='{{play_list.id}}' style="margin-left: 20px;"> حذف </a>{% endif %}
 							<div class="clearfix"></div>
 							<div class="vidz_list">
 								<div class="row">
@@ -189,7 +190,7 @@
 						<h3>کانال ها</h3>
 						<div class="clearfix"></div>
 						<div class="row">
-							{% for followed_channel in profile.follow.all %}
+							{% for followed_channel in yt_profile.follow.all %}
 							<div class="col-lg-3 col-md-3 col-sm-6 col-12">
 								<div class="videoo">
 									<div class="vid_thumbainl">
@@ -224,11 +225,11 @@
 							<div class="col-lg-8">
 								<div class="decp_cotnet">
 									<h2 class="ab-fd">توضیحات </h2>
-									<p>{{profile.description}}</p>
+									<p>{{yt_profile.description}}</p>
 								</div><!--abt-founder end-->
 								<div class="link-pr">
 									<h2 class="ab-fd"> لینک ها</h2>
-									{{profile.links|safe}}
+									{{yt_profile.links|safe}}
 									<div class="clearfix"></div>
 								</div>
 							</div>
@@ -236,9 +237,9 @@
 								<div class="stats">
 									<h2 class="ab-fd">آمار</h2>
 									<ul>
-										<li>عضویت {{profile.created_date.year}}/{{profile.created_date.month}}/{{profile.created_date.day}}</li>
-										<li>{{profile.all_yt_visit}} بازدید</li>
-										<li>{{profile.count_followers}} مشترکین</li>
+										<li>عضویت {{yt_profile.created_date.year}}/{{yt_profile.created_date.month}}/{{yt_profile.created_date.day}}</li>
+										<li>{{yt_profile.all_yt_visit}} بازدید</li>
+										<li>{{yt_profile.count_followers}} مشترکین</li>
 										<li>{{videos.count}} ویدیو</li>
 									</ul>
 								</div><!--stats end-->
@@ -339,7 +340,7 @@ $(document).ready(function(){
 		$.ajax({
 			type : 'GET',
 			url : '{% url "youtube:follow_channel" %}',
-			data : {'yt_user': '{{profile.id}}'},
+			data : {'yt_user': '{{yt_profile.id}}'},
 			dataType : 'json',
 			success : function (data) {
 				if (data.status == 'fail'){
@@ -358,7 +359,12 @@ $(document).ready(function(){
 				alert('مشکلی پیش امده است لطفا دوباره امتحان کنید.');
 			}                                
 		});
-	})	
+	});
+	$('.delete-playlist').click(function(){
+		id = $(this).data('id')
+		alert(id)
+		location.href="/delete_playlist/" + id + "/"
+	});		
 });
 </script>
 {% endblock js %}

@@ -87,4 +87,3 @@ class Profile(models.Model):
         for obj in videos:
             visit_count += obj.visited
         return visit_count
-
