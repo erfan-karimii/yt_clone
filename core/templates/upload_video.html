@@ -10,7 +10,6 @@
 				<div class="video-file">
 					<i class="icon-graphics_05"></i>
 					<h3>انتخاب ویدیو برای آپلود </h3>
-					<span>فایل ویدیو را بکشید و اینجا رها کنید</span>
 					<form method='post' enctype="multipart/form-data">
 						{% csrf_token %}
 						<label for="file-upload" class="custom-file-upload">
@@ -27,8 +26,8 @@
 					<i class="icon-graphics_03"></i>
 					<h3>ویدیو را از یوتیوب وارد کنید </h3>
 					<span>کپی / پیست لینک ویدیو</span>
-					<form>
-						<input type="text" name="import_video" placeholder="لینک را پیست کنید">
+					<form method='post' enctype="multipart/form-data">
+						<input type="url" name="yt_link" placeholder="لینک را پیست کنید">
 						<button type="submit">وارد کردن ویدیو</button>
 					</form>
 				</div><!--youtube-dwn end-->

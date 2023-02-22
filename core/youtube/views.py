@@ -3,9 +3,9 @@ from django.contrib import messages
 from django.http import JsonResponse
 from hitcount.utils import get_hitcount_model
 from hitcount.views import HitCountMixin
-from django.db.models import Count
+from django.db.models import Count , Q
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+from pytube import YouTube
 from account.models import Profile
 from .models import Video , VideoTag , PlayList , Category
 from .forms import VideoEditForm
@@ -32,6 +32,13 @@ def upload_video(request):
         Video.objects.create(youtuber=profile,video=video)
         messages.success(request,'ویدیو شما در یافت شد و در حال اپلود می باشد.')
     return render(request,'upload_video.html',{})
+
+def upload_video_from_yotube(request):
+    if request.method == 'POST':
+        link = request.POST.get('yt_link')
+        video = YouTube(link)
+        
+
 
 def upload_list(request):
     profile = Profile.objects.get(user=request.user)

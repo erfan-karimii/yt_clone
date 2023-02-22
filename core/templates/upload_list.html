@@ -19,16 +19,13 @@
 						<div class="col-lg-3 col-md-3 col-sm-6 col-6">
 							<div class="videoo">
 								<div class="vid_thumbainl">
-									<a href="#" title="">
+									<a href="{% url 'youtube:video_detail' video.id %}" title="{{video.title}}">
 										{% if video.thumbnail %}
 										<img src="{{video.thumbnail.url}}" alt="{{video.title}}" style="width: 255px;height: 160px;">
 										{% else %}
 										<img src="{% static 'images/no_thumbnail.jpg' %}" alt="no thumbnail" style="width: 255px;height: 160px;">
 										{% endif %}
 										<span class="vid-time">{{video.video_time}}</span>
-										<span class="watch_later">
-											<i class="icon-watch_later_fill"></i>
-										</span>
 									</a>	
 								</div><!--vid_thumbnail end-->
 								<div class="video_info">
