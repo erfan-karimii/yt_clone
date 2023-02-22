@@ -17,8 +17,8 @@ def get_upload_path(instance, filename):
       f"{instance.youtuber.channel_name}",filename)
 
 class VideoManager(models.Manager):
-    def all_video(self):
-        return Video.objects.filter(published=True)
+    def all_video(self,**kwargs):
+        return Video.objects.filter(published=True,**kwargs)
 
 class Video(models.Model):
     youtuber = models.ForeignKey('account.Profile',on_delete=models.CASCADE)
@@ -68,9 +68,11 @@ class VideoTag(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=200,verbose_name='نام دسته بندی')
+    image = models.ImageField(null=True)
 
     def __str__(self):
         return self.name
+    
 
 # nested comment 
 

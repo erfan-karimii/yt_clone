@@ -50,10 +50,7 @@
 		<div class="container">
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
 				<li class="nav-item">
-				<a class="nav-link active" id="home_tab" data-toggle="tab" href="#home_vidz" role="tab" aria-controls="home_tab" aria-selected="true">خانه</a>
-				</li>
-				<li class="nav-item">
-				<a class="nav-link" id="videos_taab" data-toggle="tab" href="#vvideo_tabz" role="tab" aria-controls="videos_taab" aria-selected="false">ویدیوها </a>
+				<a class="nav-link active" id="videos_taab" data-toggle="tab" href="#vvideo_tabz" role="tab" aria-controls="videos_taab" aria-selected="true">خانه </a>
 				</li>
 				<li class="nav-item">
 				<a class="nav-link" id="playlist-tab" data-toggle="tab" href="#playlist_tab" role="tab" aria-controls="playlist-tab" aria-selected="false"> لیست پخش</a>
@@ -72,48 +69,15 @@
 		</div>
 	</div><!--history-lst end-->
 	<div class="tab-content p-0" id="myTabContent">
-		<div class="tab-pane fade show active" id="home_vidz" role="tabpanel" aria-labelledby="home_tab">
-			<div class="home_tb_details">
-				<div class="viddz">
-					<div class="container">
-						<div class="vidz_sec">
-							<h3>آپلود های اخیر</h3>
-							<div class="clearfix"></div>
-							<div class="vidz_list">
-								<div class="row">
-									{% for video in videos %}
-									<div class="col-lg-3 col-md-3 col-sm-6 col-6 full_wdth">
-										<div class="videoo">
-											<div class="vid_thumbainl">
-												<a href="{% url 'youtube:video_detail' video.id %}" title="{{video.category.name}}">
-													<img src="{{video.thumbnail.url}}" alt="{{video.title}}">
-													<span class="vid-time">{{video.video_time}}</span>
-													<span class="watch_later">
-														<i class="icon-watch_later_fill"></i>
-													</span>
-												</a>	
-											</div><!--vid_thumbnail end-->
-											<div class="video_info">
-												<h3><a href="{% url 'youtube:video_detail' video.id %}" title="{{video.title}}">{{video.title|truncatechars:35}}</a></h3>
-												<h4><a href="#" title="مشاهده کانال">{{video.youtuber.channel_name}}</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-												<span>{{video.visited}} بازدید .<small class="posted_dt">{{video.days_passed}}</small></span>
-											</div>
-										</div><!--videoo end-->
-									</div>
-									{% endfor %}
-								</div>
-							</div><!--vidz_list end-->
-						</div><!--vidz_videos end-->
-					</div>
-				</div><!--viddz end-->
-			</div><!--home_tb_details end-->
-		</div>
-		<div class="tab-pane" id="vvideo_tabz" role="tabpanel" aria-labelledby="videos_taab">
+		<div class="tab-pane fade show active" id="vvideo_tabz" role="tabpanel" aria-labelledby="videos_taab">
 			<div class="videso_tb_details">
 				<div class="container">
 					<div class="vidz_sec">
 						<h3>آپلودها</h3>
-						<a href="#" title=""><i class="icon-sort_by"></i> براساس </a>
+							<select style="float: left;" id="order-select" name="orderby" class="orderby" aria-label="Shop order">
+								<option value="-created">پیش فرض</option>
+								<option value="created">قدیمی ترین</option>
+							</select>
 						<div class="clearfix"></div>
 						<div class="vidz_list">
 							<div class="row">
@@ -151,7 +115,7 @@
 						<div class="vidz_sec">
 							<h3>{{play_list.name}}</h3>
 							<a href="#" title=""> نمایش همه </a>
-							{% if yt_profile == profile %}<a href="#" class="delete-playlist" title="حذف لیست ویدیو" data-id='{{play_list.id}}' style="margin-left: 20px;"> حذف </a>{% endif %}
+							{% if forloop.counter != 1 %}{% if yt_profile == profile %}<a href="#" class="delete-playlist" title="حذف لیست ویدیو" data-id='{{play_list.id}}' style="margin-left: 20px;"> حذف </a>{% endif %}{% endif %}
 							<div class="clearfix"></div>
 							<div class="vidz_list">
 								<div class="row">
@@ -362,9 +326,13 @@ $(document).ready(function(){
 	});
 	$('.delete-playlist').click(function(){
 		id = $(this).data('id')
-		alert(id)
 		location.href="/delete_playlist/" + id + "/"
-	});		
+	});
+	$('#order-select option[value="{{order_by}}"]').attr("selected", "selected");
+	$('#order-select').change(function(){
+		value = $('option:selected', this).val()
+		location.href = "{% url 'youtube:channel_home_page' yt_profile.id %}" + "?orderby=" + value
+	})		
 });
 </script>
 {% endblock js %}

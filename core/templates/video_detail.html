@@ -73,7 +73,7 @@
 									</button>
 								</li>
 								<li>
-									<button id='watch-later' data-toggle="tooltip" data-placement="top" title="بعدا میبینم">
+									<button class='watch_later' data-videoid='{{video.id}}' data-toggle="tooltip" data-placement="top" title="بعدا میبینم">
 										<i class="icon-watch_later"></i>
 									</button>
 								</li>
@@ -190,41 +190,29 @@
 						<div class="clearfix"></div>
 					</div><!--vidz-prt end-->
 					<div class="videoo-list-ab">
-						<div class="videoo">
-							<div class="vid_thumbainl">
-								<a href="single_video_page.html" title="">
-									<img src="{% static 'images/resources/vide1.png' %}" alt="">
-									<span class="vid-time">10:21</span>
-									<span class="watch_later">
-										<i class="icon-watch_later_fill"></i>
-									</span>
-								</a>	
-							</div><!--vid_thumbnail end-->
-							<div class="video_info">
-								<h3><a href="#" title="">خانه ما 10 ( قسمت 8 )</a></h3>
-								<h4><a href="#" title="">مستند مسابقه خانه ما</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-								<span>686 هزار بازدید .<small class="posted_dt">1 هفته قبل</small></span>
-							</div>
-						</div><!--videoo end-->
+						{% for video in similar_videos %}
+						{% if forloop.counter == 2 %}
 						<div class="ad-rw">
 							<img src="{% static 'images/resources/ad-img.jpg' %}" alt="">
 						</div>
+						{% endif %}
 						<div class="videoo">
 							<div class="vid_thumbainl">
-								<a href="single_video_page.html" title="">
-									<img src="{% static 'images/resources/vide4.png' %}" alt="">
-									<span class="vid-time">5:25</span>
-									<span class="watch_later">
+								<a href="{% url 'youtube:video_detail' id=video.id %}" title="{{video.title}}">
+									<img src="{{video.thumbnail.url}}" alt="{{video.title}}">
+									<span class="vid-time">{{video.video_time}}</span>
+									<span class="watch_later" data-videoid='{{video.id}}'>
 										<i class="icon-watch_later_fill"></i>
 									</span>
 								</a>	
 							</div><!--vid_thumbnail end-->
 							<div class="video_info">
-								<h3><a href="#" title="">نقد و بررسی پابجی new state</a></h3>
-								<h4><a href="#" title="">رسانه های دنیای گیم</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-								<span>686 هزار بازدید .<small class="posted_dt">1 هفته قبل</small></span>
+								<h3><a href="{% url 'youtube:video_detail' id=video.id %}">{{video.title}}</a></h3>
+								<h4><a href="{% url 'youtube:channel_home_page' id=video.youtuber.id %}" title="{{video.youtuber.channel_name}}">{{video.youtuber.channel_name}}</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
+								<span>{{video.visited}} بازدید .<small class="posted_dt">{{video.days_passed}}</small></span>
 							</div>
 						</div><!--videoo end-->
+						{% endfor %}						
 					</div><!--videoo-list-ab end-->
 				</div><!--side-bar end-->
 			</div>
@@ -298,20 +286,6 @@ $(document).ready(function(){
 			}                                
 		});
 	});	
-	$('#watch-later').click(function(){
-		$.ajax({
-			type : 'GET',
-			url : '{% url "youtube:watch_later" %}',
-			data : {'video_id': '{{video.id}}'},
-			dataType : 'json',
-			success : function (data) {
-				alert(data.status)
-			},  
-			error: function(data){
-				alert('مشکلی پیش امده است لطفا دوباره امتحان کنید.');
-			}                                
-		});
-	});
 	$('#add-to-playlist').click(function(){
 		$.ajax({
 			type : 'GET',

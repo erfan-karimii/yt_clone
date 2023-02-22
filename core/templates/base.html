@@ -220,6 +220,22 @@
             })
             {% endif %}
         {% endfor %}
+        $('.watch_later').click(function(e){
+            video_id = $(this).data('videoid')
+            e.preventDefault()
+            $.ajax({
+                type : 'GET',
+                url : '{% url "youtube:watch_later" %}',
+                data : {'video_id': video_id},
+                dataType : 'json',
+                success : function (data) {
+                    alert(data.status)
+                },  
+                error: function(data){
+                    alert('مشکلی پیش امده است لطفا دوباره امتحان کنید.');
+                }                                
+            });
+        });
     </script>
     {% block js %}{% endblock js %}
 </body>

@@ -5,19 +5,22 @@ from hitcount.utils import get_hitcount_model
 from hitcount.views import HitCountMixin
 from django.db.models import Count
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from account.models import Profile
-from .models import Video , VideoTag , PlayList
+from .models import Video , VideoTag , PlayList , Category
 from .forms import VideoEditForm
 # Create your views here.
 
 def index(request):
     videos = Video.objects.all_video().order_by('-created')
     channels = Profile.objects.exclude(image='').annotate(most_like=Count('video__like')).exclude(most_like=0).order_by('-most_like')
-    favorite_videos = Video.objects.all_video().annotate(like_count=Count('like')).order_by('-like_count','created')
+    favorite_videos = Video.objects.all_video().annotate(like_count=Count('like')).order_by('-like_count','-created')
+    categorys = Category.objects.all()
     context = {
         'latest_videos': videos,
         'channels' : channels,
         'favorite_videos' : favorite_videos,
+        'categorys' : categorys,
     }
     return render(request,'index.html',context)
 
@@ -70,12 +73,16 @@ def upload_delete(request,id):
 @login_required(login_url='/login/')
 def video_detail(request,id):
     video = Video.objects.get(id=id,published=True)
-    user_profile = Profile.objects.filter(user=request.user).first()
-    if video.youtuber in user_profile.follow.all():
+    profile = Profile.objects.filter(user=request.user).first()
+    
+    if video.youtuber in profile.follow.all():
         is_followed = True
     else :
         is_followed = False
-    context = {}
+    
+    ids=video.tags.values_list('id',flat=True)
+    similar_videos = Video.objects.all_video(tags__in=ids).exclude(id=id)
+    similar_videos = similar_videos.annotate(s_count=Count('tags')).order_by('-s_count','-created')[:6]
 
     hit_count = get_hitcount_model().objects.get_for_object(video)
     hits = hit_count.hits
@@ -87,8 +94,12 @@ def video_detail(request,id):
         hitcontext['hit_message'] = hit_count_response.hit_message
         hitcontext['total_hits'] = hits
     
-    context['video'] = video
-    context['is_followed'] = is_followed
+    context = {
+        'video' : video, 
+        'is_followed' : is_followed,
+        'similar_videos': similar_videos,
+    }
+
     return render(request,'video_detail.html',context)
 
 def add_new_tag_ajax(request):
@@ -169,27 +180,31 @@ def create_playlist_ajax(request):
 
 def delete_playlist(request,id):
     profile = Profile.objects.get(user=request.user)
-    playlist = PlayList.objects.get(id=id,profile=profile)
+    playlist = PlayList.objects.get(~Q(name='watch_later'),id=id,profile=profile)
     playlist.delete()
     messages.success(request,'پلی لیست با موفقیت حذف شد')
     return redirect('youtube:channel_home_page',id=profile.id)
 
 def channel_home_page(request,id):
     yt_profile = get_object_or_404(Profile,id=id)
-    all_video = yt_profile.video_set.filter(published=True).order_by('-created')
-    play_lists = PlayList.objects.filter(profile=yt_profile)
-
-    profile = Profile.objects.filter(user=request.user).first()
-    if yt_profile in profile.follow.all():
-        is_followed = True
+    order_by = request.GET.get('orderby')
+    if order_by:
+        all_video = yt_profile.video_set.filter(published=True).order_by(order_by)
     else :
-        is_followed = False
+        all_video = yt_profile.video_set.filter(published=True).order_by('-created')
+    play_lists = PlayList.objects.filter(profile=yt_profile)
+    
+    is_followed = False
+    if request.user.is_authenticated:
+        profile = Profile.objects.get(user=request.user)
+        if yt_profile in profile.follow.all():
+            is_followed = True
 
     context = {
         'yt_profile' : yt_profile,
-        'profile':profile,
         'videos' : all_video,
         'is_followed' : is_followed,
         'play_lists' : play_lists,
+        'order_by' : order_by,
     }
     return render(request,'channel_home_page.html',context)
