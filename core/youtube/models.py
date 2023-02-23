@@ -74,7 +74,27 @@ class Category(models.Model):
         return self.name
     
 
-# nested comment 
+class Comment(models.Model):
+    profile = models.ForeignKey('account.Profile',on_delete=models.CASCADE)
+    video = models.ForeignKey(Video,on_delete=models.CASCADE)
+    body = models.TextField()
+    like = models.PositiveIntegerField(default=0)
+    is_show = models.BooleanField(default=False)
+    
+    created = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.body
+    
+    @property
+    def days_passed(self):
+        today = datetime.now(timezone.utc)
+        days_passed = today - self.created
+        print(days_passed)
+        return f"{days_passed.days} روز پیش" if days_passed.days != 0 else f'{timedelta(seconds=int(days_passed.seconds))} قبل '
+
+    class Meta :
+        ordering = ['created']
 
 class PlayList(models.Model):
     profile = models.ForeignKey('account.Profile',on_delete=models.CASCADE)
@@ -83,3 +103,4 @@ class PlayList(models.Model):
 
     def __str__(self):
         return self.name
+

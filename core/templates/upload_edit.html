@@ -57,10 +57,10 @@
 							<h2 class="title-hd">کسب درآمد </h2>
 							<div class="form_field">
 								<select name='monetize'>
-									<option value='on'{% if video.monetize %}selected{% endif %}>بله</option>
 									<option value=''{% if not video.monetize %}selected{% endif %}>خیر</option>
+									<option value='on'{% if video.monetize %}selected{% endif %}>بله</option>
 								</select>
-								<a href="#" title="" class="arw_vz">
+								<a href="javascript:void(0)" title="" class="arw_vz">
 									<svg width="24" height="26" viewBox="0 0 24 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path fill-rule="evenodd" clip-rule="evenodd" d="M19.9394 7.51447L22.0607 9.63579L12 19.6964L1.93936 9.63579L4.06068 7.51447L12 15.4538L19.9394 7.51447Z" fill="#9494A0"></path>
 									</svg>
@@ -70,13 +70,13 @@
 					</div>
 					<div class="col-lg-3 col-md-3 col-sm-4 col-12">
 						<div class="option">
-							<h2 class="title-hd">نمایش خصوصی </h2>
+							<h2 class="title-hd">نمایش داده شود؟</h2>
 							<div class="form_field">
-								<select>
-									<option>بله</option>
-									<option>خیر</option>
+								<select name='published'>
+									<option value='' {% if not video.published %}selected{% endif %}>خیر</option>
+									<option value='on' {% if video.published %}selected{% endif %}>بله</option>
 								</select>
-								<a href="#" title="" class="arw_vz">
+								<a href="javascript:void(0)" title="" class="arw_vz">
 									<svg width="24" height="26" viewBox="0 0 24 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path fill-rule="evenodd" clip-rule="evenodd" d="M19.9394 7.51447L22.0607 9.63579L12 19.6964L1.93936 9.63579L4.06068 7.51447L12 15.4538L19.9394 7.51447Z" fill="#9494A0"></path>
 									</svg>

@@ -7,7 +7,7 @@ from django.db.models import Count , Q
 from django.contrib.auth.decorators import login_required
 from pytube import YouTube
 from account.models import Profile
-from .models import Video , VideoTag , PlayList , Category
+from .models import Video , VideoTag , PlayList , Category , Comment
 from .forms import VideoEditForm
 # Create your views here.
 
@@ -27,9 +27,8 @@ def index(request):
 @login_required(login_url='/login/')
 def upload_video(request):
     if request.method == 'POST':
-        profile = Profile.objects.get(user=request.user)
         video = request.FILES.get('video')
-        Video.objects.create(youtuber=profile,video=video)
+        Video.objects.create(youtuber=request.profile,video=video)
         messages.success(request,'ویدیو شما در یافت شد و در حال اپلود می باشد.')
     return render(request,'upload_video.html',{})
 
@@ -37,12 +36,12 @@ def upload_video_from_yotube(request):
     if request.method == 'POST':
         link = request.POST.get('yt_link')
         video = YouTube(link)
-        
-
+        pass
+    return ''
 
 def upload_list(request):
-    profile = Profile.objects.get(user=request.user)
-    videos = Video.objects.filter(youtuber=profile)
+    # profile = Profile.objects.get(user=request.user)
+    videos = Video.objects.filter(youtuber=request.profile)
     context = {
         'videos' : videos,
     }
@@ -51,11 +50,9 @@ def upload_list(request):
 def upload_edit(request,id):
     video = Video.objects.get(id=id)
     if request.method == 'POST':
-        print(request.POST)
         form = VideoEditForm(request.POST,request.FILES,instance=video)
         if form.is_valid():
             video = form.save()
-            video.published = True
             video.save()
             messages.success(request,'ویدیو شما با موفقیت ادیت شد.')
         else:
@@ -71,8 +68,8 @@ def upload_edit(request,id):
     return render(request,'upload_edit.html',context)
 
 def upload_delete(request,id):
-    profile = Profile.objects.get(user=request.user)
-    video = Video.objects.get(id=id,youtuber=profile)
+    # profile = Profile.objects.get(user=request.user)
+    video = Video.objects.get(id=id,youtuber=request.profile)
     video.delete()
     messages.success(request,'ویدیو شما حذف شد.')
     return redirect('youtube:upload_list')
@@ -80,9 +77,10 @@ def upload_delete(request,id):
 @login_required(login_url='/login/')
 def video_detail(request,id):
     video = Video.objects.get(id=id,published=True)
-    profile = Profile.objects.filter(user=request.user).first()
     
-    if video.youtuber in profile.follow.all():
+    comments = Comment.objects.filter(video=video)
+    
+    if video.youtuber in request.profile.follow.all():
         is_followed = True
     else :
         is_followed = False
@@ -105,6 +103,7 @@ def video_detail(request,id):
         'video' : video, 
         'is_followed' : is_followed,
         'similar_videos': similar_videos,
+        'comments' : comments,
     }
 
     return render(request,'video_detail.html',context)
@@ -117,34 +116,34 @@ def add_new_tag_ajax(request):
 def like_video_ajax(request):
     video_id = request.GET.get('video_id')
     video = Video.objects.get(id=video_id)
-    profile = Profile.objects.get(user=request.user)
-    if profile in video.like.all():
-        video.like.remove(profile)
+    # profile = Profile.objects.get(user=request.user)
+    if request.profile in video.like.all():
+        video.like.remove(request.profile)
         status = 'removed'
     else:
-        video.like.add(profile)
+        video.like.add(request.profile)
         status = 'added'
     return JsonResponse({'status':status})
 
 def follow_channel_ajax(request):
     yt_user = request.GET.get('yt_user')
     yt_profile= Profile.objects.get(user=yt_user)
-    profile = Profile.objects.get(user=request.user)
-    if yt_profile == profile:
+    # profile = Profile.objects.get(user=request.user)
+    if yt_profile == request.profile:
         status = 'same'
-    elif yt_profile in profile.follow.all():
-        profile.follow.remove(yt_profile)
+    elif yt_profile in request.profile.follow.all():
+        request.profile.follow.remove(yt_profile)
         status = 'removed'
     else:
-        profile.follow.add(yt_profile)
+        request.profile.follow.add(yt_profile)
         status = 'added'
     return JsonResponse({'status':status})
 
 def watch_later_ajax(request):
     video_id = request.GET.get('video_id')
     video = Video.objects.get(id=video_id)
-    profile = Profile.objects.get(user=request.user)
-    playlist = PlayList.objects.get(profile=profile,name='watch_later')
+    # profile = Profile.objects.get(user=request.user)
+    playlist = PlayList.objects.get(profile=request.profile,name='watch_later')
     if video in playlist.video.all():
         playlist.video.remove(video)
         status = 'removed'
@@ -154,8 +153,8 @@ def watch_later_ajax(request):
     return JsonResponse({'status':status})
 
 def get_playlist_ajax(request):
-    profile = Profile.objects.get(user=request.user)
-    playlists = PlayList.objects.filter(profile=profile).exclude(name='watch_later').values_list('name',flat=True)
+    # profile = Profile.objects.get(user=request.user)
+    playlists = PlayList.objects.filter(profile=request.profile).exclude(name='watch_later').values_list('name',flat=True)
     return JsonResponse({'playlists':list(playlists)})
 
 def add_video_to_playlist_ajax(request):
@@ -172,11 +171,11 @@ def add_video_to_playlist_ajax(request):
     return JsonResponse({'status':status})
 
 def create_playlist_ajax(request):
-    profile = Profile.objects.get(user=request.user)
+    # profile = Profile.objects.get(user=request.user)
     playlist_name = request.GET.get('playlist_name')
     video_id = request.GET.get('video_id')
     video = Video.objects.get(id=video_id)
-    obj,created = PlayList.objects.get_or_create(name=playlist_name,defaults={'profile':profile,})
+    obj,created = PlayList.objects.get_or_create(name=playlist_name,defaults={'profile':request.profile,})
 
     if created:
         obj.video.add(video)
@@ -185,12 +184,20 @@ def create_playlist_ajax(request):
         status = 'this play list already exists'
     return JsonResponse({'status':status})
 
+def save_comment_ajax(request):
+    body = request.GET.get('comment_body')
+    video_id = request.GET.get('video_id')
+    video = Video.objects.get(id=video_id)
+    Comment.objects.create(profile=request.profile,video=video,body=body)
+    messages.success(request,'کامنت شما ثبت شد و بعد از تایید ادمین نمایش داده می شود.')
+    return JsonResponse({'status':'success'})
+
 def delete_playlist(request,id):
-    profile = Profile.objects.get(user=request.user)
-    playlist = PlayList.objects.get(~Q(name='watch_later'),id=id,profile=profile)
+    # profile = Profile.objects.get(user=request.user)
+    playlist = PlayList.objects.get(~Q(name='watch_later'),id=id,profile=request.profile)
     playlist.delete()
     messages.success(request,'پلی لیست با موفقیت حذف شد')
-    return redirect('youtube:channel_home_page',id=profile.id)
+    return redirect('youtube:channel_home_page',id=request.profile.id)
 
 def channel_home_page(request,id):
     yt_profile = get_object_or_404(Profile,id=id)
@@ -203,8 +210,8 @@ def channel_home_page(request,id):
     
     is_followed = False
     if request.user.is_authenticated:
-        profile = Profile.objects.get(user=request.user)
-        if yt_profile in profile.follow.all():
+        # profile = Profile.objects.get(user=request.user)
+        if yt_profile in request.profile.follow.all():
             is_followed = True
 
     context = {

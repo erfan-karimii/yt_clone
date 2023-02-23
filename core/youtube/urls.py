@@ -17,6 +17,7 @@ urlpatterns = [
     path('get_playlist/',views.get_playlist_ajax,name='get_playlist'),
     path('add_video_to_playlist/',views.add_video_to_playlist_ajax,name='add_video_to_playlist'),
     path('create_playlist/',views.create_playlist_ajax,name='create_playlist'),
+    path('save_comment/',views.save_comment_ajax,name='save_comment'),
     path('delete_playlist/<id>/',views.delete_playlist,name='delete_playlist'),
     path('channel_home_page/<id>/',views.channel_home_page,name='channel_home_page'),
 

@@ -57,9 +57,9 @@
 							<ul class="chan_cantrz">
 								<li>
 									{% if is_followed %}
-									<a href="#" id="follow-button" title=""  class="subscribe">دنبال می کنید</a>
+									<a href="javascript:void(0)" id="follow-button" title=""  class="subscribe">دنبال می کنید</a>
 									{% else %}
-									<a href="#" id="follow-button" title=""  class="subscribe">دنبال کردن</a>
+									<a href="javascript:void(0)" id="follow-button" title=""  class="subscribe">دنبال کردن</a>
 									{% endif %}
 								</li>
 								<li>
@@ -117,11 +117,11 @@
 						<div class="clearfix"></div>
 						<div class="vcp_inf pc">
 							<div class="vc_hd">
-								<img src="{% static 'images/resources/th1.png' %}" alt="">
+								<img src="{{request.profile.image.url}}" alt="">
 							</div>
-							<form>
-								<input type="text" placeholder="دیدگاه خود را بنویسید">
-								<button type="submit">ارسال دیدگاه</button>
+							<form method='get'>
+								<input id='comment-body' type="text" name='body' placeholder="دیدگاه خود را بنویسید">
+								<button id='save-comment' type="submit">ارسال دیدگاه</button>
 							</form>
 							<div class="clearfix"></div>
 						</div><!--cmt-bx end-->
@@ -154,34 +154,30 @@
 									</div><!--coments end-->
 								</div><!--vcp_inf end-->
 							</li>
+							{% for comment in comments %}
 							<li>
 								<div class="vcp_inf">
 									<div class="vc_hd">
-										<img src="{% static 'images/resources/th3.png' %}" alt="">
+										<img src="{{comment.profile.image.url}}" alt="">
 									</div>
 									<div class="coments">
-										<h2>محمد امینی <small class="posted_dt"> . 2 ساعت قبل</small></h2>
-										<p>این ویدیو مورد علاقه من هست و من دوست دارم </p>
+										<h2>{{comment.profile.channel_name}} <small class="posted_dt"> . {{comment.days_passed}}</small></h2>
+										<p>{{comment.body}}</p>
 										<ul class="cmn-i">
 											<li>
-												<a href="#" title="">
+												<a href="javascript:void(0)" title="like">
 													<i class="icon-thumbs_up"></i>
 												</a>
-												<span>61</span>
-											</li>
-											<li>
-												<a href="#" title="">
-													<i class="icon-thumbs_down"></i>
-												</a>
-												<span>3</span>
+												<span>{{comment.like}}</span>
 											</li>
 										</ul>
 									</div><!--coments end-->
 								</div><!--vcp_inf end-->
 							</li>
+							{% endfor %}
 						</ul><!--comment list end-->
 					</div>
-				</div><!--mn-vid-sc end--->
+				</div>
 			</div><!---col-lg-9 end-->
 			<div class="col-lg-3">
 				<div class="sidebar">
@@ -263,8 +259,7 @@ $(document).ready(function(){
 			}                                
 		});
 	});
-	$('#follow-button').click(function(e){
-		e.preventDefault()
+	$('#follow-button').click(function(){
 		$.ajax({
 			type : 'GET',
 			url : '{% url "youtube:follow_channel" %}',
@@ -320,7 +315,24 @@ $(document).ready(function(){
 				alert('مشکلی پیش امده است لطفا دوباره امتحان کنید.');
 			}                                
 		});
-	});	
+	});
+	$('#save-comment').click(function(e){
+		e.preventDefault()
+		value = $('#comment-body').val()
+		alert(value)
+		$.ajax({
+			type : 'GET',
+			url : '{% url "youtube:save_comment" %}',
+			data : {'comment_body': value,'video_id':'{{video.id}}'},
+			dataType : 'json',
+			success : function (data) {
+				console.log(data.status)
+			},  
+			error: function(data){
+				alert('مشکلی پیش امده است لطفا دوباره امتحان کنید.');
+			}                                
+		});
+	})	
 });
 function addPlaylist(name) {
 	$.ajax({

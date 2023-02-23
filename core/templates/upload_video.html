@@ -27,6 +27,7 @@
 					<h3>ویدیو را از یوتیوب وارد کنید </h3>
 					<span>کپی / پیست لینک ویدیو</span>
 					<form method='post' enctype="multipart/form-data">
+						{% csrf_token %}
 						<input type="url" name="yt_link" placeholder="لینک را پیست کنید">
 						<button type="submit">وارد کردن ویدیو</button>
 					</form>
