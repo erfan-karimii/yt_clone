@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 
 from hitcount.utils import get_hitcount_model
 from hitcount.views import HitCountMixin
-from hitcount.models import Hit
+from hitcount.models import Hit ,HitCount
 from pytube import YouTube
 
 from account.models import Profile
@@ -248,16 +248,11 @@ def channel_home_page(request,id):
     return render(request,'channel_home_page.html',context)
 
 def history_page(request):
-    historys_id = Hit.objects.filter(user=request.user).values_list('hitcount__object_pk',flat=True).order_by('-created')
-    
-    x = 0 
-    video_list = []
-    
-    for id in historys_id:
-        if x == 3:
-            break
-        video = Video.objects.get(id=id)
-        video_list.append(video)
-        x += 1
+    # historys_id = Hit.objects.filter(user=request.user).values_list('hitcount__object_pk',flat=True).order_by('-created')
+    hits = Hit.objects.filter(user=request.user)
+    print(hits)
+    # print(hits[0].hitcount.hit_count_generic_relation.all())
+    # for y in hits :
+    #     print(y.hitcount.hit_count_generic_relation.first().description)    
 
-    return render(request,'history_page.html',{'video_list':video_list,})
+    return render(request,'history_page.html',{'hits':hits,})
