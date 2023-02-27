@@ -1,8 +1,6 @@
 send email code (in server) 
-remember me register
 use "show = False" for deleting objects not realy deleting it
 screen share
 google ad
-add profile attr to request before getting into views?
 shekayat page
 pytube

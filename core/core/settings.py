@@ -170,3 +170,7 @@ CKEDITOR_CONFIGS = {
         ]
     }
 }
+
+#------------------------hitcount-------------
+HITCOUNT_KEEP_HIT_ACTIVE  = {'days' : 1}
+HITCOUNT_HITS_PER_IP_LIMIT = 10

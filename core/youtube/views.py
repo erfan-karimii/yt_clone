@@ -1,11 +1,15 @@
 from django.shortcuts import render ,redirect ,get_object_or_404
 from django.contrib import messages
 from django.http import JsonResponse
+from django.db.models import Count , Q
+from django.db.utils import IntegrityError
+from django.contrib.auth.decorators import login_required
+
 from hitcount.utils import get_hitcount_model
 from hitcount.views import HitCountMixin
-from django.db.models import Count , Q
-from django.contrib.auth.decorators import login_required
+from hitcount.models import Hit
 from pytube import YouTube
+
 from account.models import Profile
 from .models import Video , VideoTag , PlayList , Category , Comment
 from .forms import VideoEditForm
@@ -78,26 +82,17 @@ def upload_delete(request,id):
 def video_detail(request,id):
     video = Video.objects.get(id=id,published=True)
     
-    comments = Comment.objects.filter(video=video)
+    comments = Comment.objects.filter(video=video,is_show=True).order_by('-is_pin_comment','-created')
     
-    if video.youtuber in request.profile.follow.all():
-        is_followed = True
-    else :
-        is_followed = False
+    is_followed = bool(video.youtuber in request.profile.follow.all())
     
     ids=video.tags.values_list('id',flat=True)
     similar_videos = Video.objects.all_video(tags__in=ids).exclude(id=id)
     similar_videos = similar_videos.annotate(s_count=Count('tags')).order_by('-s_count','-created')[:6]
 
     hit_count = get_hitcount_model().objects.get_for_object(video)
-    hits = hit_count.hits
-    hitcontext = {'pk': hit_count.pk}
-    hit_count_response = HitCountMixin.hit_count(request, hit_count)
-    if hit_count_response.hit_counted:
-        hits = hits + 1
-        hitcontext['hit_counted'] = hit_count_response.hit_counted
-        hitcontext['hit_message'] = hit_count_response.hit_message
-        hitcontext['total_hits'] = hits
+    HitCountMixin.hit_count(request, hit_count)
+    
     
     context = {
         'video' : video, 
@@ -186,11 +181,40 @@ def create_playlist_ajax(request):
 
 def save_comment_ajax(request):
     body = request.GET.get('comment_body')
-    video_id = request.GET.get('video_id')
-    video = Video.objects.get(id=video_id)
-    Comment.objects.create(profile=request.profile,video=video,body=body)
-    messages.success(request,'کامنت شما ثبت شد و بعد از تایید ادمین نمایش داده می شود.')
-    return JsonResponse({'status':'success'})
+    if body :
+        video_id = request.GET.get('video_id')
+        video = Video.objects.get(id=video_id)
+        try:
+            Comment.objects.create(profile=request.profile,video=video,body=body)
+            icon = 'success'
+            status = 'کامنت شما ثبت شد و بعد از تایید ادمین نمایش داده می شود.'
+        except IntegrityError:
+            icon = 'error'
+            status = 'شما مجاز به گذاشتن یک پیام بر روی هر ویدیو هستید.'
+    else :
+        icon = 'error'
+        status = 'لطفا پیام بگذارید'
+    return JsonResponse({'status':status,'icon':icon})
+
+def delete_comment(request,id):
+    comment = Comment.objects.get(id=id)
+    comment.delete()
+    messages.success(request,'کامنت با موفقیت حذف شد.')
+    prev =  request.GET.get('prev')
+    return redirect(prev)
+
+def pin_comment(request,id):
+    comment = Comment.objects.get(id=id)
+    if comment.is_pin_comment:
+        comment.is_pin_comment = False
+        comment.save()
+        messages.success(request,'کامنت با موفقیت ان پین شد.')
+    else :
+        comment.is_pin_comment = True
+        comment.save()
+        messages.success(request,'کامنت با موفقیت پین شد.')
+    prev =  request.GET.get('prev')
+    return redirect(prev)
 
 def delete_playlist(request,id):
     # profile = Profile.objects.get(user=request.user)
@@ -222,3 +246,18 @@ def channel_home_page(request,id):
         'order_by' : order_by,
     }
     return render(request,'channel_home_page.html',context)
+
+def history_page(request):
+    historys_id = Hit.objects.filter(user=request.user).values_list('hitcount__object_pk',flat=True).order_by('-created')
+    
+    x = 0 
+    video_list = []
+    
+    for id in historys_id:
+        if x == 3:
+            break
+        video = Video.objects.get(id=id)
+        video_list.append(video)
+        x += 1
+
+    return render(request,'history_page.html',{'video_list':video_list,})

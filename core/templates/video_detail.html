@@ -108,7 +108,7 @@
 					</div><!--abt-mk end-->
 					<div class="cmt-bx">
 						<ul class="cmt-pr">
-							<li><span>18,386</span> کامنت</li>
+							<li><span>{{comments.count}}</span> کامنت</li>
 							<li>
 								<span></span>
 							</li>
@@ -120,40 +120,12 @@
 								<img src="{{request.profile.image.url}}" alt="">
 							</div>
 							<form method='get'>
-								<input id='comment-body' type="text" name='body' placeholder="دیدگاه خود را بنویسید">
+								<input id='comment-body' type="text" name='body' placeholder="دیدگاه خود را بنویسید" required='required'>
 								<button id='save-comment' type="submit">ارسال دیدگاه</button>
 							</form>
 							<div class="clearfix"></div>
 						</div><!--cmt-bx end-->
 						<ul class="cmn-lst">
-							<li>
-								<div class="vcp_inf">
-									<div class="vc_hd">
-										<img src="{% static 'images/resources/th2.png' %}" alt="">
-									</div>
-									<div class="coments">
-										<div class="pinned-comment">
-											<span><i class="icon-pinned"></i> پین شده توسط {{video.youtuber.channel_name}}</span>
-										</div>
-										<h2>ویدئوگرام <small class="posted_dt"> . 18 ساعت قبل</small></h2>
-										<p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است  </p>
-										<ul class="cmn-i">
-											<li>
-												<a href="#" title="">
-													<i class="icon-thumbs_up"></i>
-												</a>
-												<span>680</span>
-											</li>
-											<li>
-												<a href="#" title="">
-													<i class="icon-thumbs_down"></i>
-												</a>
-												<span>21</span>
-											</li>
-										</ul>
-									</div><!--coments end-->
-								</div><!--vcp_inf end-->
-							</li>
 							{% for comment in comments %}
 							<li>
 								<div class="vcp_inf">
@@ -161,16 +133,27 @@
 										<img src="{{comment.profile.image.url}}" alt="">
 									</div>
 									<div class="coments">
+										{% if comment.is_pin_comment %}
+										<div class="pinned-comment">
+											<span><i class="icon-pinned"></i> پین شده توسط {{video.youtuber.channel_name}}</span>
+										</div>
+										{% endif %}
 										<h2>{{comment.profile.channel_name}} <small class="posted_dt"> . {{comment.days_passed}}</small></h2>
 										<p>{{comment.body}}</p>
+										{% if video.youtuber == request.profile %}
 										<ul class="cmn-i">
 											<li>
-												<a href="javascript:void(0)" title="like">
-													<i class="icon-thumbs_up"></i>
+												<a href="{% url 'youtube:delete_comment' comment.id %}?prev={{ request.path|urlencode }}" class='delete-comment'>
+													حذف
 												</a>
-												<span>{{comment.like}}</span>
+											</li>
+											<li>
+												<a href="{% url 'youtube:pin_comment' comment.id %}?prev={{ request.path|urlencode }}" class='pin-comment'>
+													پین
+												</a>
 											</li>
 										</ul>
+										{% endif %}
 									</div><!--coments end-->
 								</div><!--vcp_inf end-->
 							</li>
@@ -319,14 +302,17 @@ $(document).ready(function(){
 	$('#save-comment').click(function(e){
 		e.preventDefault()
 		value = $('#comment-body').val()
-		alert(value)
 		$.ajax({
 			type : 'GET',
 			url : '{% url "youtube:save_comment" %}',
 			data : {'comment_body': value,'video_id':'{{video.id}}'},
 			dataType : 'json',
 			success : function (data) {
-				console.log(data.status)
+				$('#comment-body').val('')
+				Swal.fire({
+					icon:  data.icon,
+					text : data.status,
+				});
 			},  
 			error: function(data){
 				alert('مشکلی پیش امده است لطفا دوباره امتحان کنید.');
