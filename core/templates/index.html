@@ -86,7 +86,7 @@
 		<div class="container">
 			<div class="vidz_sec">
 				<h3>کانال های محبوب</h3>
-				<a href="#" title="" class="view-btn">نمایش همه</a>
+				<a href="{% url 'youtube:browse_channels' %}" title="" class="view-btn">نمایش همه</a>
 				<div class="vidz_list">
 					<div class="row">
 						{% for channel in channels %}
@@ -143,6 +143,7 @@
 		<div class="container">
 			<div class="vidz_sec">
 				<h3>دسته بندی ها</h3>
+				<a href="{% url 'youtube:browse_category' %}" title="همه دسته بندی ها" class="view-btn">نمایش همه</a>
 				<div class="vidz_list">
 					<div class="row">
 						{% for category in categorys %}

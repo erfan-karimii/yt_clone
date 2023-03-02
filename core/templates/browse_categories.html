@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+
+<section class="browse_categories_sec">
+	<div class="container">
+		<div class="browse_categories">
+			<div class="row">
+				{% for category in categories %}
+				<div class="col-lg-2 col-md-4 col-sm-4 col-6 full_wdth">
+					<div class="br-channel">
+						<div class="br-channel-img">
+							<a href="#" title="#">
+								<img src="{{category.image.url}}" alt="">
+							</a>
+						</div>
+						<div class="br-info">
+							<h3><a href="#" title="">{{category.name}}</a></h3>
+							<span>{{category.video_set.all.count}} ویدیو</span>
+						</div>
+					</div><!--br-channel end-->
+				</div>
+				{% endfor %}
+			</div>
+		</div><!--</div> end-->
+		<div class="browse_cat_lists">
+			<h3>دسته بندی ها</h3>
+			<ul>
+				<li><a href="#" title="">فیلم سینمایی</a></li>
+				<li><a href="#" title="">سریال</a></li>
+				<li><a href="#" title="">فیلم تلوزیونی</a></li>
+				<li><a href="#" title="">گیم</a></li>
+				<li><a href="#" title="">ورزشی</a></li>
+				<li><a href="#" title="">طنز</a></li>
+				<li><a href="#" title="">آموزشی</a></li>
+				<li><a href="#" title="">تفریحی</a></li>
+				<li><a href="#" title="">فیلم</a></li>
+				<li><a href="#" title="">مذهبی</a></li>
+			</ul>
+			<ul>
+				<li><a href="#" title="">موسیقی</a></li>
+				<li><a href="#" title="">خبری</a></li>
+				<li><a href="#" title="">سیاسی</a></li>
+				<li><a href="#" title="">علم و تکنولوژی</a></li>
+				<li><a href="#" title="">حوادث</a></li>
+				<li><a href="#" title="">گردشگری</a></li>
+				<li><a href="#" title="">حیوانات</a></li>
+				<li><a href="#" title="">تبلیغات</a></li>
+				<li><a href="#" title="">هنری</a></li>
+				<li><a href="#" title="">متفرقه</a></li>
+			</ul>
+			<ul>
+				<li><a href="#" title="">بانوان</a></li>
+				<li><a href="#" title="">سلامت</a></li>
+				<li><a href="#" title="">آشپزی</a></li>
+				<li><a href="#" title="">گیم</a></li>
+				<li><a href="#" title="">فیلم</a></li>
+				<li><a href="#" title="">تفریحی</a></li>
+				<li><a href="#" title="">آموزشی</a></li>
+				<li><a href="#" title="">طنز</a></li>
+				<li><a href="#" title="">کارتون</a></li>
+				<li><a href="#" title="">ورزشی</a></li>
+			</ul>
+			<ul>
+				<li><a href="#" title="">مذهبی</a></li>
+				<li><a href="#" title="">خبری</a></li>
+				<li><a href="#" title="">سیاسی</a></li>
+				<li><a href="#" title="">علم و تکنولوژی</a></li>
+				<li><a href="#" title="">حوادث</a></li>
+				<li><a href="#" title="">گردشگری</a></li>
+				<li><a href="#" title="">حیوانات</a></li>
+				<li><a href="#" title="">تبلیغات</a></li>
+				<li><a href="#" title="">هنری</a></li>
+				<li><a href="#" title="">بانوان</a></li>
+			</ul>
+			<ul>
+				<li><a href="#" title="">مذهبی</a></li>
+				<li><a href="#" title="">خبری</a></li>
+				<li><a href="#" title="">سیاسی</a></li>
+				<li><a href="#" title="">علم و تکنولوژی</a></li>
+				<li><a href="#" title="">حوادث</a></li>
+				<li><a href="#" title="">گردشگری</a></li>
+				<li><a href="#" title="">حیوانات</a></li>
+				<li><a href="#" title="">تبلیغات</a></li>
+				<li><a href="#" title="">هنری</a></li>
+				<li><a href="#" title="">بانوان</a></li>
+			</ul>
+			<ul>
+				<li><a href="#" title="">آب</a></li>
+				<li><a href="#" title="">ساخت و ساز</a></li>
+				<li><a href="#" title="">انجام بده</a></li>
+				<li><a href="#" title="">ورزشی</a></li>
+				<li><a href="#" title="">گردشگری</a></li>
+				<li><a href="#" title="">هنری</a></li>
+			</ul>
+			<div class="clearfix"></div>
+		</div><!--browse_cat_lists end-->
+	</div>
+</section><!--browse-sec end-->
+
+
+{% endblock body %}

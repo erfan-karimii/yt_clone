@@ -17,9 +17,10 @@ from .forms import VideoEditForm
 
 def index(request):
     videos = Video.objects.all_video().order_by('-created')
-    channels = Profile.objects.exclude(image='').annotate(most_like=Count('video__like')).exclude(most_like=0).order_by('-most_like')
+    channels = Profile.objects.exclude(image='').annotate(most_like=Count('video__like')).exclude(most_like=0).order_by('-most_like')[0:4]
+
     favorite_videos = Video.objects.all_video().annotate(like_count=Count('like')).order_by('-like_count','-created')
-    categorys = Category.objects.all()
+    categorys = Category.objects.all()[0:4]
     context = {
         'latest_videos': videos,
         'channels' : channels,
@@ -80,6 +81,12 @@ def upload_delete(request,id):
 
 @login_required(login_url='/login/')
 def video_detail(request,id):
+    is_play_list = False
+    play_list = []
+    if request.GET.get('playlist'):
+        is_play_list = True
+        play_list = PlayList.objects.get(id=request.GET.get('playlist'))
+
     video = Video.objects.get(id=id,published=True)
     
     comments = Comment.objects.filter(video=video,is_show=True).order_by('-is_pin_comment','-created')
@@ -99,6 +106,8 @@ def video_detail(request,id):
         'is_followed' : is_followed,
         'similar_videos': similar_videos,
         'comments' : comments,
+        'is_play_list' : is_play_list,
+        'play_list' : play_list,
     }
 
     return render(request,'video_detail.html',context)
@@ -250,9 +259,16 @@ def channel_home_page(request,id):
 def history_page(request):
     # historys_id = Hit.objects.filter(user=request.user).values_list('hitcount__object_pk',flat=True).order_by('-created')
     hits = Hit.objects.filter(user=request.user)
-    print(hits)
     # print(hits[0].hitcount.hit_count_generic_relation.all())
     # for y in hits :
     #     print(y.hitcount.hit_count_generic_relation.first().description)    
 
     return render(request,'history_page.html',{'hits':hits,})
+
+def browse_category(request):
+    categories = Category.objects.all()
+    return render(request,'browse_categories.html',{'categories':categories})
+
+def browse_channels(request):
+    channels = Profile.objects.exclude(image='').annotate(most_like=Count('video__like')).exclude(most_like=0).order_by('-most_like')
+    return render(request,'browse_channels.html',{'channels':channels})

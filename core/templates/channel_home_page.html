@@ -88,7 +88,7 @@
 											<a href="{% url 'youtube:video_detail' video.id %}" title="{{video.category.name}}">
 												<img src="{{video.thumbnail.url}}" alt="{{video.title}}">
 												<span class="vid-time">{{video.video_time}}</span>
-												<span class="watch_later">
+												<span class="watch_later" data-videoid="{{video.id}}">
 													<i class="icon-watch_later_fill"></i>
 												</span>
 											</a>	
@@ -123,17 +123,17 @@
 									<div class="col-lg-3 col-md-3 col-sm-6 col-6 full_wdth">
 										<div class="videoo">
 											<div class="vid_thumbainl">
-												<a href="{% url 'youtube:video_detail' video.id %}" title="{{video.category.name}}">
+												<a href="{% url 'youtube:video_detail' video.id %}?playlist={{play_list.id}}" title="{{video.category.name}}">
 													<img src="{{video.thumbnail.url}}" alt="{{video.title}}">
 													<span class="vid-time">{{video.video_time}}</span>
-													<span class="watch_later">
+													<span class="watch_later" data-videoid="{{video.id}}">
 														<i class="icon-watch_later_fill"></i>
 													</span>
 												</a>	
 											</div><!--vid_thumbnail end-->
 											<div class="video_info">
-												<h3><a href="{% url 'youtube:video_detail' video.id %}" title="{{video.title}}">{{video.title|truncatechars:35}}</a></h3>
-												<h4><a href="#" title="مشاهده کانال">{{video.youtuber.channel_name}}</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
+												<h3><a href="{% url 'youtube:video_detail' video.id %}?playlist={{play_list.id}}" title="{{video.title}}">{{video.title|truncatechars:35}}</a></h3>
+												<h4><a href="{% url 'youtube:channel_home_page' video.youtuber.id %}" title="مشاهده کانال">{{video.youtuber.channel_name}}</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
 												<span>{{video.visited}} بازدید .<small class="posted_dt">{{video.days_passed}}</small></span>
 											</div>
 										</div><!--videoo end-->
@@ -158,7 +158,7 @@
 							<div class="col-lg-3 col-md-3 col-sm-6 col-12">
 								<div class="videoo">
 									<div class="vid_thumbainl">
-										<a href="single_video_page.html" title="">
+										<a href="{% url 'youtube:channel_home_page' followed_channel.id %}" title="">
 											{% if followed_channel.banner %}
 											<img src="{{followed_channel.banner.url}}" alt="">
 											{% else %}
@@ -170,8 +170,8 @@
 										<div class="vid_thumb">
 											<img src="{{followed_channel.image.url}}" alt="">
 										</div>
-										<h4><a href="#" title="">{{followed_channel.channel_name}}</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
-										<span>{{followed_channel.count_followers}} اشتراک . {{followed_channel.all_yt_videos.count}} ویدیو . 1374  بازدید</span>
+										<h4><a href="{% url 'youtube:channel_home_page' followed_channel.id %}" title="">{{followed_channel.channel_name}}</a> <span class="verify_ic"><i class="icon-tick"></i></span></h4>
+										<span>{{followed_channel.count_followers}} اشتراک . {{followed_channel.all_yt_videos.count}} ویدیو . {{followed_channel.all_yt_visit}}  بازدید</span>
 									</div>
 								</div>
 							</div>

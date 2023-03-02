@@ -5,6 +5,7 @@
 
 <section class="mn-sec">
 	<div class="container">
+
 		<div class="row">
 			<div class="col-lg-9">
 				<div class="mn-vid-sc single_video">
@@ -163,6 +164,54 @@
 				</div>
 			</div><!---col-lg-9 end-->
 			<div class="col-lg-3">
+				{% if is_play_list %}
+				<div class="playlist_view">
+					<div class="playlist_hd">
+						<h3>{{play_list.name}} - <span id='playlist-count'></span></h3>
+						<ul>
+							<li>
+								<a href="#" title="">
+									<i class="icon-add_to_playlist"></i>
+								</a>
+							</li>
+							<li>
+								<a href="#" title="">
+									<i class="icon-like"></i>
+								</a>
+							</li>
+						</ul>
+						<div class="clearfix"></div>
+					</div><!--playlist_hd end-->
+					<div class="clearfix"></div>
+					<ul class="videos_lizt mCustomScrollbar" data-mcs-theme="dark">
+						{% for  play_list_video in play_list.video.all  %}
+						{% if video != play_list_video %}
+						<li>
+							<div class="vidz_row">
+								<span class="vid_num">{{forloop.counter}}</span>
+								<div class="vidz_img">
+									<a href="{% url 'youtube:video_detail' play_list_video.id %}?playlist={{play_list.id}}" title="{{play_list_video.title}}">
+										<img src="{{play_list_video.thumbnail.url}}" style="height: 84px;width: 100px;">
+									</a>
+									<span class="vid-time">{{play_list_video.video_time}}</span>
+									<span class="watch_later" data-videoid='{{play_list_video.id}}'>
+										<i class="icon-watch_later_fill"></i>
+									</span>
+								</div><!--vidz_img end-->
+								<div class="video_info">
+									<h3><a href="{% url 'youtube:video_detail' play_list_video.id %}?playlist={{play_list.id}}">{{play_list_video.title}}</a></h3>
+									<h4><a href="{% url 'youtube:channel_home_page' play_list_video.youtuber.id %}" title="{{play_list_video.youtuber.channel_name}}">{{play_list_video.youtuber.channel_name}}</a></h4>
+								</div>
+							</div><!--vidz_row end-->
+						</li>
+						{% else %}
+						<input id='s-number' type='hidden' value='{{forloop.counter}}'>
+						{% endif %}
+
+						{% endfor %}
+					</ul><!--videos_lizt end-->
+				</div><!--playlist_view end-->
+				{% endif %}
 				<div class="sidebar">
 					<div class="vidz-prt">
 						<h2 class="sm-vidz">ویدیو های مشابه</h2>
@@ -348,6 +397,10 @@ function createPlaylist(result) {
 		}, 
 	});
 	
+}
+window.onload = function playListCount(){
+	number = $('#s-number').val()
+	$('#playlist-count').text(number + '/ {{play_list.video.all.count}}')
 }
 </script>
 {% endblock js %}

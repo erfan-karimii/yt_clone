@@ -23,6 +23,8 @@ urlpatterns = [
     path('delete_playlist/<id>/',views.delete_playlist,name='delete_playlist'),
     path('channel_home_page/<id>/',views.channel_home_page,name='channel_home_page'),
     path('history_page/',views.history_page,name='history_page'),
+    path('browse_category/',views.browse_category,name='browse_category'),
+    path('browse_channels/',views.browse_channels,name='browse_channels'),
 
 
 ]
