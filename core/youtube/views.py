@@ -13,6 +13,7 @@ from pytube import YouTube
 from account.models import Profile
 from .models import Video , VideoTag , PlayList , Category , Comment
 from .forms import VideoEditForm
+from . import tasks
 # Create your views here.
 
 def index(request):
@@ -33,8 +34,10 @@ def index(request):
 def upload_video(request):
     if request.method == 'POST':
         video = request.FILES.get('video')
-        Video.objects.create(youtuber=request.profile,video=video)
+        tasks.test_celery.delay(video,request.profile.id)
+        print("="*90,"won?")
         messages.success(request,'ویدیو شما در یافت شد و در حال اپلود می باشد.')
+        return redirect('/')
     return render(request,'upload_video.html',{})
 
 def upload_video_from_yotube(request):
