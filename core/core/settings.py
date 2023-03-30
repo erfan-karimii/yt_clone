@@ -39,12 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # Django App
+    #-----------Django App--------
     'youtube',
     'account',
     'sitesetting',
 
-    #-----------package--------
+    #----------- Packages --------
+    'storages',
     'ckeditor',
     'django_render_partial',
     'hitcount',
@@ -128,8 +129,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
-MEDIA_URL2 = '/thumbnail/'
 if DEBUG:
     STATICFILES_DIRS = [BASE_DIR / "static",]
 else:
@@ -144,6 +143,16 @@ MEDIA_ROOT2 = os.path.join(BASE_DIR,'thumbnail/')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'account.User'
+
+#------------------------arvancloud storages-------------
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_ACCESS_KEY_ID = '4b742de1-1a24-4840-8780-a6b64c8d976e'
+AWS_SECRET_ACCESS_KEY = '956f1099eacb79723f9a2b97d56a68208bf3ae8e'
+AWS_S3_ENDPOINT_URL  = 'https://django-video.s3.ir-thr-at1.arvanstorage.ir'
+AWS_STORAGE_BUCKET_NAME = 'django-video'
+AWS_SERVICE_NAME = "s3"
+AWS_S3_FILE_OVERWRITE = False
 
 #------------------------ckeditor-------------
 CKEDITOR_UPLOAD_PATH = "uploads/"

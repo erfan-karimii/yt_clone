@@ -7,5 +7,7 @@ urlpatterns = [
     path('header/',views.header_view,name='header'),
     path('footer/',views.footer_view,name='footer'),
 
+    path('bucket/',views.BucketHome.as_view(),name='bucket')
+
 
 ]

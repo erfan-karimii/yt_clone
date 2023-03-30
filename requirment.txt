@@ -3,3 +3,5 @@ django-render-partial
 moviepy
 django-hitcount
 pytube
+django-storages
+boto3

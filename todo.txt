@@ -1,9 +1,7 @@
-send email code (in server) 
+send email code (in server)
 use "show = False" for deleting objects not realy deleting it
 screen share
-google ad
+google add
 pytube
-searchview()
-film?
 clear watch_history
 use arvancloud s3?

@@ -57,7 +57,7 @@ class User(AbstractBaseUser,PermissionsMixin):
 
 class Profile(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    follow = models.ManyToManyField('Profile')
+    follow = models.ManyToManyField('Profile',blank=True)
     channel_name = models.CharField(max_length=30,null=True,unique=True)
     image = models.ImageField(null=True,blank=True)
     banner = models.ImageField(null=True,blank=True)
