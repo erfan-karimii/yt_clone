@@ -1,5 +1,4 @@
 send email code (in server)
-use "show = False" for deleting objects not realy deleting it
 screen share
 google add
 pytube
