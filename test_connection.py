@@ -9,7 +9,7 @@ try:
     # S3 resource
     s3_resource = boto3.resource(
         's3',
-        endpoint_url='https://django-video.s3.ir-thr-at1.arvanstorage.ir',
+        endpoint_url='https://s3.ir-thr-at1.arvanstorage.ir',
         aws_access_key_id='4b742de1-1a24-4840-8780-a6b64c8d976e',
         aws_secret_access_key='956f1099eacb79723f9a2b97d56a68208bf3ae8e'
     )

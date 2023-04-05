@@ -3,6 +3,7 @@
 
 {% block body %}
 
+<!--upload-videooz-->
 <section class="upload-videooz">
 	<div class="container">
 		<div class="row">
@@ -22,21 +23,20 @@
 				</div><!--video-file end-->
 			</div>
 			<div class="col-lg-6">
-				<div class="youtube-dwn">
+				<div class="video-file">
 					<i class="icon-graphics_03"></i>
 					<h3>ویدیو را از یوتیوب وارد کنید </h3>
 					<span>کپی / پیست لینک ویدیو</span>
-					<form method='post' enctype="multipart/form-data">
-						{% csrf_token %}
-						<input type="url" name="yt_link" placeholder="لینک را پیست کنید">
-						<button type="submit">وارد کردن ویدیو</button>
-					</form>
+					<br>
+					<button type="submit" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal">وارد کردن ویدیو از یوتیوب</button>
 				</div><!--youtube-dwn end-->
 			</div>
 		</div>
 	</div>
-</section><!--upload-videooz end-->
+</section>
+<!--upload-videooz end-->
 
+<!--Suggestions-->
 <section class="suggestions">
 	<div class="container">
 		<div class="sgst_content">
@@ -44,8 +44,10 @@
 			<p>با ارسال فیلم به اورن تایید می کنید که قوانین سایت به طور کامل خوانده و فهمیده اید <a href="#" title=""> مطالعه کامل قوانین </a> و <a href="#" title=""> حریم خصوصی </a>. لطفاً اطمینان حاصل کنید که کپی رایت یا حقوق حریم خصوصی دیگران را نقض نکنید.<a href="#"> مطالعه بیشتر</a></p>
 		</div>
 	</div>
-</section><!--Suggestions end-->
+</section>
+<!--Suggestions end-->
 
+<!--abt-vidz-->
 <section class="abt-vidz">
 	<ul>
 		<li>
@@ -58,7 +60,65 @@
 			<a href="#">آپلود از موبایل </a>
 		</li>
 	</ul>
-</section><!--abt-vidz-->
+</section>
+<!--abt-vidz end-->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="exampleModalLabel">مشخصات ویدیو</h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body">
+			<div class="form-group">
+				<input type="url" class="form-control" id="yt-vid-url" placeholder="url ویدیو" required>
+			</div>
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" data-dismiss="modal">کنسل</button>
+		  <button type="button" id="search-yt-vid" class="btn btn-primary">جست و جو ویدیو</button>
+		</div>
+	  </div>
+	</div>
+</div>
+<!-- Modal end -->
+
 
 {% endblock body %}
 
+{% block js %}
+<script>
+	$(document).ready(function(){
+		$('#search-yt-vid').click(function(){
+			url = $("#yt-vid-url").val()
+			if (url) {
+				Swal.fire({
+					icon: 'info',
+					text : 'درحال گرفتن اطلاعات ویدیو لطفا منتظر بمانید',
+					showConfirmButton :false,
+				})
+			}
+			$.ajax({
+				type : 'GET',
+				url : '{% url "youtube:search_for_youtube_video_ajax" %}',
+				data : {'video-url': url },
+				dataType : 'json',
+				success : function (data) {
+					if (data.status == 'success') {
+						alert(data.title)
+					} else {
+						alert(data.status)
+					}
+				},  
+				error: function(data){
+					alert('متاسفانه مشکلی پیش امده ,لطفا بعدا دوباره امتحان کنید.');
+				}                                
+			})
+		});
+	});
+</script>
+{% endblock js %}

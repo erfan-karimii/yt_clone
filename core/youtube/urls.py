@@ -25,6 +25,8 @@ urlpatterns = [
     path('history_page/',views.history_page,name='history_page'),
     path('browse_category/',views.browse_category,name='browse_category'),
     path('browse_channels/',views.browse_channels,name='browse_channels'),
+    path('search_for_youtube_video_ajax/',views.search_for_youtube_video_ajax,name='search_for_youtube_video_ajax'),
+
 
 
 ]

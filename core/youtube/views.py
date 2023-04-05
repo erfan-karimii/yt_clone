@@ -9,6 +9,7 @@ from hitcount.utils import get_hitcount_model
 from hitcount.views import HitCountMixin
 from hitcount.models import Hit ,HitCount
 from pytube import YouTube
+from pytube.exceptions import RegexMatchError
 
 from account.models import Profile
 from .models import Video , VideoTag , PlayList , Category , Comment
@@ -37,13 +38,6 @@ def upload_video(request):
         messages.success(request,'ویدیو شما در یافت شد و در حال اپلود می باشد.')
         return redirect('/')
     return render(request,'upload_video.html',{})
-
-def upload_video_from_yotube(request):
-    if request.method == 'POST':
-        link = request.POST.get('yt_link')
-        video = YouTube(link)
-        pass
-    return ''
 
 def upload_list(request):
     # profile = Profile.objects.get(user=request.user)
@@ -205,6 +199,24 @@ def save_comment_ajax(request):
         icon = 'error'
         status = 'لطفا پیام بگذارید'
     return JsonResponse({'status':status,'icon':icon})
+
+def search_for_youtube_video_ajax(request):
+    url = request.GET.get('video-url')
+
+    try :
+        video = YouTube(url)
+        title = video.title
+        status = 'success'
+    except RegexMatchError:
+        title = ''
+        status = 'url پیدا نشد!'
+    
+    context = {
+        'status' : status,
+        'title' : title,
+    }
+
+    return JsonResponse(context)
 
 def delete_comment(request,id):
     comment = Comment.objects.get(id=id)
