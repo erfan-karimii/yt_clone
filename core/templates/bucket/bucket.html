@@ -1,5 +1,32 @@
 {% extends 'base.html' %}
 
-{% block content %}
-
-{% endblock content %}
+{% block body %}
+<section class="vds-main">
+	<div class="container">
+        <div class="col-md-12">
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <td scope="col">نام</td>
+                <td scope="col">سایز</td>
+                <td scope="col">دانلود</td>
+                <td scope="col">حذف</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for obj in objects %}
+            <tr>
+                <th scope="col">{{forloop.counter}}</th>
+                <td scope="col">{{obj.key}}</td>
+                <td scope="col">{{obj.size|filesizeformat}}</td>
+                <td scope="col">(به زودی)</td>
+                <td scope="col"><a href="{% url 'sitesetting:delete_obj_bucket' obj.key %}">&times;</a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table> 
+        </div>
+    </div>     
+</section><!--vds-main end-->
+{% endblock body %}

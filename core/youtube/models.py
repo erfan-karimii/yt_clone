@@ -14,10 +14,6 @@ def get_video_duration_with_moviepy(filename):
     video_duration = clip.duration
     return str(timedelta(seconds=int(video_duration)))
 
-def get_upload_path(instance, filename):
-    return os.path.join(
-      f"{instance.youtuber.channel_name}",filename)
-
 class VideoManager(models.Manager):
     def all_video(self,**kwargs):
         return Video.objects.filter(published=True,**kwargs)
@@ -27,9 +23,9 @@ class Video(models.Model,HitCountMixin):
     title = models.CharField(max_length=255)
     description = RichTextUploadingField()
     category = models.ForeignKey('Category',on_delete=models.PROTECT,null=True)
-    video = models.FileField(upload_to=get_upload_path)
+    video = models.FileField()
     video_time = models.CharField(max_length=15,null=True,blank=True)
-    thumbnail = models.ImageField(upload_to=get_upload_path)
+    thumbnail = models.ImageField()
     monetize = models.BooleanField(default=True)
     tags = models.ManyToManyField('VideoTag')
     like = models.ManyToManyField('account.Profile',related_name='like')
@@ -55,8 +51,8 @@ class Video(models.Model,HitCountMixin):
     
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs) 
-        if self.video:
-            self.video_time = get_video_duration_with_moviepy(self.video.path)
+        # if self.video:
+        #     self.video_time = get_video_duration_with_moviepy(self.video.path)
 
 
     def __str__(self):

@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render , redirect
 from django.views import View
+from django.contrib import messages
 
 from .models import NavOne ,FooterOne ,SiteSetting
 from account.models import Profile
-from .tasks import all_bucket_objects_task
+from . import tasks
 
 # Create your views here.
 def header_view(request):
@@ -28,5 +29,16 @@ def footer_view(request):
 class BucketHome(View):
     template_name = 'bucket/bucket.html'
     def get(self,request):
-        objects = all_bucket_objects_task()
+        objects = tasks.all_bucket_objects_task()
+        # for obj in objects:
+        #     print(obj.__dir__())
+        #     break
         return render(request,self.template_name,{'objects':objects})
+    
+
+class DeleteBucketObject(View):
+    template_name = 'bucket/bucket.html'
+    def get(self,request,key):
+        tasks.delete_object_task.delay(key)
+        messages.success(request,'your object will delete soon')
+        return redirect('sitesetting:bucket')
