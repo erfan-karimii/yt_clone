@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load video_tags %}
 
 {% block body %}
 
@@ -17,7 +18,7 @@
 						</div>
 						<div class="br-info">
 							<h3><a href="#" title="">{{category.name}}</a></h3>
-							<span>{{category.video_set.all.count}} ویدیو</span>
+							<span>{% count_category_video category.id %} ویدیو</span>
 						</div>
 					</div><!--br-channel end-->
 				</div>
