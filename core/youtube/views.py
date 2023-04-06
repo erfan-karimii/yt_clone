@@ -4,12 +4,13 @@ from django.http import JsonResponse
 from django.db.models import Count , Q
 from django.db.utils import IntegrityError
 from django.contrib.auth.decorators import login_required
+from urllib.error import URLError
 
 from hitcount.utils import get_hitcount_model
 from hitcount.views import HitCountMixin
 from hitcount.models import Hit ,HitCount
 from pytube import YouTube
-from pytube.exceptions import RegexMatchError
+from pytube.exceptions import RegexMatchError 
 
 from account.models import Profile
 from .models import Video , VideoTag , PlayList , Category , Comment
@@ -211,7 +212,10 @@ def search_for_youtube_video_ajax(request):
     except RegexMatchError:
         title = ''
         status = 'url پیدا نشد!'
-    
+    except URLError:
+        title = ''
+        status = 'برای گرفتن ویدیو از یوتیوب متاسفانه باید از قندشکن استفاده کنید.' 
+ 
     context = {
         'status' : status,
         'title' : title,

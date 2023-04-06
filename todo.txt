@@ -1,6 +1,4 @@
 send email code (in server)
-screen share
 google add
 pytube
 clear watch_history
-use arvancloud s3?
