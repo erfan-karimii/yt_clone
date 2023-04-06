@@ -1,7 +1,7 @@
 from django.shortcuts import render , redirect
 from django.views import View
 from django.contrib import messages
-
+from django.contrib.auth.mixins import UserPassesTestMixin
 from .models import NavOne ,FooterOne ,SiteSetting
 from account.models import Profile
 from . import tasks
@@ -26,7 +26,7 @@ def footer_view(request):
     }
     return render(request,'layout/footer.html',context)
 
-class BucketHome(View):
+class BucketHome(UserPassesTestMixin,View):
     template_name = 'bucket/bucket.html'
     def get(self,request):
         objects = tasks.all_bucket_objects_task()
@@ -35,10 +35,24 @@ class BucketHome(View):
         #     break
         return render(request,self.template_name,{'objects':objects})
     
-
-class DeleteBucketObject(View):
-    template_name = 'bucket/bucket.html'
+    def test_func(self):
+        return self.request.user.is_authenticated and self.request.user.is_superuser
+    
+class DeleteBucketObject(UserPassesTestMixin,View):
     def get(self,request,key):
         tasks.delete_object_task.delay(key)
         messages.success(request,'your object will delete soon')
         return redirect('sitesetting:bucket')
+    
+    def test_func(self):
+        return self.request.user.is_authenticated and self.request.user.is_superuser
+
+class DownloadBucketObject(UserPassesTestMixin,View):
+    def get(self,request,key):
+        tasks.download_object_task.delay(key)
+        messages.success(request,'your object will download soon')
+        return redirect('sitesetting:bucket')
+    
+    def test_func(self):
+        return self.request.user.is_authenticated and self.request.user.is_superuser
+

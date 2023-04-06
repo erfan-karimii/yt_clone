@@ -10,7 +10,7 @@ urlpatterns = [
     path('set_password/',views.set_password,name='set_password'),
     path('complateprofile/',views.ComplateProfile,name='complate'),
 
-    path('login/',views.Login,name='login'),
+    path('accounts/login/',views.Login,name='login'),
     path('logout/',views.LogOut,name='logout'),
 ]
 

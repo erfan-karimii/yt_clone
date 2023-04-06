@@ -10,8 +10,8 @@
                 <th scope="col">#</th>
                 <td scope="col">نام</td>
                 <td scope="col">سایز</td>
-                <td scope="col">دانلود</td>
-                <td scope="col">حذف</td>
+                <td scope="col">دانلود فایل</td>
+                <td scope="col">حذف فایل</td>
             </tr>
             </thead>
             <tbody>
@@ -20,8 +20,8 @@
                 <th scope="col">{{forloop.counter}}</th>
                 <td scope="col">{{obj.key}}</td>
                 <td scope="col">{{obj.size|filesizeformat}}</td>
-                <td scope="col">(به زودی)</td>
-                <td scope="col"><a href="{% url 'sitesetting:delete_obj_bucket' obj.key %}">&times;</a></td>
+                <td scope="col"><a href="{% url 'sitesetting:download_obj_bucket' obj.key %}">دانلود</a></td>
+                <td scope="col"><a href="{% url 'sitesetting:delete_obj_bucket' obj.key %}">حذف</a></td>
             </tr>
             {% endfor %}
             </tbody>

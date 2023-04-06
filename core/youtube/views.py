@@ -34,6 +34,7 @@ def index(request):
 def upload_video(request):
     if request.method == 'POST':
         video = request.FILES.get('video')
+        Video.objects.create(youtuber = request.profile,video=video)
         print("="*90,"won?")
         messages.success(request,'ویدیو شما در یافت شد و در حال اپلود می باشد.')
         return redirect('/')

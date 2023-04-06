@@ -1,10 +1,5 @@
 import boto3
 from django.conf import settings
-import logging 
-from botocore.exceptions import ClientError
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-
 
 
 class Bucket:
@@ -21,8 +16,7 @@ class Bucket:
         )
 
     def get_objects(self):
-        bucket_name = settings.AWS_STORAGE_BUCKET_NAME
-        bucket = self.s3_resource.Bucket(bucket_name)
+        bucket = self.s3_resource.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
         return bucket.objects.all()
 
     def delete_object(self,object_name):
@@ -30,5 +24,14 @@ class Bucket:
         object = bucket.Object(object_name)
         object.delete()
         return True
+    
+    def download_object(self,object_name):
+        bucket = self.s3_resource.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
+        object_name = object_name
+        download_path =  settings.AWS_LOCAL_STORAGE +  object_name
+        bucket.download_file(
+            object_name,
+            download_path
+        )
 
 bucket = Bucket()
