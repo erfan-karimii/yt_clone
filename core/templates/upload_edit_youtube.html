@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+<section class="upload-detail">
+	<div class="container">
+		<h3>جزئیات آپلود</h3>
+		<div class="vid_thumbainl tr">
+			<a href="#" title="">
+				<img src="{{thumbnail_url}}" alt="">
+			</a>	
+		</div><!--vid_thumbnail tr end-->
+		<div class="video_info sr">
+			<h3><a href="#" title="">{{title}}</a></h3>
+			<h4>{{length}}</h4>
+			<p>کیفیت مورد نظر خود را انتخواب کنید:</p>
+			<form action="{% url 'youtube:save_video_from_youtube' %}" method="get">
+
+			<select name='itag' class="custom-select" id="inputGroupSelect01">
+				{% for stream in streams %}
+				<option value="{{stream.itag}}">{{stream.resolution}}-{{stream.filesize_mb}}</option>
+				{% endfor %}
+			</select>
+			<input type="hidden" name="url" value="{{url}}" >
+			<button type="submit">تایید</button>
+			</form>
+		</div><!--videoo end-->
+		<div class="clearfix"></div>
+	</div>
+</section><!--upload-detail end-->
+
+<section class="suggestions">
+	<div class="container">
+		<div class="sgst_content">
+			<h3>راهنما و پیشنهادات</h3>
+			<p>با ارسال فیلم به اورن تایید می کنید که قوانین سایت به طور کامل خوانده و فهمیده اید <a href="#" title=""> مطالعه کامل قوانین </a> و <a href="#" title=""> حریم خصوصی </a>. لطفاً اطمینان حاصل کنید که کپی رایت یا حقوق حریم خصوصی دیگران را نقض نکنید.<a href="#"> مطالعه بیشتر</a></p>
+		</div>
+	</div>
+</section><!--Suggestions end-->
+
+<div class="abt-vidz">
+	<ul>
+		<li>
+			<a href="#">راهنمای آپلود </a>
+		</li>
+		<li>
+			<a href="#">عیب یابی </a>
+		</li>
+		<li>
+			<a href="#">آپلود از موبایل </a>
+		</li>
+	</ul>
+</div><!--abt-vidz-->
+{% endblock body %}

@@ -5,22 +5,23 @@ from django.db.models import Count , Q
 from django.db.utils import IntegrityError
 from django.contrib.auth.decorators import login_required
 from urllib.error import URLError
+import datetime
 
 from hitcount.utils import get_hitcount_model
 from hitcount.views import HitCountMixin
-from hitcount.models import Hit ,HitCount
+from hitcount.models import Hit ,HitCount 
 from pytube import YouTube
-from pytube.exceptions import RegexMatchError 
+from pytube.exceptions import RegexMatchError , PytubeError
 
 from account.models import Profile
 from .models import Video , VideoTag , PlayList , Category , Comment
 from .forms import VideoEditForm
+from . import tasks
 # Create your views here.
 
 def index(request):
     videos = Video.objects.all_video().order_by('-created')
     channels = Profile.objects.exclude(image='').annotate(most_like=Count('video__like')).exclude(most_like=0).order_by('-most_like')[0:4]
-
     favorite_videos = Video.objects.all_video().annotate(like_count=Count('like')).order_by('-like_count','-created')
     categorys = Category.objects.all()[0:4]
     context = {
@@ -35,12 +36,12 @@ def index(request):
 def upload_video(request):
     if request.method == 'POST':
         video = request.FILES.get('video')
-        Video.objects.create(youtuber = request.profile,video=video)
-        print("="*90,"won?")
+        Video.objects.create(youtuber = request.profile,video=video,title='منتظر ادیت')
         messages.success(request,'ویدیو شما در یافت شد و در حال اپلود می باشد.')
         return redirect('/')
     return render(request,'upload_video.html',{})
 
+@login_required(login_url='/login/')
 def upload_list(request):
     # profile = Profile.objects.get(user=request.user)
     videos = Video.objects.filter(youtuber=request.profile)
@@ -49,6 +50,7 @@ def upload_list(request):
     }
     return render(request,'upload_list.html',context)
 
+@login_required(login_url='/login/')
 def upload_edit(request,id):
     video = Video.objects.get(id=id)
     if request.method == 'POST':
@@ -69,6 +71,48 @@ def upload_edit(request,id):
     }
     return render(request,'upload_edit.html',context)
 
+@login_required(login_url='/login/')
+def upload_edit_youtube(request):
+    url = request.GET.get('video-url')
+
+    try :
+        video = YouTube(url)
+        title = video.title
+        thumbnail_url = video.thumbnail_url
+        length = datetime.timedelta(seconds=video.length).__str__()
+        streams = video.streams.filter(file_extension='mp4').order_by('resolution')
+        status = 'success'
+    except RegexMatchError:
+        status = 'url پیدا نشد!'
+    except URLError:
+        status = 'برای گرفتن ویدیو از یوتیوب متاسفانه باید از قندشکن استفاده کنید.' 
+    except PytubeError:
+        status = 'مشکلی پیش امده لطفا دوباره امتحان کنید.'
+    
+    if status != 'success':
+        messages.error(request,status)
+        return redirect('yotube:upload_video')
+    else:
+        context = {
+            'form' : VideoEditForm(),
+            'title' : title,
+            'thumbnail_url':thumbnail_url,
+            'length': length,
+            'streams' : streams,
+            'url':url
+        }
+        return render(request,'upload_edit_youtube.html',context)
+
+@login_required(login_url='/login/')
+def save_video_from_youtube(request):
+    itag = request.GET.get('itag')
+    url = request.GET.get('url')
+    tasks.save_video_from_youtube_task.delay(url,itag,request.user.email)
+    messages.success(request,'درخواست شما برای ذخیره ویدیو دریافت شد . به دلیل زمان \
+    زیاد اپلود ان از یوتیوب به محض اتمام این فراید و برای ویرایش اطلاعات ویدیو برای شما ایمیل صادر خواهد شد')
+    return redirect('youtube:home')
+
+@login_required(login_url='/login/')
 def upload_delete(request,id):
     # profile = Profile.objects.get(user=request.user)
     video = Video.objects.get(id=id,youtuber=request.profile)
@@ -201,27 +245,6 @@ def save_comment_ajax(request):
         icon = 'error'
         status = 'لطفا پیام بگذارید'
     return JsonResponse({'status':status,'icon':icon})
-
-def search_for_youtube_video_ajax(request):
-    url = request.GET.get('video-url')
-
-    try :
-        video = YouTube(url)
-        title = video.title
-        status = 'success'
-    except RegexMatchError:
-        title = ''
-        status = 'url پیدا نشد!'
-    except URLError:
-        title = ''
-        status = 'برای گرفتن ویدیو از یوتیوب متاسفانه باید از قندشکن استفاده کنید.' 
- 
-    context = {
-        'status' : status,
-        'title' : title,
-    }
-
-    return JsonResponse(context)
 
 def delete_comment(request,id):
     comment = Comment.objects.get(id=id)

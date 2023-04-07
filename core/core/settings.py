@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django_render_partial',
     'hitcount',
     'django_celery_beat',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [

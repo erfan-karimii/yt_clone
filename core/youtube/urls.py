@@ -8,6 +8,7 @@ urlpatterns = [
     path('upload_video/',views.upload_video,name='upload_video'),
     path('upload_list/',views.upload_list,name='upload_list'),
     path('upload_edit/<id>/',views.upload_edit,name='upload_edit'),
+    path('upload_edit_youtube/',views.upload_edit_youtube,name='upload_edit_youtube'),
     path('upload_delete/<id>/',views.upload_delete,name='upload_delete'),
     path('video_detail/<id>/',views.video_detail,name='video_detail'),
     path('add_new_tag/',views.add_new_tag_ajax,name='add_new_tag'),
@@ -25,7 +26,7 @@ urlpatterns = [
     path('history_page/',views.history_page,name='history_page'),
     path('browse_category/',views.browse_category,name='browse_category'),
     path('browse_channels/',views.browse_channels,name='browse_channels'),
-    path('search_for_youtube_video_ajax/',views.search_for_youtube_video_ajax,name='search_for_youtube_video_ajax'),
+    path('save_video_from_youtube/',views.save_video_from_youtube,name='save_video_from_youtube'),
 
 
 

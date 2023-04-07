@@ -75,7 +75,9 @@
 		</div>
 		<div class="modal-body">
 			<div class="form-group">
-				<input type="url" class="form-control" id="yt-vid-url" placeholder="url ویدیو" required>
+				<form action="{% url 'youtube:upload_edit_youtube' %}" id="yt-vid-form"  method="get">
+					<input name="video-url" type="url" class="form-control" id="yt-vid-url" placeholder="url ویدیو" required>
+				</form>
 			</div>
 		</div>
 		<div class="modal-footer">
@@ -91,15 +93,16 @@
 {% endblock body %}
 
 {% block js %}
-<script>
+{% comment %} <script>
 	$(document).ready(function(){
 		$('#search-yt-vid').click(function(){
 			url = $("#yt-vid-url").val()
 			if (url) {
 				Swal.fire({
 					icon: 'info',
-					text : 'درحال گرفتن اطلاعات ویدیو لطفا منتظر بمانید',
-					showConfirmButton :false,
+					title : 'درحال گرفتن اطلاعات ویدیو لطفا منتظر بمانید',
+					text : 'توجه: این مدت زمان بین 1 تا 3 دقیقه برای ویدیو های یک دقیقه ای متغیر است.',
+					confirmButtonText :'تایید',
 				})
 			}
 			$.ajax({
@@ -119,6 +122,13 @@
 				}                                
 			})
 		});
+	});
+</script> {% endcomment %}
+<script>
+	$("#search-yt-vid").click(function(){
+		if($('#yt-vid-url').val()){
+			$('#yt-vid-form').submit()
+		}
 	});
 </script>
 {% endblock js %}
