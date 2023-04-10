@@ -9,7 +9,7 @@ import datetime
 
 from hitcount.utils import get_hitcount_model
 from hitcount.views import HitCountMixin
-from hitcount.models import Hit ,HitCount 
+from hitcount.models import Hit
 from pytube import YouTube
 from pytube.exceptions import RegexMatchError , PytubeError
 
@@ -132,7 +132,7 @@ def video_detail(request,id):
     
     comments = Comment.objects.filter(video=video,is_show=True).order_by('-is_pin_comment','-created')
     
-    is_followed = bool(video.youtuber in request.profile.follow.all())
+    is_followed = video.youtuber in request.profile.follow.all()
     
     ids=video.tags.values_list('id',flat=True)
     similar_videos = Video.objects.all_video(tags__in=ids).exclude(id=id)
@@ -313,3 +313,12 @@ def browse_category(request):
 def browse_channels(request):
     channels = Profile.objects.exclude(image='').annotate(most_like=Count('video__like')).exclude(most_like=0).order_by('-most_like')
     return render(request,'browse_channels.html',{'channels':channels})
+
+def clear_watch_history(request):
+    hits = Hit.objects.filter(user=request.user)
+    if hits:
+        hits.delete()
+        messages.success(request,'تاریخچه شما با موفقیت پاک شد.')
+    else:
+        messages.error(request,'چیزی برای حذف کردن وجود ندارد.')
+    return redirect('youtube:history_page')

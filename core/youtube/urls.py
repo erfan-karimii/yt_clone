@@ -27,7 +27,5 @@ urlpatterns = [
     path('browse_category/',views.browse_category,name='browse_category'),
     path('browse_channels/',views.browse_channels,name='browse_channels'),
     path('save_video_from_youtube/',views.save_video_from_youtube,name='save_video_from_youtube'),
-
-
-
+    path('clear_watch_history/',views.clear_watch_history,name='clear_watch_history'),
 ]

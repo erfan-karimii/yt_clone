@@ -27,11 +27,11 @@ class Bucket:
     
     def download_object(self,object_name):
         bucket = self.s3_resource.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
-        object_name = object_name
         download_path =  settings.AWS_LOCAL_STORAGE +  object_name
         bucket.download_file(
             object_name,
             download_path
         )
+        return True
 
 bucket = Bucket()
