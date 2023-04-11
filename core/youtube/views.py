@@ -36,7 +36,10 @@ def index(request):
 def upload_video(request):
     if request.method == 'POST':
         video = request.FILES.get('video')
-        Video.objects.create(youtuber = request.profile,video=video,title='منتظر ادیت')
+        tasks.save_video_task.delay(object_name=video.name,file_path=video.temporary_file_path(),email=request.user.email)
+        import os
+        print(os.path.isfile(video.temporary_file_path()))
+        # Video.objects.create(youtuber = request.profile,video=video,title='منتظر ادیت')
         messages.success(request,'ویدیو شما در یافت شد و در حال اپلود می باشد.')
         return redirect('/')
     return render(request,'upload_video.html',{})

@@ -41,3 +41,7 @@ video = YouTube(url)
 #  '__contains__', '__reversed__', 'index', '__subclasshook__', '__class_getitem__', '__new__', '__hash__', '__str__', '__getattribute__',
 #  '__setattr__', '__delattr__', '__lt__', '__le__', '__eq__', '__ne__', '__gt__', '__ge__', '__reduce_ex__', '__reduce__', '__getstate__',
 #  '__init_subclass__', '__format__', '__sizeof__', '__dir__', '__class__']
+
+['file', '_name', 'size', 'content_type', 'charset', 'content_type_extra', '__module__', '__doc__', '__init__', 'temporary_file_path', 'close', '__repr__', '_get_name', '_set_name', 'name', 'DEFAULT_CHUNK_SIZE', '__str__', '__bool__', '__len__', 'chunks', 'multiple_chunks', '__iter__', '__enter__', '__exit__', 'open', 'encoding', 'fileno', 'flush', 'isatty', 'newlines', 'read', 
+'readinto', 'readline', 'readlines', 'seek', 'tell', 'truncate', 'write', 'writelines', 'closed', 'readable', 'writable', 'seekable', '__dict__', '__weakref__', '__new__', '__hash__', '__getattribute__', '__setattr__', '__delattr__', '__lt__', '__le__', 
+'__eq__', '__ne__', '__gt__', '__ge__', '__reduce_ex__', '__reduce__', '__getstate__', '__subclasshook__', '__init_subclass__', '__format__', '__sizeof__', '__dir__', '__class__']

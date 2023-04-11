@@ -6,4 +6,3 @@ pytube
 django-storages
 boto3
 django-celery-beat
-django_celery_result
