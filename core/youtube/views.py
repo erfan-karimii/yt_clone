@@ -17,7 +17,9 @@ from account.models import Profile
 from .models import Video , VideoTag , PlayList , Category , Comment
 from .forms import VideoEditForm
 from . import tasks
+from time import sleep
 # Create your views here.
+
 
 def index(request):
     videos = Video.objects.all_video().order_by('-created')
@@ -32,14 +34,15 @@ def index(request):
     }
     return render(request,'index.html',context)
 
+# TODO: sleep to 5
 @login_required(login_url='/login/')
 def upload_video(request):
     if request.method == 'POST':
         video = request.FILES.get('video')
-        tasks.save_video_task.delay(object_name=video.name,file_path=video.temporary_file_path(),email=request.user.email)
-        import os
-        print(os.path.isfile(video.temporary_file_path()))
-        # Video.objects.create(youtuber = request.profile,video=video,title='منتظر ادیت')
+        tasks.save_video_task.delay(str(video),str(video.temporary_file_path()))
+        print(video.temporary_file_path())
+        sleep(2)
+        Video.objects.create(video=video,youtuber=request.profile)
         messages.success(request,'ویدیو شما در یافت شد و در حال اپلود می باشد.')
         return redirect('/')
     return render(request,'upload_video.html',{})

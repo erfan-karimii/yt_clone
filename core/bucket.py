@@ -1,7 +1,41 @@
-import boto3
 from django.conf import settings
+from typing import Optional
+from boto3.s3.transfer import TransferConfig
+from botocore.exceptions import ClientError
+import boto3
+import json
+import logging
+import os
+import pathlib
+import sys
+import threading
 
+# Constant variables
+KB = 1024
+MB = KB * KB
+GB = MB * KB
 
+class ProgressPercentage:
+    def __init__(self, file_path: str):
+        self._file_path = file_path
+        self._size = float(os.path.getsize(file_path))
+        self._seen_so_far = 0
+        self._lock = threading.Lock()
+
+    def __call__(self, bytes_amount):
+        """
+        To simplify, assume this is hooked up to a single file_path
+
+        :param bytes_amount: uploaded bytes
+        """
+        with self._lock:
+            self._seen_so_far += bytes_amount
+            percentage = (self._seen_so_far / self._size) * 100
+            sys.stdout.write(
+                "\r%s  %s / %s  (%.2f%%)" % (self._file_path, self._seen_so_far, self._size, percentage)
+            )
+            sys.stdout.flush()
+            
 class Bucket:
     """CDN Bucket manager
     init method creates connection.
@@ -33,13 +67,42 @@ class Bucket:
         )
         return True
     
-    # def upload_object(self,object_name,file_path):
-    #     with open(file_path, "rb") as file:
-    #         self.bucket.put_object(
-    #             ACL='private',
-    #             Body=file,
-    #             Key=object_name
-    #         )
-    #     return True
+    def upload_file(self,file_path: str, bucket: str, object_name: Optional[str] = None):
+        """
+        Upload a file to an S3 bucket
+
+        :param file_path: File to upload
+        :param bucket: Bucket to upload to
+        :param object_name: S3 object name. If not specified then file_path is used
+        :return: True if file was uploaded, else False
+        """
+        # If S3 object_name was not specified, use file_path
+        if object_name is None:
+            object_name = file_path
+
+        # Upload the file
+        try:
+            s3_client = boto3.client(
+                settings.AWS_SERVICE_NAME,
+                endpoint_url=settings.AWS_S3_ENDPOINT_URL,
+                aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+                aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY
+            )
+            # Set the desired multipart threshold value (400 MB)
+            config = TransferConfig(multipart_threshold=400 * MB, max_concurrency=5)
+            s3_client.upload_file(
+                file_path,
+                bucket,
+                object_name,
+                ExtraArgs={'ACL': 'public-read'},
+                Callback=ProgressPercentage(file_path),
+                Config=config
+            )
+        except ClientError as e:
+            logging.error(e)
+            return False
+
+        return True
 
 bucket = Bucket()
+
