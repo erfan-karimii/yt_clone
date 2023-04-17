@@ -9,10 +9,8 @@ from bucket import bucket
 import os
 
 @shared_task
-def save_video_from_youtube_task(url,itag,email):
-    user = User.objects.get(email=email)
-    profile = Profile.objects.get(user=user)
-
+def save_video_from_youtube_task(url,itag,profile_id):
+    profile = Profile.objects.get(id=profile_id)
     video = YouTube(url)
     stream = video.streams.get_by_itag(itag)
     # stream.download()
@@ -21,7 +19,7 @@ def save_video_from_youtube_task(url,itag,email):
     return 'Done'
 
 @shared_task
-def save_video_task(object_name,file_abs_path):
-    import os
-    print(os.path.isfile(file_abs_path))
+def save_video_task(object_name,file_abs_path,profile_id):
     bucket.upload_file(file_abs_path, settings.AWS_STORAGE_BUCKET_NAME, object_name)
+    profile = Profile.objects.get(id=profile_id)
+    Video.objects.create(video=object_name,youtuber=profile)

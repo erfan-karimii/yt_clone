@@ -34,15 +34,12 @@ def index(request):
     }
     return render(request,'index.html',context)
 
-# TODO: sleep to 5
 @login_required(login_url='/login/')
 def upload_video(request):
     if request.method == 'POST':
         video = request.FILES.get('video')
-        tasks.save_video_task.delay(str(video),str(video.temporary_file_path()))
-        print(video.temporary_file_path())
+        tasks.save_video_task.delay(str(video),str(video.temporary_file_path()),request.profile.id)
         sleep(2)
-        Video.objects.create(video=video,youtuber=request.profile)
         messages.success(request,'ویدیو شما در یافت شد و در حال اپلود می باشد.')
         return redirect('/')
     return render(request,'upload_video.html',{})
@@ -113,7 +110,7 @@ def upload_edit_youtube(request):
 def save_video_from_youtube(request):
     itag = request.GET.get('itag')
     url = request.GET.get('url')
-    tasks.save_video_from_youtube_task.delay(url,itag,request.user.email)
+    tasks.save_video_from_youtube_task.delay(url,itag,request.profile.id)
     messages.success(request,'درخواست شما برای ذخیره ویدیو دریافت شد . به دلیل زمان \
     زیاد اپلود ان از یوتیوب به محض اتمام این فراید و برای ویرایش اطلاعات ویدیو برای شما ایمیل صادر خواهد شد')
     return redirect('youtube:home')
