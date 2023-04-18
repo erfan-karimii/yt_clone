@@ -118,8 +118,9 @@ def save_video_from_youtube(request):
 @login_required(login_url='/login/')
 def upload_delete(request,id):
     # profile = Profile.objects.get(user=request.user)
-    video = Video.objects.get(id=id,youtuber=request.profile)
-    video.delete()
+    video_obj = Video.objects.get(id=id,youtuber=request.profile)
+    tasks.delete_video_with_object_task.delay(video_obj.video.name)
+    video_obj.delete()
     messages.success(request,'ویدیو شما حذف شد.')
     return redirect('youtube:upload_list')
 

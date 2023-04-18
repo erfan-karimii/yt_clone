@@ -49,10 +49,10 @@ class Video(models.Model,HitCountMixin):
         hit_count = get_hitcount_model().objects.get_for_object(self)
         return hit_count.hits
     
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs) 
-        # if self.video:
-        #     self.video_time = get_video_duration_with_moviepy(self.video.path)
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs) 
+    #     if self.video:
+    #         self.video_time = get_video_duration_with_moviepy(self.video.path)
 
 
     def __str__(self):
