@@ -16,6 +16,7 @@
 <a href="https://www.djangoproject.com/" target="_blank"> <img src="./docs/django-plain.svg" alt="django" width="40" height="40"/> </a>
 <a href="https://www.arvancloud.ir/fa" target="_blank"> <img src="./docs/arvancloud.svg" alt="arvancloud" width="40" height="40"/> </a>
 <a href="https://docs.celeryq.dev/" target="_blank"> <img src="./docs/celery.svg" alt="celery" width="40" height="40"/> </a>
+<a href="https://sqlite.org/index.html" target="_blank"> <img src="./docs/sqlite-original.svg" alt="sqlite" width="40" height="40"/> </a>
 </p>
 
 ## startproject
