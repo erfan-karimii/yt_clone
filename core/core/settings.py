@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -149,10 +153,10 @@ AUTH_USER_MODEL = 'account.User'
 #------------------------arvancloud storages-------------
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 FILE_UPLOAD_MAX_MEMORY_SIZE = 0
-AWS_ACCESS_KEY_ID = '4b742de1-1a24-4840-8780-a6b64c8d976e'
-AWS_SECRET_ACCESS_KEY = '956f1099eacb79723f9a2b97d56a68208bf3ae8e'
-AWS_S3_ENDPOINT_URL  = 'https://s3.ir-thr-at1.arvanstorage.ir'
-AWS_STORAGE_BUCKET_NAME = 'django-video'
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+AWS_S3_ENDPOINT_URL  = env('AWS_S3_ENDPOINT_URL')
+AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
 AWS_SERVICE_NAME = "s3"
 AWS_S3_FILE_OVERWRITE = False
 AWS_LOCAL_STORAGE = f'{BASE_DIR}/aws/'

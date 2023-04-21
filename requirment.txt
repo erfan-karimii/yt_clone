@@ -1,3 +1,4 @@
+django-environ
 django-ckeditor
 django-render-partial
 moviepy
