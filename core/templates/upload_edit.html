@@ -90,7 +90,8 @@
 				<div class="category-typ">
 					<div class="video-file">
 						<h3>عکس بند انگشتی ویدیو خود را بارگذاری کنید.</h3>
-						{{form.thumbnail}}
+						<input type="file" name="thumbnail" accept="image/*" id="id_thumbnail">
+						{% if video.thumbnail %}<a href="{{video.thumbnail.url}}" >عکس</a>{% endif %}
 					</div><!--video-file end-->
 					<div class="clearfix"></div>
 					<div class="btn-sbmit">

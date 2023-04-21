@@ -115,7 +115,7 @@
 						<div class="vidz_sec">
 							<h3>{{play_list.name}}</h3>
 							<a href="#" title=""> نمایش همه </a>
-							{% if forloop.counter != 1 %}{% if yt_profile == profile %}<a href="#" class="delete-playlist" title="حذف لیست ویدیو" data-id='{{play_list.id}}' style="margin-left: 20px;"> حذف </a>{% endif %}{% endif %}
+							{% if forloop.counter != 1 %}{% if yt_profile == request.profile %}<a href="#" class="delete-playlist" title="حذف لیست ویدیو" data-id='{{play_list.id}}' style="margin-left: 20px;"> حذف </a>{% endif %}{% endif %}
 							<div class="clearfix"></div>
 							<div class="vidz_list">
 								<div class="row">

@@ -72,7 +72,7 @@ def set_password(request):
     elif request.method == "GET":
         return render(request,'account/setpassword.html',{})
 
-@login_required(login_url='/login/')
+@login_required(login_url='/accounts/login/')
 def ComplateProfile(request):
     profile = Profile.objects.get(user=request.user)
     if request.method == "POST":

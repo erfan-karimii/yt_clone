@@ -34,7 +34,7 @@ def index(request):
     }
     return render(request,'index.html',context)
 
-@login_required(login_url='/login/')
+@login_required(login_url='/accounts/login/')
 def upload_video(request):
     if request.method == 'POST':
         video = request.FILES.get('video')
@@ -44,7 +44,7 @@ def upload_video(request):
         return redirect('/')
     return render(request,'upload_video.html',{})
 
-@login_required(login_url='/login/')
+@login_required(login_url='/accounts/login/')
 def upload_list(request):
     # profile = Profile.objects.get(user=request.user)
     videos = Video.objects.filter(youtuber=request.profile)
@@ -53,7 +53,7 @@ def upload_list(request):
     }
     return render(request,'upload_list.html',context)
 
-@login_required(login_url='/login/')
+@login_required(login_url='/accounts/login/')
 def upload_edit(request,id):
     video = Video.objects.get(id=id)
     if request.method == 'POST':
@@ -74,7 +74,7 @@ def upload_edit(request,id):
     }
     return render(request,'upload_edit.html',context)
 
-@login_required(login_url='/login/')
+@login_required(login_url='/accounts/login/')
 def upload_edit_youtube(request):
     url = request.GET.get('video-url')
 
@@ -106,7 +106,7 @@ def upload_edit_youtube(request):
     }
     return render(request,'upload_edit_youtube.html',context)
 
-@login_required(login_url='/login/')
+@login_required(login_url='/accounts/login/')
 def save_video_from_youtube(request):
     itag = request.GET.get('itag')
     url = request.GET.get('url')
@@ -115,7 +115,7 @@ def save_video_from_youtube(request):
     زیاد اپلود ان از یوتیوب به محض اتمام این فراید و برای ویرایش اطلاعات ویدیو برای شما ایمیل صادر خواهد شد')
     return redirect('youtube:home')
 
-@login_required(login_url='/login/')
+@login_required(login_url='/accounts/login/')
 def upload_delete(request,id):
     video_obj = Video.objects.get(id=id,youtuber=request.profile)
     tasks.delete_video_with_object_task.delay(video_obj.video.name)
@@ -123,7 +123,7 @@ def upload_delete(request,id):
     messages.success(request,'ویدیو شما حذف شد.')
     return redirect('youtube:upload_list')
 
-@login_required(login_url='/login/')
+@login_required(login_url='/accounts/login/')
 def video_detail(request,id):
     is_play_list = False
     play_list = []
@@ -287,7 +287,6 @@ def channel_home_page(request,id):
     
     is_followed = False
     if request.user.is_authenticated:
-        # profile = Profile.objects.get(user=request.user)
         if yt_profile in request.profile.follow.all():
             is_followed = True
 

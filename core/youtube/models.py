@@ -61,6 +61,9 @@ class Video(models.Model,HitCountMixin):
 class VideoTag(models.Model):
     name = models.CharField(max_length=155,null=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Category(models.Model):
     name = models.CharField(max_length=200,verbose_name='نام دسته بندی')

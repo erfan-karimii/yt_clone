@@ -7,3 +7,4 @@ pytube
 django-storages
 boto3
 django-celery-beat
+gevent
