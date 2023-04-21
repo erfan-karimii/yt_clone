@@ -12,7 +12,7 @@ def save_video_from_youtube_task(url,itag,profile_id):
     profile = Profile.objects.get(id=profile_id)
     video = YouTube(url)
     stream = video.streams.get_by_itag(itag)
-    # stream.download()
+    stream.download()
     filename = safe_filename(video.title)
     Video.objects.create(youtuber = profile,video=filename,title='منتظر ادیت')
     return 'Done'

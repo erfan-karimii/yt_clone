@@ -39,7 +39,7 @@ def upload_video(request):
     if request.method == 'POST':
         video = request.FILES.get('video')
         tasks.save_video_task.delay(str(video),str(video.temporary_file_path()),request.profile.id)
-        sleep(2)
+        sleep(5)
         messages.success(request,'ویدیو شما در یافت شد و در حال اپلود می باشد.')
         return redirect('/')
     return render(request,'upload_video.html',{})
@@ -94,17 +94,17 @@ def upload_edit_youtube(request):
     
     if status != 'success':
         messages.error(request,status)
-        return redirect('yotube:upload_video')
-    else:
-        context = {
-            'form' : VideoEditForm(),
-            'title' : title,
-            'thumbnail_url':thumbnail_url,
-            'length': length,
-            'streams' : streams,
-            'url':url
-        }
-        return render(request,'upload_edit_youtube.html',context)
+        return redirect('youtube:upload_video')
+    
+    context = {
+        'form' : VideoEditForm(),
+        'title' : title,
+        'thumbnail_url':thumbnail_url,
+        'length': length,
+        'streams' : streams,
+        'url':url,
+    }
+    return render(request,'upload_edit_youtube.html',context)
 
 @login_required(login_url='/login/')
 def save_video_from_youtube(request):
